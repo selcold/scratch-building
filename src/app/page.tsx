@@ -17,7 +17,7 @@ export default function Home() {
   // 表示認証制度機能
   var isSiteViewLoad;
   if(process.env.NEXT_PUBLIC_SITE_VIEW_Locked === 'true'){
-    isSiteViewLoad = ViewLocked_check()
+    isSiteViewLoad = ViewLocked_check('')
   }else{
     isSiteViewLoad = true
   }

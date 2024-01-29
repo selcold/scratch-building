@@ -40,7 +40,7 @@ export function ViewLocked_setting_authReset() {
 }
 
 // データの取得と有効期限確認
-export function ViewLocked_check() {
+export function ViewLocked_check(mode:string) {
     if (typeof window !== 'undefined') {
         const storedData = localStorage.getItem('ViewLocked');
 
@@ -63,13 +63,15 @@ export function ViewLocked_check() {
                 storedViewLockedObjVersion === process.env.NEXT_PUBLIC_SITE_VIEW_version &&
                 storedViewLockedObjPassword === process.env.NEXT_PUBLIC_SITE_VIEW_KEY
             ) {
+                if(mode==='reload'){
+                    window.location.href=(`./`)
+                }
                 return true;
             } else {
                 return false;
             }
         }else{
             ViewLocked_setting_authReset();
-            window.location.href=(`./`)
         }
     }
 
@@ -100,7 +102,8 @@ export function updatePassword(newPassword: string) {
             const updatedEncryptedText = encrypt(JSON.stringify(storedViewLockedObj));
             localStorage.setItem('ViewLocked', JSON.stringify({ value: updatedEncryptedText, expires: parsedData.expires }));
         }
-    }
+    };
+    ViewLocked_check('reload')
 }
 
 // 他の関数を追加...
