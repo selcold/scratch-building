@@ -37,7 +37,7 @@ export function Header() {
                                 <UserButton afterSignOutUrl="/" />
                             </SignedIn>
                             <SignedOut>
-                                <SignInButton />
+                                <SignInButton>ログイン</SignInButton>
                             </SignedOut>
                         </div>
                     </div>
@@ -62,10 +62,10 @@ export function Header() {
                                     </SheetTrigger>
                                     <SheetContent>
                                         <SheetHeader>
-                                        <SheetTitle>{links_config.site_title}</SheetTitle>
-                                        <SheetDescription>
-                                        {links_config.site_description_short}
-                                        </SheetDescription>
+                                            <SheetTitle>{links_config.site_title}</SheetTitle>
+                                            <SheetDescription>
+                                            {links_config.site_description_short}
+                                            </SheetDescription>
                                         </SheetHeader>
                                         <div className="grid gap-4 py-4 items-center">
                                             <li>
@@ -79,19 +79,19 @@ export function Header() {
                                                 </a>
                                             </li>
                                         </div>
+                                        <SignedIn>
+                                            <UserButton afterSignOutUrl="/" />
+                                        </SignedIn>
+                                        <SignedOut>
+                                            <SignInButton>ログイン</SignInButton>
+                                        </SignedOut>
                                         <SheetFooter>
-                                        <SheetClose asChild>
-                                            <Button type="submit" className='button_border_1'>閉じる</Button>
-                                        </SheetClose>
+                                            <SheetClose asChild>
+                                                <Button type="submit" className='button_border_1'>閉じる</Button>
+                                            </SheetClose>
                                         </SheetFooter>
                                     </SheetContent>
                                 </Sheet>
-                                <SignedIn>
-                                    <UserButton afterSignOutUrl="/" />
-                                </SignedIn>
-                                <SignedOut>
-                                    <SignInButton />
-                                </SignedOut>
                             </div>
                         </div>
                     </div>

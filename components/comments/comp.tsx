@@ -1,0 +1,215 @@
+'use client'
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { formatDateTime } from "../formatDateTime";
+import { faLink, faReply } from "@fortawesome/free-solid-svg-icons";
+import { UserInfo_avatar_url } from "../userInfo";
+import { createRoot } from "react-dom/client";
+import { API_gas_backendApi_new_commentSend } from "../api/comments";
+import { customLog } from "../api/customLog";
+import { validationCheck_comment } from "../validation";
+
+interface Comment {
+    avatar_url: string;
+    comment: string;
+    name: string;
+    timestamp: Date; // Date型に変更
+    tag: string;
+    uuid: string;
+    replyId: string;
+    replyGroupId: string;
+};
+export function CommentAddHtml(commentData: Comment[], username: string, userId: string, avatar_url: string): JSX.Element[] {
+
+    var obj_commentsId: Record<string, any> = {};
+    var obj_comments: Record<string, any> = {};
+    var obj_comments_reply: Record<string, any> = {};
+
+    // コメントデータのタイムスタンプを日時オブジェクトに変換
+    commentData.forEach(comment => {
+        comment.timestamp = new Date(comment.timestamp);
+        obj_commentsId[comment.uuid] = comment;
+        if (comment.replyGroupId) {
+            obj_comments_reply[comment.uuid] = comment;
+        } else {
+            obj_comments[comment.uuid] = comment;
+        }
+    });
+    var obj_comments_Array = Object.values(obj_comments);
+    var obj_comments_reply_Array = Object.values(obj_comments_reply);
+    
+    // タイムスタンプの新しい順にコメントデータをソート
+    obj_comments_Array.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+    // コメントを格納する変数
+    let commentsHtml: JSX.Element[] = [];
+    // コメントデータをループしてコメントごとにHTMLを生成
+    obj_comments_Array.forEach(comment => {
+        const formattedTimestamp = formatDateTime(comment.timestamp);
+
+        // コメントフォーム
+        function set_comment_reply_form(mode: string, uuid: string) {
+            const HtmlCommentReplyForm = document.getElementById(`comment_reply_${uuid}`);
+            if (HtmlCommentReplyForm) {
+                if (HtmlCommentReplyForm.children.length > 0) {
+                    // 子要素がある場合は削除
+                    HtmlCommentReplyForm.innerHTML = '';
+                } else {
+                    if (mode === 'comment') {
+                        const root = createRoot(HtmlCommentReplyForm);
+                        root.render(
+                            <div id={`comment_reply_form_${uuid}`} className="relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem]">
+                                <a className=''>
+                                    <img src={avatar_url} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
+                                </a>
+                                <div className='flex flex-wrap flex-col justify-center items-center ml-1 w-full'>
+                                    <div className='w-full'>
+                                        <div className='w-full'>
+                                            <div>
+                                                <textarea id={`comment_reply_form_textarea_${uuid}`} className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                            </div>
+                                        </div>
+                                        <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
+                                            <button className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,uuid,'',comment.name)}>投稿する</button>
+                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',uuid)}>キャンセル</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    } else {
+                        const root = createRoot(HtmlCommentReplyForm);
+                        root.render(
+                            <div id={`comment_reply_form_${uuid}`} className="relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem]">
+                                <a className=''>
+                                    <img src={avatar_url} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
+                                </a>
+                                <div className='flex flex-wrap flex-col justify-center items-center ml-1 w-full'>
+                                    <div className='w-full'>
+                                        <div className='w-full'>
+                                            <div>
+                                                <textarea id={`comment_reply_form_textarea_${uuid}`} className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                            </div>
+                                        </div>
+                                        <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
+                                            <button className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,uuid,'',comment.name)}>投稿する</button>
+                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',uuid)}>キャンセル</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    }
+                }
+            }
+        };
+
+        async function CommentReplyForm_send_ButtonClick(username: string,userId: string,replyGroupId: string,replyId: string = 'false',replyUser: string) {
+            if(!obj_commentsId[replyGroupId].replyGroupId){
+                replyId=replyGroupId;
+            }else{
+                var fuc_replyGroupId=obj_commentsId[replyGroupId].replyGroupId;
+                var fuc_replyId=obj_commentsId[replyGroupId].uuid;
+            }
+            const text_CommentReplyForm = document.getElementById(`comment_reply_form_textarea_${replyGroupId}`) as HTMLInputElement;
+            if (text_CommentReplyForm) {
+                const comment = text_CommentReplyForm.value;
+                if(!obj_commentsId[replyGroupId].replyGroupId){
+                    if(validationCheck_comment(comment)){
+                        if(await API_gas_backendApi_new_commentSend(username,userId,comment,replyGroupId,replyId,replyUser)){
+                            if (typeof window !== 'undefined') {
+                                window.alert('コメントを投稿しました！');
+                                window.location.href=(`./`);
+                            }
+                        }
+                    }else{
+                        if (typeof window !== 'undefined') {
+                            alert('スペース以外の文字を最低一文字入力してください！');
+                        }
+                    };
+                }else{
+                    if(validationCheck_comment(comment)){
+                        if(await API_gas_backendApi_new_commentSend(username,userId,comment,replyGroupId,replyId,replyUser)){
+                            if (typeof window !== 'undefined') {
+                                window.alert('コメントを投稿しました！');
+                                window.location.href=(`./`);
+                            }
+                        }
+                    }else{
+                        if (typeof window !== 'undefined') {
+                            alert('スペース以外の文字を最低一文字入力してください！');
+                        }
+                    };
+                }
+                return text_CommentReplyForm.value;
+            } else {
+                return false;
+            }
+        };        
+        
+        // コメントのHTMLを生成し、commentsHtmlに追加
+        commentsHtml.push(
+            <li key={comment.uuid} className='relative flex flex-col md:flex-row flex-wrap items-center justify-end w-full'>
+                <div id={`comment_${comment.uuid}`} className='flex flex-row flex-nowrap justify-between items-start w-full p-1 group'>
+                    <a className=''>
+                        <img src={comment.avatar_url} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
+                    </a>
+                    <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
+                        <div className='flex flex-wrap flex-row justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
+                            <a className='mr-auto text-slate-50'>{comment.name}</a>
+                            <div className='flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
+                                <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'><FontAwesomeIcon icon={faLink} className='mr-[1px]'/>コピー</button>
+                                <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>！報告</button>
+                            </div>
+                        </div>
+                        <div className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-zinc-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-zinc-800' style={{width:'calc(100% - 0.5rem)'}}>
+                        <span className='overflow-auto whitespace-break-spaces break-words text-left'>
+                            <span className='whitespace-break-spaces break-words'>{comment.comment}</span>
+                        </span>
+                        <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
+                            <span className='text-zinc-500'>{formattedTimestamp}</span>
+                            <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                        </div>
+                        </div>
+                        <div id={`comment_reply_${comment.uuid}`} className='flex flex-row flex-wrap justify-around items-center w-full'></div>
+                    </div>
+                </div>
+                <section id={`comment_section_${comment.uuid}`} className='flex flex-wrap flex-col md:flex-row justify-center items-center w-11/12'>
+                    {/* 返信コメントの表示 */}
+                    {obj_comments_reply_Array.map(commentReply => {
+                        if (commentReply.replyGroupId === comment.uuid) {
+                            return (
+                                <div key={commentReply.uuid} id={`comment_${commentReply.uuid}`} className='flex flex-row flex-nowrap justify-between items-start w-full p-1 group'>
+                                    <a>
+                                        <img src={commentReply.avatar_url} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
+                                    </a>
+                                    <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
+                                        <div className='flex flex-wrap flex-row justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
+                                            <a className='mr-auto text-slate-50'>{commentReply.name}</a>
+                                            <div className='flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
+                                                <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'><FontAwesomeIcon icon={faLink} className='mr-[1px]'/>コピー</button>
+                                                <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>！報告</button>
+                                            </div>
+                                        </div>
+                                        <div className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-zinc-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-zinc-800' style={{width:'calc(100% - 0.5rem)'}}>
+                                        <span className='overflow-auto whitespace-break-spaces break-words text-left'>
+                                            <span className="text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2">@{obj_commentsId[commentReply.replyId].name}</span>
+                                            <span className='whitespace-break-spaces break-words'>{commentReply.comment}</span>
+                                        </span>
+                                        <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
+                                            <span className='text-zinc-500'>{formattedTimestamp}</span>
+                                            <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                                        </div>
+                                        </div>
+                                        <div id={`comment_reply_${commentReply.uuid}`} className='flex flex-row flex-wrap justify-around items-center ml-[-3.5rem] w-full' style={{width:'calc(100% + 3.5rem)'}}></div>
+                                    </div>
+                                </div>
+                            );
+                        }
+                    })}
+                </section>
+            </li>
+        );
+    });
+    // 生成したHTMLを返す
+    return commentsHtml;
+};

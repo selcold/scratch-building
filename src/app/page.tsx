@@ -1,17 +1,21 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloud } from '@fortawesome/free-solid-svg-icons';
+import { faCloud, faExclamation, faLink, faReply } from '@fortawesome/free-solid-svg-icons';
 import { Header } from '../../components/header';
 import Footer from '../../components/footer';
 import links_config from '../../public/assets/data/links_config';
 import { HeadCustom_config } from '../../components/headCustom';
 import { FadeUpTrigger } from '../../components/fadeUpTrigger';
-import { UserInfo_userId, UserInfo_username } from '../../components/userInfo';
-import { sendGetRequestToGAS } from '../../components/get';
+import { UserInfo_avatar_url, UserInfo_userId, UserInfo_username } from '../../components/userInfo';
 import '../../components/siteView/site_view'
 import { ViewLocked_check, updatePassword } from '../../components/siteView/site_view';
+import { SignInButton } from '@clerk/nextjs';
+import { API_commentForm_send, sendGetRequestToGAS } from '../../components/api/comments';
+import { UserInfo_publicMetadata_beta } from '../../components/clerk/UserInfo_publicMetadata';
+import { CommentAddHtml } from '../../components/comments/comp';
+import { validationCheck_comment } from '../../components/validation';
 
 export default function Home() {
   // 表示認証制度機能
@@ -22,56 +26,77 @@ export default function Home() {
     isSiteViewLoad = true
   }
   const [ViewLocked_password, setViewLocked_password] = useState('');
-
   // ページロード
   const [isLangLoaded, setPageLoaded] = useState(false);
   useEffect(() => {
     const fetchLanguage = async () => {
       try {
-        
         setPageLoaded(true);
       } catch (error) {
         console.error("取得エラー:", error);
       }
     };
-
     if (!isLangLoaded) {
       fetchLanguage();
     }
   }, [isLangLoaded]);
-
   // headカスタム
   const Head_config = {
     "title":`${links_config.site_title}`,
   };
   HeadCustom_config(Head_config);
-
   // 読み込みアニメーション
   FadeUpTrigger();
-  
   // ユーザー情報の取得
   const username = UserInfo_username();
   const userId = UserInfo_userId();
-
-  // コメント送信
-  const handlePostRequest = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER}?apikey=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_API_KEY}&sheet=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID}&mode=postComment&name=${username}&userId=${userId}`);
-      const result = await response.json();
-      console.log(result);
-    } catch (error) {
-      console.error('Error sending POST request to GAS:', error);
-    }
-  };
+  const avatar_url = UserInfo_avatar_url();
 
   // コメント取得
+  const [comments, setComments] = useState([]);
   useEffect(() => {
-    sendGetRequestToGAS();
+    const fetchData = async () => {
+      try {
+        const result = await sendGetRequestToGAS(); // コメントデータを取得
+        console.log(result)
+        setComments(result); // 取得したコメントデータをstateにセット
+      } catch (error) {
+        console.error('コメントの取得中にエラーが発生しました:', error);
+      }
+    };
+    fetchData();
   }, []);
 
   // フォームの設定
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
+
+  // コメント送信
+  const CommentForm_send_ButtonClick = async () => {
+    if(await API_commentForm_send(username,userId,comment)){
+      if (typeof window !== 'undefined') {
+        window.alert('コメントを投稿しました！');
+        window.location.href=(`./`);
+      }
+    }else{
+      if (typeof window !== 'undefined') {
+        alert('スペース以外の文字を最低一文字入力してください！');
+      }
+    }
+  };
+
+  // ユーザーメタデータ取得
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const result = await UserInfo_publicMetadata_beta();
+        //console.log(result);
+      } catch (error) {
+        console.error('エラー:', error);
+      }
+    }
+    fetchUserInfo();
+  }, []);
 
   return (
     <body>
@@ -83,8 +108,8 @@ export default function Home() {
               <div>
                 {/* トップイメージ */}
                 <div id='top_image' className="w-full relative z-1 min-h-[calc(100vh-20%)] flex" style={{background:`linear-gradient(rgb(19, 21, 31) -4.84%, rgb(29, 28, 47) 34.9%, rgb(32 38 54) 48.6%, rgb(40 48 62) 66.41%, rgb(61 85 98) 103.41%, rgb(81 124 140) 132.18%)`}}>
-                  <div className="absolute w-full h-full -z-1 bottom-0 left-0 pointer-events-none overflow-hidden">
-                    <img src={links_config.game_play_img} alt="Forest dark" className="w-full absolute bottom-0 pt-96" />
+                  <div className="absolute w-full h-full -z-1 bottom-0 left-0 pointer-events-none overflow-hidden bg-[#97b7d1]">
+                    <img src={links_config.game_play_img} alt="Forest dark" className="w-full absolute bottom-0" />
                   </div>
                   <div className="backdrop-blur-sm backdrop-brightness-50 min-h-full w-full flex items-center justify-start">
                     <div className="mx-auto w-full max-w-screen-lg px-6 lg:px-10 py-6 lg:py-10 pt-10 lg:pt-24 lg:py-36">
@@ -134,7 +159,7 @@ export default function Home() {
                 {/* メイン */}
                 <div className='mt-20 mb-20'>
                   <div className="items-center">
-                    <div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-black">
+                    <div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md">
                       <h2 className=' font-bold text-2xl'>気軽にMOD開発！</h2>
                       <p className='mb-[10px]'>
                         ビル経営ゲームのMODを作りたいと思ったことはありませんか？
@@ -142,12 +167,12 @@ export default function Home() {
                         そんなあなたへ！誰でも簡単にMODを作れるプロジェクトを見てみましょう！
                       </p>
                       <a href='#'>
-                        <button className='button_blue_1'>
+                        <button className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[18px] py-[10px] text-sm transition duration-300 ease-in-out'>
                         ページを見る
                         </button>
                       </a>
                     </div>
-                    <div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-black">
+                    <div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md">
                       <h2 className=' font-bold text-2xl'>お知らせ</h2>
                       <p className='mb-[10px]'>
                         ビル経営ゲームでクラウドセーブを行った人の数が3600人を超えました！
@@ -155,14 +180,42 @@ export default function Home() {
                         これからもビル経営ゲームをよろしくお願いします！
                       </p>
                     </div>
-                    <div className='fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-black'>
+                    <div className='fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md'>
                       <h2 className=' font-bold text-2xl'>コメント欄</h2>
-                      <div className='max-w-[600px] m-auto gap-10'>
-                        <input key='commentForm_name' type='text' placeholder='名前' value={username ? username : 'guest'} readOnly className='flex min-h-[20px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 mt-[10px] text-sm ring-offset-background focus-visible:outline-none' onChange={(e) => setName(e.target.value)}/>
-                        <textarea key='commentForm_comment' placeholder='コメント' className='flex min-h-[80px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 mt-[10px] text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50' onChange={(e) => setComment(e.target.value)}/>
-                        <button id='commentForm_send' className='button_blue_1 mt-[10px] m-auto' onClick={handlePostRequest}>コメントを送信</button>
+                      <div className='flex flex-col justify-center items-center max-w-[600px] m-auto mt-[10px] gap-2'>
+                        {username!=='false' ? (
+                          <>
+                            <input key='commentForm_name' type='text' placeholder='名前' value={username ? username : 'guest'} readOnly className='flex min-h-[20px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none' onChange={(e) => setName(e.target.value)}/>
+                            <textarea key='commentForm_comment' placeholder='コメント' className='flex min-h-[80px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50' onChange={(e) => setComment(e.target.value)}/>
+                            <button id='commentForm_send' className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[24px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={CommentForm_send_ButtonClick}>コメントを送信</button>
+                          </>
+                        ) : (
+                          <>
+                            <input key='commentForm_name' type='text' placeholder='名前' value={'guest'} readOnly className='flex min-h-[20px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none cursor-not-allowed select-none pointer-events-none opacity-50' onChange={(e) => setName(e.target.value)}/>
+                            <textarea key='commentForm_comment' placeholder='コメント' className='flex min-h-[80px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 cursor-not-allowed select-none pointer-events-none opacity-50' onChange={(e) => setComment(e.target.value)}/>
+                            <SignInButton>
+                              <button id='commentForm_send' className='bg-blue-500 shadow-lg rounded-lg m-auto px-[24px] py-[12px] text-sm select-none opacity-50'>ログインして利用</button>
+                            </SignInButton>
+                          </>
+                        )}
                       </div>
-                      <div>
+                      <ul id='comments' className='flex flex-col justify-center items-center w-full gap-1 mt-10 *:flex *:flex-row *:flex-wrap *:justify-end *:items-center *:w-full *:p-1'>
+                        {comments.length > 0 && CommentAddHtml(comments,username,userId,avatar_url)}
+                      </ul>
+                    </div>
+                    <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto hidden">
+                      <div className="animate-pulse flex space-x-4">
+                        <div className="rounded-full bg-slate-700 h-10 w-10"></div>
+                        <div className="flex-1 space-y-6 py-1">
+                          <div className="h-2 bg-slate-700 rounded"></div>
+                          <div className="space-y-3">
+                            <div className="grid grid-cols-3 gap-4">
+                              <div className="h-2 bg-slate-700 rounded col-span-2"></div>
+                              <div className="h-2 bg-slate-700 rounded col-span-1"></div>
+                            </div>
+                            <div className="h-2 bg-slate-700 rounded"></div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

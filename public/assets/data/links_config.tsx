@@ -3,7 +3,7 @@ const links_config = {
     "game_name":"ビル経営ゲーム",
     "game_play_platform":"Scratch",
     "game_play_url":"https://scratch.mit.edu/projects/927111186/",
-    "game_play_img":"https://cdn.discordapp.com/attachments/1187984825458638859/1188420679423492146/image.png?ex=659a7601&is=65880101&hm=999767d62e8f483b9593e4817941286df5a840fa5977f0939a7406b8761bee72&",
+    "game_play_img":"/assets/img/game/banner.png",
 
     "ScratchBuilding_logo_url":"/assets/img/ScratchBuilding.png",
 
