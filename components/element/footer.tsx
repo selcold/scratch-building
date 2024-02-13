@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faYoutube } from '@fortawesome/free-brands-svg-icons';
-import links_config from '../public/assets/data/links_config';
+import links_config from '../../public/assets/data/links_config';
 
 export default function Footer() {
 
@@ -58,7 +58,7 @@ export default function Footer() {
                         </a>
                     </div>
                     <div className="flex flex-col text-sm md:px-4 mb-4">
-                        <a href={links_config.fun117_link_github} target='_block' rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white transition-all" style={{color:"var(--text-1)"}}>
+                        <a href={links_config.github_link_source_code} target='_block' rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white transition-all" style={{color:"var(--text-1)"}}>
                         ソースコード
                         </a>
                     </div>

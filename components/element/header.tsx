@@ -1,7 +1,7 @@
 'use client'
 
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import links_config from '../public/assets/data/links_config';
+import links_config from '../../public/assets/data/links_config';
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

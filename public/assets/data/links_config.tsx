@@ -12,6 +12,8 @@ const links_config = {
     "site_url_home":"/",
     "site_url_mods":"/mods",
 
+    "github_link_source_code":"https://github.com/selcold/scratch-building",
+
     "masaabu_link_github":"https://github.com/Masaabu",
     "masaabu_link_youtube":"https://youtube.com/@masaabu_",
 

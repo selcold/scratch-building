@@ -4,14 +4,14 @@ import { Clerk_backendApi_users } from "./clerk";
 import { customLog } from "./customLog";
 import { sendWebhook } from "./webhook";
 
-export async function API_commentForm_send(username:string,userId:string,comment:string) {
+export async function API_commentForm_send(username:string,userId:string,user_tag:string,comment:string,) {
     const currentDate = new Date();
     const formattedDate = `[${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}:${String(currentDate.getSeconds()).padStart(2, '0')}]`;
     const data = formattedDate;
     if(await  Clerk_backendApi_users('boolean',userId)){
         //customLog(`User ID verification successful.`, '✓', '32', '0', 'log');
         if(validationCheck_comment(comment)){
-            API_gas_backendApi_new_commentSend(username,userId,comment);
+            API_gas_backendApi_new_commentSend(username,userId,user_tag,comment);
             return true
         }else{
             return false
@@ -46,15 +46,15 @@ export const sendGetRequestToGAS = async () => {
 };
 
 // コメント送信
-export const API_gas_backendApi_new_commentSend = async (username:string,userId:string,comment:string,replyGroupId:string = 'false',replyId: string = 'false',replyUser:string = '返信') => {
+export const API_gas_backendApi_new_commentSend = async (username:string,userId:string,user_tag:string,comment:string,replyGroupId:string = 'false',replyId: string = 'false',replyUser:string = '返信') => {
     try {
         //customLog(`Communicating with the comment database...`, '○', '0', '0', 'log');
         const compileStartTime = performance.now();
         // get user icon
         const avatar_url = await Clerk_backendApi_users('',userId);
-        var apiUrl = `${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER}?apikey=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_API_KEY}&sheet=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID}&mode=postComment&name=${username}&userId=${userId}&comment=${comment}&avatar_url=${avatar_url.image_url}`
+        var apiUrl = `${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER}?apikey=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_API_KEY}&sheet=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID}&mode=postComment&name=${username}&userId=${userId}&user_tag=${user_tag}&comment=${comment}&avatar_url=${avatar_url.image_url}`
         if(replyGroupId!=='false'){
-            apiUrl = `${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER}?apikey=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_API_KEY}&sheet=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID}&mode=postComment&name=${username}&userId=${userId}&comment=${comment}&replyGroupId=${replyGroupId}&replyId=${replyId}&avatar_url=${avatar_url.image_url}`
+            apiUrl = `${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER}?apikey=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_API_KEY}&sheet=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID}&mode=postComment&name=${username}&userId=${userId}&user_tag=${user_tag}&comment=${comment}&replyGroupId=${replyGroupId}&replyId=${replyId}&avatar_url=${avatar_url.image_url}`
         };
         const response = await fetch(apiUrl, {
             method: 'GET',

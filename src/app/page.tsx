@@ -3,12 +3,12 @@
 import React, { useState, useEffect, FormEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloud, faExclamation, faLink, faReply } from '@fortawesome/free-solid-svg-icons';
-import { Header } from '../../components/header';
-import Footer from '../../components/footer';
+import { Header } from '../../components/element/header';
+import Footer from '../../components/element/footer';
 import links_config from '../../public/assets/data/links_config';
 import { HeadCustom_config } from '../../components/headCustom';
 import { FadeUpTrigger } from '../../components/fadeUpTrigger';
-import { UserInfo_avatar_url, UserInfo_userId, UserInfo_username } from '../../components/userInfo';
+import { UserInfo_avatar_url, UserInfo_userId, UserInfo_username } from '../../components/clerk/userInfo';
 import '../../components/siteView/site_view'
 import { ViewLocked_check, updatePassword } from '../../components/siteView/site_view';
 import { SignInButton } from '@clerk/nextjs';
@@ -51,6 +51,24 @@ export default function Home() {
   const username = UserInfo_username();
   const userId = UserInfo_userId();
   const avatar_url = UserInfo_avatar_url();
+  // ユーザーメタデータ取得
+  const [user_tag, setTag] = useState('')
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const result = await UserInfo_publicMetadata_beta();
+        if (result) {
+          const { tag } = JSON.parse(result);
+          setTag(tag); // Stateにtagをセット
+        } else {
+          console.error('ユーザーメタデータが取得できませんでした');
+        }
+      } catch (error) {
+        console.error('エラー:', error);
+      }
+    }
+    fetchUserInfo();
+  }, []);
 
   // コメント取得
   const [comments, setComments] = useState([]);
@@ -58,7 +76,6 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const result = await sendGetRequestToGAS(); // コメントデータを取得
-        console.log(result)
         setComments(result); // 取得したコメントデータをstateにセット
       } catch (error) {
         console.error('コメントの取得中にエラーが発生しました:', error);
@@ -73,30 +90,24 @@ export default function Home() {
 
   // コメント送信
   const CommentForm_send_ButtonClick = async () => {
-    if(await API_commentForm_send(username,userId,comment)){
-      if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined') {
+      const comment_reply_form_button = document.getElementById(`commentForm_send`);
+      if(comment_reply_form_button){
+        comment_reply_form_button.classList.add('pointer-events-none');
+        comment_reply_form_button.innerText=(`送信中...`)
+      }
+      if(await API_commentForm_send(username,userId,user_tag,comment)){
         window.alert('コメントを投稿しました！');
         window.location.href=(`./`);
-      }
-    }else{
-      if (typeof window !== 'undefined') {
+      }else{
         alert('スペース以外の文字を最低一文字入力してください！');
+        if(comment_reply_form_button){
+          comment_reply_form_button.classList.remove('pointer-events-none');
+          comment_reply_form_button.innerText=(`コメントを投稿`)
+        }
       }
     }
   };
-
-  // ユーザーメタデータ取得
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const result = await UserInfo_publicMetadata_beta();
-        //console.log(result);
-      } catch (error) {
-        console.error('エラー:', error);
-      }
-    }
-    fetchUserInfo();
-  }, []);
 
   return (
     <body>
@@ -187,7 +198,7 @@ export default function Home() {
                           <>
                             <input key='commentForm_name' type='text' placeholder='名前' value={username ? username : 'guest'} readOnly className='flex min-h-[20px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none' onChange={(e) => setName(e.target.value)}/>
                             <textarea key='commentForm_comment' placeholder='コメント' className='flex min-h-[80px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50' onChange={(e) => setComment(e.target.value)}/>
-                            <button id='commentForm_send' className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[24px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={CommentForm_send_ButtonClick}>コメントを送信</button>
+                            <button id='commentForm_send' className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[24px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={CommentForm_send_ButtonClick}>コメントを投稿</button>
                           </>
                         ) : (
                           <>
@@ -200,7 +211,7 @@ export default function Home() {
                         )}
                       </div>
                       <ul id='comments' className='flex flex-col justify-center items-center w-full gap-1 mt-10 *:flex *:flex-row *:flex-wrap *:justify-end *:items-center *:w-full *:p-1'>
-                        {comments.length > 0 && CommentAddHtml(comments,username,userId,avatar_url)}
+                        {comments.length > 0 && CommentAddHtml(comments,username,userId,user_tag,avatar_url)}
                       </ul>
                     </div>
                     <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto hidden">

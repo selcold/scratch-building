@@ -3,7 +3,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatDateTime } from "../formatDateTime";
 import { faLink, faReply } from "@fortawesome/free-solid-svg-icons";
-import { UserInfo_avatar_url } from "../userInfo";
+import { UserInfo_avatar_url } from "../clerk/userInfo";
 import { createRoot } from "react-dom/client";
 import { API_gas_backendApi_new_commentSend } from "../api/comments";
 import { customLog } from "../api/customLog";
@@ -20,7 +20,7 @@ interface Comment {
     replyId: string;
     replyGroupId: string;
 };
-export function CommentAddHtml(commentData: Comment[], username: string, userId: string, avatar_url: string): JSX.Element[] {
+export function CommentAddHtml(commentData: Comment[], username: string, userId: string, user_tag: string, avatar_url: string): JSX.Element[] {
 
     var obj_commentsId: Record<string, any> = {};
     var obj_comments: Record<string, any> = {};
@@ -48,7 +48,7 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
         const formattedTimestamp = formatDateTime(comment.timestamp);
 
         // コメントフォーム
-        function set_comment_reply_form(mode: string, uuid: string) {
+        function set_comment_reply_form(mode: string, uuid: string, user_tag: string) {
             const HtmlCommentReplyForm = document.getElementById(`comment_reply_${uuid}`);
             if (HtmlCommentReplyForm) {
                 if (HtmlCommentReplyForm.children.length > 0) {
@@ -70,8 +70,8 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
-                                            <button className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,uuid,'',comment.name)}>投稿する</button>
-                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',uuid)}>キャンセル</button>
+                                            <button id={`comment_reply_form_button_${uuid}`} className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,user_tag,uuid,'',comment.name)}>投稿する</button>
+                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',uuid,user_tag)}>キャンセル</button>
                                         </div>
                                     </div>
                                 </div>
@@ -92,8 +92,8 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
-                                            <button className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,uuid,'',comment.name)}>投稿する</button>
-                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',uuid)}>キャンセル</button>
+                                            <button id={`comment_reply_form_button_${uuid}`} className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,user_tag,uuid,'',comment.name)}>投稿する</button>
+                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',uuid,user_tag)}>キャンセル</button>
                                         </div>
                                     </div>
                                 </div>
@@ -104,19 +104,21 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
             }
         };
 
-        async function CommentReplyForm_send_ButtonClick(username: string,userId: string,replyGroupId: string,replyId: string = 'false',replyUser: string) {
+        async function CommentReplyForm_send_ButtonClick(username: string,userId: string,user_tag: string,replyGroupId: string,replyId: string = 'false',replyUser: string) {
+            const comment_reply_form_button = document.getElementById(`comment_reply_form_button_${replyGroupId}`);
+            if(comment_reply_form_button){
+                comment_reply_form_button.classList.add('pointer-events-none');
+                comment_reply_form_button.innerText=(`送信中...`)
+            }
             if(!obj_commentsId[replyGroupId].replyGroupId){
                 replyId=replyGroupId;
-            }else{
-                var fuc_replyGroupId=obj_commentsId[replyGroupId].replyGroupId;
-                var fuc_replyId=obj_commentsId[replyGroupId].uuid;
-            }
+            };
             const text_CommentReplyForm = document.getElementById(`comment_reply_form_textarea_${replyGroupId}`) as HTMLInputElement;
             if (text_CommentReplyForm) {
                 const comment = text_CommentReplyForm.value;
                 if(!obj_commentsId[replyGroupId].replyGroupId){
                     if(validationCheck_comment(comment)){
-                        if(await API_gas_backendApi_new_commentSend(username,userId,comment,replyGroupId,replyId,replyUser)){
+                        if(await API_gas_backendApi_new_commentSend(username,userId,user_tag,comment,replyGroupId,replyId,replyUser)){
                             if (typeof window !== 'undefined') {
                                 window.alert('コメントを投稿しました！');
                                 window.location.href=(`./`);
@@ -125,11 +127,15 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                     }else{
                         if (typeof window !== 'undefined') {
                             alert('スペース以外の文字を最低一文字入力してください！');
+                            if(comment_reply_form_button){
+                                comment_reply_form_button.classList.remove('pointer-events-none');
+                                comment_reply_form_button.innerText=(`投稿する`)
+                            }
                         }
                     };
                 }else{
                     if(validationCheck_comment(comment)){
-                        if(await API_gas_backendApi_new_commentSend(username,userId,comment,replyGroupId,replyId,replyUser)){
+                        if(await API_gas_backendApi_new_commentSend(username,userId,user_tag,comment,replyGroupId,replyId,replyUser)){
                             if (typeof window !== 'undefined') {
                                 window.alert('コメントを投稿しました！');
                                 window.location.href=(`./`);
@@ -138,13 +144,21 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                     }else{
                         if (typeof window !== 'undefined') {
                             alert('スペース以外の文字を最低一文字入力してください！');
+                            if(comment_reply_form_button){
+                                comment_reply_form_button.classList.remove('pointer-events-none');
+                                comment_reply_form_button.innerText=(`投稿する`)
+                            }
                         }
                     };
-                }
+                };
                 return text_CommentReplyForm.value;
             } else {
+                if (typeof window !== 'undefined') {
+                    window.alert('コメント投稿中に問題が発生しました！');
+                    window.location.href=(`./`);
+                }
                 return false;
-            }
+            };
         };        
         
         // コメントのHTMLを生成し、commentsHtmlに追加
@@ -156,7 +170,37 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                     </a>
                     <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
                         <div className='flex flex-wrap flex-row justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
-                            <a className='mr-auto text-slate-50'>{comment.name}</a>
+                            <div className=' flex flex-row justify-center mr-auto text-slate-50 gap-1'>
+                                <a>{comment.name}</a>
+                                <span className="tooltip m-auto">
+                                    {comment.tag==='developer' ? (
+                                        <>
+                                            <svg className="m-auto h-5 w-5 text-blue-500 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
+                                            </svg>
+                                            <span className="tooltiptext">開発者</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            {comment.tag==='authentic' ? (
+                                                <>
+                                                    <svg className="m-auto h-5 w-5 text-orange-500 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
+                                                    </svg>
+                                                    <span className="tooltiptext">認証者</span>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <svg className="m-auto h-5 w-5 text-gray-400 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
+                                                    </svg>
+                                                    <span className="tooltiptext">登録者</span>
+                                                </>
+                                            )}
+                                        </>
+                                    )}
+                                </span>
+                            </div>
                             <div className='flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
                                 {username!=='false' ? (
                                     <>
@@ -183,7 +227,7 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                             <span className='text-zinc-500'>{formattedTimestamp}</span>
                             {username!=='false' ? (
                                 <>
-                                    <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                                    <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,user_tag)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
                                 </>
                             ) : (
                                 <>
@@ -208,7 +252,37 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                                     </a>
                                     <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
                                         <div className='flex flex-wrap flex-row justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
-                                            <a className='mr-auto text-slate-50'>{commentReply.name}</a>
+                                            <div className='flex flex-row justify-center mr-auto text-slate-50 gap-1'>
+                                                <a>{commentReply.name}</a>
+                                                <span className="tooltip m-auto">
+                                                    {commentReply.tag==='developer' ? (
+                                                        <>
+                                                            <svg className="m-auto h-5 w-5 text-blue-500 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
+                                                            </svg>
+                                                            <span className="tooltiptext">開発者</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {commentReply.tag==='authentic' ? (
+                                                                <>
+                                                                    <svg className="m-auto h-5 w-5 text-orange-500 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                        <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
+                                                                    </svg>
+                                                                    <span className="tooltiptext">認証者</span>
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <svg className="m-auto h-5 w-5 text-gray-400 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                                        <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
+                                                                    </svg>
+                                                                    <span className="tooltiptext">登録者</span>
+                                                                </>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                </span>
+                                            </div>
                                             <div className='flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
                                                 {username!=='false' ? (
                                                     <>
@@ -236,7 +310,7 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                                             <span className='text-zinc-500'>{formattedTimestamp}</span>
                                             {username!=='false' ? (
                                                 <>
-                                                    <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                                                    <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid,user_tag)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
                                                 </>
                                             ) : (
                                                 <>

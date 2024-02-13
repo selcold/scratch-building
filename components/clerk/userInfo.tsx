@@ -1,5 +1,5 @@
 import { useUser, useAuth } from '@clerk/nextjs';
-import { Clerk_backendApi_users } from './api/clerk';
+import { Clerk_backendApi_users } from '../api/clerk';
 
 export const UserInfo_username = () => {
     const { isSignedIn, user, isLoaded } = useUser();
