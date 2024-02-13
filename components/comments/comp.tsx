@@ -8,6 +8,7 @@ import { createRoot } from "react-dom/client";
 import { API_gas_backendApi_new_commentSend } from "../api/comments";
 import { customLog } from "../api/customLog";
 import { validationCheck_comment } from "../validation";
+import { SignInButton } from "@clerk/nextjs";
 
 interface Comment {
     avatar_url: string;
@@ -58,7 +59,7 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                         const root = createRoot(HtmlCommentReplyForm);
                         root.render(
                             <div id={`comment_reply_form_${uuid}`} className="relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem]">
-                                <a className=''>
+                                <a className='select-none pointer-events-none'>
                                     <img src={avatar_url} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
                                 </a>
                                 <div className='flex flex-wrap flex-col justify-center items-center ml-1 w-full'>
@@ -80,7 +81,7 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                         const root = createRoot(HtmlCommentReplyForm);
                         root.render(
                             <div id={`comment_reply_form_${uuid}`} className="relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem]">
-                                <a className=''>
+                                <a className='select-none pointer-events-none'>
                                     <img src={avatar_url} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
                                 </a>
                                 <div className='flex flex-wrap flex-col justify-center items-center ml-1 w-full'>
@@ -150,15 +151,28 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
         commentsHtml.push(
             <li key={comment.uuid} className='relative flex flex-col md:flex-row flex-wrap items-center justify-end w-full'>
                 <div id={`comment_${comment.uuid}`} className='flex flex-row flex-nowrap justify-between items-start w-full p-1 group'>
-                    <a className=''>
+                    <a className='select-none pointer-events-none'>
                         <img src={comment.avatar_url} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
                     </a>
                     <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
                         <div className='flex flex-wrap flex-row justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
                             <a className='mr-auto text-slate-50'>{comment.name}</a>
                             <div className='flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
-                                <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'><FontAwesomeIcon icon={faLink} className='mr-[1px]'/>コピー</button>
-                                <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>！報告</button>
+                                {username!=='false' ? (
+                                    <>
+                                        <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'><FontAwesomeIcon icon={faLink} className='mr-[1px]'/>コピー</button>
+                                        <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>！報告</button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <SignInButton>
+                                            <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'><FontAwesomeIcon icon={faLink} className='mr-[1px]'/>コピー</button>
+                                        </SignInButton>
+                                        <SignInButton>
+                                            <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>！報告</button>
+                                        </SignInButton>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-zinc-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-zinc-800' style={{width:'calc(100% - 0.5rem)'}}>
@@ -167,7 +181,17 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                         </span>
                         <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
                             <span className='text-zinc-500'>{formattedTimestamp}</span>
-                            <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                            {username!=='false' ? (
+                                <>
+                                    <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                                </>
+                            ) : (
+                                <>
+                                    <SignInButton>
+                                        <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                                    </SignInButton>
+                                </>
+                            )}
                         </div>
                         </div>
                         <div id={`comment_reply_${comment.uuid}`} className='flex flex-row flex-wrap justify-around items-center w-full'></div>
@@ -179,15 +203,28 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                         if (commentReply.replyGroupId === comment.uuid) {
                             return (
                                 <div key={commentReply.uuid} id={`comment_${commentReply.uuid}`} className='flex flex-row flex-nowrap justify-between items-start w-full p-1 group'>
-                                    <a>
+                                    <a className="select-none pointer-events-none">
                                         <img src={commentReply.avatar_url} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
                                     </a>
                                     <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
                                         <div className='flex flex-wrap flex-row justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
                                             <a className='mr-auto text-slate-50'>{commentReply.name}</a>
                                             <div className='flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out'>
-                                                <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'><FontAwesomeIcon icon={faLink} className='mr-[1px]'/>コピー</button>
-                                                <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>！報告</button>
+                                                {username!=='false' ? (
+                                                    <>
+                                                        <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'><FontAwesomeIcon icon={faLink} className='mr-[1px]'/>コピー</button>
+                                                        <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>！報告</button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <SignInButton>
+                                                            <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'><FontAwesomeIcon icon={faLink} className='mr-[1px]'/>コピー</button>
+                                                        </SignInButton>
+                                                        <SignInButton>
+                                                            <button className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>！報告</button>
+                                                        </SignInButton>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                         <div className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-zinc-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-zinc-800' style={{width:'calc(100% - 0.5rem)'}}>
@@ -197,7 +234,17 @@ export function CommentAddHtml(commentData: Comment[], username: string, userId:
                                         </span>
                                         <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
                                             <span className='text-zinc-500'>{formattedTimestamp}</span>
-                                            <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                                            {username!=='false' ? (
+                                                <>
+                                                    <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid)}>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <SignInButton>
+                                                        <button className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/></button>
+                                                    </SignInButton>
+                                                </>
+                                            )}
                                         </div>
                                         </div>
                                         <div id={`comment_reply_${commentReply.uuid}`} className='flex flex-row flex-wrap justify-around items-center ml-[-3.5rem] w-full' style={{width:'calc(100% + 3.5rem)'}}></div>
