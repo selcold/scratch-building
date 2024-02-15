@@ -22,24 +22,22 @@ export function Header() {
     return (
         <>
             <div className="hidden md:block">
-                <div className="fadeDown fixed inset-x-0 top-4 z-50 w-[95%] m-auto bg-[your-background-color] backdrop-blur-md">
-                    <div className="flex justify-between text-white max-w-7xl gap-4 mx-auto border border-[#FFFFFF]/[0.16] px-4 py-2 rounded-lg w-full inset-x-0 backdrop-blur-md z-50">
-                        <a className="flex items-center space-x-2 flex-shrink-0 relative z-50" href={links_config.site_url_home}>
-                            <img alt="Logo" loading="lazy" width="10" height="10" decoding="async" data-nimg="1" className="transition duration-300 transform blur-0 scale-100 h-5 w-5" style={{color:`transparent`}} src={links_config.ScratchBuilding_logo_url} />
-                            <span className="text-lg text-[#CCCCCC] font-medium">{links_config.site_title}</span>
-                        </a>
-                        <div className="flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 py-2 space-x-6 text-sm items-center justify-center px-6 font-medium overflow-hidden">
-                            <a rel="noopener noreferrer" href={links_config.site_url_home} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">ホーム</a>
-                            <a rel="noopener noreferrer" href={links_config.site_url_mods} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">MOD</a>
-                        </div>
-                        <div className="flex space-x-4 items-center">
-                            <SignedIn>
-                                <UserButton afterSignOutUrl="/" />
-                            </SignedIn>
-                            <SignedOut>
-                                <SignInButton>ログイン</SignInButton>
-                            </SignedOut>
-                        </div>
+                <div className="fadeDown fixed inset-x-0 top-4 z-50 w-[95%] m-auto backdrop-blur-md flex justify-between text-white max-w-7xl gap-4 border border-[#FFFFFF]/[0.16] px-4 py-2 rounded-lg">
+                    <a className="flex items-center space-x-2 flex-shrink-0 relative z-50" href={links_config.site_url_home}>
+                        <img alt="Logo" loading="lazy" width="10" height="10" decoding="async" data-nimg="1" className="transition duration-300 transform blur-0 scale-100 h-5 w-5" style={{color:`transparent`}} src={links_config.ScratchBuilding_logo_url} />
+                        <span className="text-lg text-[#CCCCCC] font-medium">{links_config.site_title}</span>
+                    </a>
+                    <div className="flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 py-2 space-x-6 text-sm items-center justify-center px-6 font-medium overflow-hidden">
+                        <a rel="noopener noreferrer" href={links_config.site_url_home} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">ホーム</a>
+                        <a rel="noopener noreferrer" href={links_config.site_url_mods} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">MOD</a>
+                    </div>
+                    <div className="flex space-x-4 items-center">
+                        <SignedIn>
+                            <UserButton afterSignOutUrl="/" />
+                        </SignedIn>
+                        <SignedOut>
+                            <SignInButton>ログイン</SignInButton>
+                        </SignedOut>
                     </div>
                 </div>
             </div>
@@ -61,6 +59,14 @@ export function Header() {
                                         </Button>
                                     </SheetTrigger>
                                     <SheetContent>
+                                        <div className="mb-4">
+                                            <SignedIn>
+                                                <UserButton afterSignOutUrl="/" />
+                                            </SignedIn>
+                                            <SignedOut>
+                                                <SignInButton>ログイン</SignInButton>
+                                            </SignedOut>
+                                        </div>
                                         <SheetHeader>
                                             <SheetTitle>{links_config.site_title}</SheetTitle>
                                             <SheetDescription>
@@ -79,12 +85,6 @@ export function Header() {
                                                 </a>
                                             </li>
                                         </div>
-                                        <SignedIn>
-                                            <UserButton afterSignOutUrl="/" />
-                                        </SignedIn>
-                                        <SignedOut>
-                                            <SignInButton>ログイン</SignInButton>
-                                        </SignedOut>
                                         <SheetFooter>
                                             <SheetClose asChild>
                                                 <Button type="submit" className='button_border_1'>閉じる</Button>

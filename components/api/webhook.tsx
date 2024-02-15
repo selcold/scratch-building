@@ -3,7 +3,7 @@
 import { customLog } from "./customLog";
 
 // WebHook送信関数
-export const sendWebhook = async (_webhookUrl:string, webhookSendData:string, mode:string = 'default', username:string = 'webhook', avatar_url:string = 'https://img.clerk.com/eyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yYkowSGl6RmdlVUxodGE2MnFoNFFBNVdFMHUiLCJyaWQiOiJ1c2VyXzJiSjE0aW9hNmU1R09LS245VlhEZmxRdFNwaiJ9?width=80') => {
+export const sendWebhook = async (_webhookUrl:string, webhookSendData:string, mode:string = 'default', username:string = 'webhook', avatar_url:string) => {
     const currentDate = new Date();
     const formattedDate = `[${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}:${String(currentDate.getSeconds()).padStart(2, '0')}]`;
     try {

@@ -96,7 +96,7 @@ export default function Home() {
         comment_reply_form_button.classList.add('pointer-events-none');
         comment_reply_form_button.innerText=(`送信中...`)
       }
-      if(await API_commentForm_send(username,userId,user_tag,comment)){
+      if(await API_commentForm_send(username,userId,avatar_url,user_tag,comment)){
         window.alert('コメントを投稿しました！');
         window.location.href=(`./`);
       }else{
@@ -193,12 +193,20 @@ export default function Home() {
                     </div>
                     <div className='fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md'>
                       <h2 className=' font-bold text-2xl'>コメント欄</h2>
-                      <div className='flex flex-col justify-center items-center max-w-[600px] m-auto mt-[10px] gap-2'>
+                      <div className='flex flex-col justify-center items-center max-w-[600px] m-auto mt-[10px] pt-2 pb-5 gap-2 border-b-[2px] border-zinc-700'>
                         {username!=='false' ? (
                           <>
                             <input key='commentForm_name' type='text' placeholder='名前' value={username ? username : 'guest'} readOnly className='flex min-h-[20px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none' onChange={(e) => setName(e.target.value)}/>
                             <textarea key='commentForm_comment' placeholder='コメント' className='flex min-h-[80px] w-full rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50' onChange={(e) => setComment(e.target.value)}/>
-                            <button id='commentForm_send' className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[24px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={CommentForm_send_ButtonClick}>コメントを投稿</button>
+                            {username && userId && avatar_url && user_tag ? (
+                              <>
+                                <button id='commentForm_send' className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[24px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={CommentForm_send_ButtonClick}>コメントを投稿</button>
+                              </>
+                            ) : (
+                              <>
+                                <button id='commentForm_send' className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[24px] py-[12px] text-sm transition duration-300 ease-in-out opacity-50'>読み込み中</button>
+                              </>
+                            )}
                           </>
                         ) : (
                           <>
@@ -211,7 +219,20 @@ export default function Home() {
                         )}
                       </div>
                       <ul id='comments' className='flex flex-col justify-center items-center w-full gap-1 mt-10 *:flex *:flex-row *:flex-wrap *:justify-end *:items-center *:w-full *:p-1'>
-                        {comments.length > 0 && CommentAddHtml(comments,username,userId,user_tag,avatar_url)}
+                        {comments.length > 0 && CommentAddHtml(comments,username,userId,user_tag,avatar_url) ? (
+                          <>
+                            {comments.length > 0 && CommentAddHtml(comments,username,userId,user_tag,avatar_url)}
+                          </>
+                        ) : (
+                          <>
+                            <div className='w-full m-auto'>
+                              <div className='flex flex-col justify-center items-center gap-2 w-full m-auto'>
+                                <div className="animate-spin h-10 w-10 border-4 border-gray-500 rounded-full border-t-transparent"></div>
+                                <span>コメント読み込み中...</span>
+                              </div>
+                            </div>
+                          </>
+                        )}
                       </ul>
                     </div>
                     <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto hidden">
