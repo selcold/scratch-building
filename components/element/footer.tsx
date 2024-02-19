@@ -55,6 +55,9 @@ export default function Footer() {
                         <a href={links_config.site_url_mods} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         MOD
                         </a>
+                        <a href={links_config.site_url_wiki} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
+                        Wiki
+                        </a>
                         <a href={links_config.site_url_qa} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         Q&A
                         </a>

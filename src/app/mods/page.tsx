@@ -135,7 +135,7 @@ export default function Home() {
                                     <div className='max-w-[800px] mx-auto'>
                                     {modsListHtml}
                                     </div>
-                                    </section>
+                                </section>
                             </div>
                         </div>
                     </div>

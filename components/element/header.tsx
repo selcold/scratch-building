@@ -30,6 +30,7 @@ export function Header() {
                     <div className="flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 py-2 space-x-6 text-sm items-center justify-center px-6 font-medium overflow-hidden">
                         <a rel="noopener noreferrer" href={links_config.site_url_home} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">ホーム</a>
                         <a rel="noopener noreferrer" href={links_config.site_url_mods} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">MOD</a>
+                        <a rel="noopener noreferrer" href={links_config.site_url_wiki} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">Wiki</a>
                         <a rel="noopener noreferrer" href={links_config.site_url_qa} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">Q&A</a>
                     </div>
                     <div className="flex space-x-4 items-center">
@@ -83,6 +84,11 @@ export function Header() {
                                             <li>
                                                 <a href={links_config.site_url_mods} rel="noopener noreferrer" className="relative">
                                                 MOD
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href={links_config.site_url_wiki} rel="noopener noreferrer" className="relative">
+                                                Wiki
                                                 </a>
                                             </li>
                                             <li>
