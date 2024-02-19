@@ -5,17 +5,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloud, faExclamation, faLink, faReply } from '@fortawesome/free-solid-svg-icons';
 import { Header } from '../../components/element/header';
 import Footer from '../../components/element/footer';
-import links_config from '../../public/assets/data/links_config';
-import { HeadCustom_config } from '../../components/headCustom';
-import { FadeUpTrigger } from '../../components/fadeUpTrigger';
+import links_config from '../../public/db/data/links_config';
+import { HeadCustom_config } from '../../components/site/headCustom';
+import { FadeUpTrigger } from '../../components/site/fadeUpTrigger';
 import { UserInfo_avatar_url, UserInfo_userId, UserInfo_username } from '../../components/clerk/userInfo';
 import '../../components/siteView/site_view'
 import { ViewLocked_check, updatePassword } from '../../components/siteView/site_view';
 import { SignInButton } from '@clerk/nextjs';
 import { API_commentForm_send, sendGetRequestToGAS } from '../../components/api/comments';
 import { UserInfo_publicMetadata_beta } from '../../components/clerk/UserInfo_publicMetadata';
-import { CommentAddHtml } from '../../components/comments/comp';
-import { validationCheck_comment } from '../../components/validation';
+import { CommentAddHtml } from '../../components/page/comp';
 
 export default function Home() {
   // 表示認証制度機能
@@ -58,7 +57,10 @@ export default function Home() {
       try {
         const result = await UserInfo_publicMetadata_beta();
         if (result) {
-          const { tag } = JSON.parse(result);
+          let { tag } = JSON.parse(result);
+          if(!tag){
+            tag = `member`
+          }
           setTag(tag); // Stateにtagをセット
         } else {
           console.error('ユーザーメタデータが取得できませんでした');
@@ -72,11 +74,13 @@ export default function Home() {
 
   // コメント取得
   const [comments, setComments] = useState([]);
+  const [commentsRes, setCommentsRes] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await sendGetRequestToGAS(); // コメントデータを取得
+        const result = await sendGetRequestToGAS('comment'); // コメントデータを取得
         setComments(result); // 取得したコメントデータをstateにセット
+        setCommentsRes(true);
       } catch (error) {
         console.error('コメントの取得中にエラーが発生しました:', error);
       }
@@ -96,9 +100,9 @@ export default function Home() {
         comment_reply_form_button.classList.add('pointer-events-none');
         comment_reply_form_button.innerText=(`送信中...`)
       }
-      if(await API_commentForm_send(username,userId,avatar_url,user_tag,comment)){
+      if(await API_commentForm_send('comment',username,userId,avatar_url,user_tag,comment)){
         window.alert('コメントを投稿しました！');
-        window.location.href=(`./`);
+        window.location.href=(`${window.location}`);
       }else{
         alert('スペース以外の文字を最低一文字入力してください！');
         if(comment_reply_form_button){
@@ -123,7 +127,7 @@ export default function Home() {
                     <img src={links_config.game_play_img} alt="Forest dark" className="w-full absolute bottom-0" />
                   </div>
                   <div className="backdrop-blur-sm backdrop-brightness-50 min-h-full w-full flex items-center justify-start">
-                    <div className="mx-auto w-full max-w-screen-lg px-6 lg:px-10 py-6 lg:py-10 pt-10 lg:pt-24 lg:py-36">
+                    <div className="mx-auto w-full max-w-screen-lg px-6 lg:px-10 py-6 lg:py-10 pt-10 lg:pt-24">
                       <div className='absolute bottom-2 left-2'>
                         <h1 className='mb-1'>{links_config.game_name}v{links_config.game_version}</h1>
                         <a href={links_config.game_play_url} target='_block'>
@@ -177,7 +181,7 @@ export default function Home() {
                         <br/>
                         そんなあなたへ！誰でも簡単にMODを作れるプロジェクトを見てみましょう！
                       </p>
-                      <a href='#'>
+                      <a href={links_config.site_url_mods}>
                         <button className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[18px] py-[10px] text-sm transition duration-300 ease-in-out'>
                         ページを見る
                         </button>
@@ -219,16 +223,26 @@ export default function Home() {
                         )}
                       </div>
                       <ul id='comments' className='flex flex-col justify-center items-center w-full gap-1 mt-10 *:flex *:flex-row *:flex-wrap *:justify-end *:items-center *:w-full *:p-1'>
-                        {comments.length > 0 && CommentAddHtml(comments,username,userId,user_tag,avatar_url) ? (
+                        {commentsRes && CommentAddHtml('comment',comments,username,userId,user_tag,avatar_url) ? (
                           <>
-                            {comments.length > 0 && CommentAddHtml(comments,username,userId,user_tag,avatar_url)}
+                            {comments.length > 0 ? (
+                              <>
+                                {CommentAddHtml('comment',comments,username,userId,user_tag,avatar_url)}
+                              </>
+                            ) : (
+                              <>
+                                <li className='animated-slideIn-up p-2'>
+                                  <h1 className='text-zinc-400 text-[1.2rem] m-auto'>コメントがまだ投稿されていません</h1>
+                                </li>
+                              </>
+                            )}
                           </>
                         ) : (
                           <>
                             <div className='w-full m-auto'>
                               <div className='flex flex-col justify-center items-center gap-2 w-full m-auto'>
                                 <div className="animate-spin h-10 w-10 border-4 border-gray-500 rounded-full border-t-transparent"></div>
-                                <span>コメント読み込み中...</span>
+                                <span className='text-zinc-400'>コメント取得中...</span>
                               </div>
                             </div>
                           </>

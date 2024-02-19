@@ -4,14 +4,14 @@ import { Clerk_backendApi_users } from "./clerk";
 import { customLog } from "./customLog";
 import { sendWebhook } from "./webhook";
 
-export async function API_commentForm_send(username:string,userId:string,avatar_url:string,user_tag:string,comment:string,) {
+export async function API_commentForm_send(sheetMode:string,username:string,userId:string,avatar_url:string,user_tag:string,comment:string,) {
     const currentDate = new Date();
     const formattedDate = `[${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')} ${String(currentDate.getHours()).padStart(2, '0')}:${String(currentDate.getMinutes()).padStart(2, '0')}:${String(currentDate.getSeconds()).padStart(2, '0')}]`;
     const data = formattedDate;
     if(await  Clerk_backendApi_users('boolean',userId)){
         //customLog(`User ID verification successful.`, '✓', '32', '0', 'log');
         if(validationCheck_comment(comment)){
-            API_gas_backendApi_new_commentSend(username,userId,avatar_url,user_tag,comment);
+            API_gas_backendApi_new_commentSend(sheetMode,username,userId,avatar_url,user_tag,comment);
             return true
         }else{
             return false
@@ -23,10 +23,18 @@ export async function API_commentForm_send(username:string,userId:string,avatar_
 };
 
 // コメント取得関数
-export const sendGetRequestToGAS = async () => {
+export const sendGetRequestToGAS = async (sheetMode:string) => {
     try {
+        let sheetId = "false";
+        if(sheetMode === 'comment'){
+            sheetId = process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID ? process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID : ''
+        };
+        if(sheetMode === 'changelog'){
+            sheetId = process.env.NEXT_PUBLIC_CHANGELOG_DB_SERVER_SHEET_ID ? process.env.NEXT_PUBLIC_CHANGELOG_DB_SERVER_SHEET_ID : ''
+        };
+
         // GASのAPIエンドポイントを設定
-        const apiUrl = `${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER}?apikey=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_API_KEY}&sheet=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID}&mode=getComments`;
+        const apiUrl = `${process.env.COMMENT_DB_SERVER}?apikey=${process.env.COMMENT_DB_SERVER_API_KEY}&sheet=${sheetId}&mode=getComments`;
         //console.log(apiUrl)
         // Fetch APIを使用してGETリクエストを送信
         const response = await fetch(apiUrl, {
@@ -46,13 +54,20 @@ export const sendGetRequestToGAS = async () => {
 };
 
 // コメント送信
-export const API_gas_backendApi_new_commentSend = async (username:string,userId:string,avatar_url:string,user_tag:string,comment:string,replyGroupId:string = 'false',replyId: string = 'false',replyUser:string = '返信') => {
+export const API_gas_backendApi_new_commentSend = async (sheetMode:string,username:string,userId:string,avatar_url:string,user_tag:string,comment:string,replyGroupId:string = 'false',replyId: string = 'false',replyUser:string = '返信') => {
     try {
         //customLog(`Communicating with the comment database...`, '○', '0', '0', 'log');
+        let sheetId = "false";
+        if(sheetMode === 'comment'){
+            sheetId = process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID ? process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID : ''
+        };
+        if(sheetMode === 'changelog'){
+            sheetId = process.env.NEXT_PUBLIC_CHANGELOG_DB_SERVER_SHEET_ID ? process.env.NEXT_PUBLIC_CHANGELOG_DB_SERVER_SHEET_ID : ''
+        };
         const compileStartTime = performance.now();
-        var apiUrl = `${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER}?apikey=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_API_KEY}&sheet=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID}&mode=postComment&name=${username}&userId=${userId}&user_tag=${user_tag}&comment=${comment}&avatar_url=${avatar_url}`
+        var apiUrl = `${process.env.COMMENT_DB_SERVER}?apikey=${process.env.COMMENT_DB_SERVER_API_KEY}&sheet=${sheetId}&mode=postComment&name=${username}&userId=${userId}&user_tag=${user_tag}&comment=${comment}&avatar_url=${avatar_url}`
         if(replyGroupId!=='false'){
-            apiUrl = `${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER}?apikey=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_API_KEY}&sheet=${process.env.NEXT_PUBLIC_COMMENT_DB_SERVER_SHEET_ID}&mode=postComment&name=${username}&userId=${userId}&user_tag=${user_tag}&comment=${comment}&replyGroupId=${replyGroupId}&replyId=${replyId}&avatar_url=${avatar_url}`
+            apiUrl = `${process.env.COMMENT_DB_SERVER}?apikey=${process.env.COMMENT_DB_SERVER_API_KEY}&sheet=${sheetId}&mode=postComment&name=${username}&userId=${userId}&user_tag=${user_tag}&comment=${comment}&replyGroupId=${replyGroupId}&replyId=${replyId}&avatar_url=${avatar_url}`
         };
         const response = await fetch(apiUrl, {
             method: 'GET',
@@ -67,10 +82,12 @@ export const API_gas_backendApi_new_commentSend = async (username:string,userId:
         const result = await response.json();
         const compileTime = Math.round(compileEndTime - compileStartTime);
         //customLog(`Communicating with the comment database took ${compileTime}ms.`, '✓', '32', '0', 'log');
-        if(replyGroupId==='false'){
-            sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`### ${comment}`,`discord`,username,avatar_url);
-        }else{
-            sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`_@${replyUser}に返信_\n### ${comment}`,`discord`,username,avatar_url);
+        if(sheetMode === 'comment'){
+            if(replyGroupId==='false'){
+                sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`### ${comment}`,`discord`,username,avatar_url);
+            }else{
+                sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`_@${replyUser}に返信_\n### ${comment}`,`discord`,username,avatar_url);
+            };
         };
         return true
     } catch (error: any) {

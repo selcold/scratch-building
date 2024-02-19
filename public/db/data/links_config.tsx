@@ -10,7 +10,9 @@ const links_config = {
     "site_title":"ビル経営ゲーム",
     "site_description_short":"ビル経営ゲームはScratchで作られたビルを作るシミュレーションゲームです。",
     "site_url_home":"/",
+    "site_url_changelog":"/changelog",
     "site_url_mods":"/mods",
+    "site_url_qa":"/qa",
 
     "github_link_source_code":"https://github.com/selcold/scratch-building",
 

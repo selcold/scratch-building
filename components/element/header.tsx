@@ -1,7 +1,7 @@
 'use client'
 
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import links_config from '../../public/assets/data/links_config';
+import links_config from '../../public/db/data/links_config';
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -30,6 +30,7 @@ export function Header() {
                     <div className="flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 py-2 space-x-6 text-sm items-center justify-center px-6 font-medium overflow-hidden">
                         <a rel="noopener noreferrer" href={links_config.site_url_home} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">ホーム</a>
                         <a rel="noopener noreferrer" href={links_config.site_url_mods} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">MOD</a>
+                        <a rel="noopener noreferrer" href={links_config.site_url_qa} className="relative group bg-transparent hover:text-white/[0.64] transition duration-200">Q&A</a>
                     </div>
                     <div className="flex space-x-4 items-center">
                         <SignedIn>
@@ -73,7 +74,7 @@ export function Header() {
                                             {links_config.site_description_short}
                                             </SheetDescription>
                                         </SheetHeader>
-                                        <div className="grid gap-4 py-4 items-center">
+                                        <ul className="grid gap-4 mt-2 mb-2 py-4 items-center *:border-b-[1px] last:border-b-none *:border-zinc-500 *:p-1">
                                             <li>
                                                 <a href={links_config.site_url_home} rel="noopener noreferrer" className="relative">
                                                 ホーム
@@ -84,10 +85,15 @@ export function Header() {
                                                 MOD
                                                 </a>
                                             </li>
-                                        </div>
+                                            <li>
+                                                <a href={links_config.site_url_qa} rel="noopener noreferrer" className="relative">
+                                                Q&A
+                                                </a>
+                                            </li>
+                                        </ul>
                                         <SheetFooter>
                                             <SheetClose asChild>
-                                                <Button type="submit" className='button_border_1'>閉じる</Button>
+                                                <Button type="submit" className='button_blue_1 hover:text-slate-800'>閉じる</Button>
                                             </SheetClose>
                                         </SheetFooter>
                                     </SheetContent>

@@ -1,0 +1,126 @@
+{
+    "createdBy": "selcold",
+    "version": "0.0.1",
+    "release_time": "2024-02-16",
+    "last_change_time": "2024-02-16",
+    "content_list": [
+        {
+            "group": "SB MOD [v7]",
+            "description": "使い方は<a href='../wiki/content/sbmod/' class='text-[#6094F8]' target='_blank'>こちら</a>",
+            "creator": "@Masaabu-YT",
+            "content": [
+                {
+                    "name": "SB MOD v1.0",
+                    "description": "",
+                    "creator": "Masaabu-YT",
+                    "projectId": "940232456",
+                    "tags": [
+                        {
+                            "name": "公式",
+                            "color": "yellow"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "SBAPI [v7]",
+            "description": "使い方は<a href='https://note.com/metaroro/n/n8a8ed937bb04' class='text-[#6094F8]' target='_blank'>こちら</a>",
+            "creator": "@dmmo-com-jp",
+            "content": [
+                {
+                    "name": "SBAPI",
+                    "description": "ビル経営ゲームの拡張性を上げるツール",
+                    "creator": "dmmo-com-jp",
+                    "projectId": "933515639",
+                    "tags": [
+                        {
+                            "name": "前提",
+                            "color": "blue"
+                        }
+                    ]
+                },
+                {
+                    "name": "cmdplus",
+                    "description": "SBAPIのpostに依存した、コマンド強化modです。",
+                    "creator": "dmmo-com-jp",
+                    "projectId": "939787547"
+                },
+                {
+                    "name": "隕石経営ゲーム",
+                    "description": "隕石！！",
+                    "creator": "banana_877_",
+                    "projectId": "933713134"
+                }
+            ]
+        },
+        {
+            "group": "SB Addons [v6]",
+            "description": "GUIがあり、機能のon/offを切り替えられるため、簡単に利用できる。オーバーレイなどもあるため、色々な情報を画面に表示することもできる。",
+            "creator": "@-Masaabu-",
+            "content": [
+                {
+                    "name": "SB Addons",
+                    "description": "ビル経営ゲームの拡張性を上げるツール",
+                    "creator": "Masaabu-YT",
+                    "projectId": "790969288",
+                    "tags": [
+                        {
+                            "name": "公式",
+                            "color": "yellow"
+                        }
+                    ]
+                },
+                {
+                    "name": "SB Addons+",
+                    "description": "",
+                    "creator": "dmmo-com-jp",
+                    "projectId": "791408146"
+                },
+                {
+                    "name": "隕石アドオン",
+                    "description": "隕石！！",
+                    "creator": "dmmo-com-jp",
+                    "projectId": "792121597"
+                },
+                {
+                    "name": "Re:BN addon",
+                    "description": "",
+                    "creator": "banana_877_",
+                    "projectId": "817892400"
+                },
+                {
+                    "name": "SB Addons Remix",
+                    "description": "",
+                    "creator": "yoshikunTA",
+                    "projectId": "795165690"
+                }
+            ]
+        },
+        {
+            "group": "SB Addon API [v6]",
+            "description": "使い方は<a href='https://note.com/metaroro/n/n8a8ed937bb04' class='text-[#6094F8]' target='_blank'>こちら</a>",
+            "creator": "@dmmo-com-jp",
+            "content": [
+                {
+                    "name": "SBAPI",
+                    "description": "お金の管理や幸福度の管理を簡単に行えます。",
+                    "creator": "dmmo-com-jp",
+                    "projectId": "926411096",
+                    "tags": [
+                        {
+                            "name": "前提",
+                            "color": "blue"
+                        }
+                    ]
+                },
+                {
+                    "name": "天候復活アドオン",
+                    "description": "天候を6.0に復活させます",
+                    "creator": "dmmo-com-jp",
+                    "projectId": "933340996"
+                }
+            ]
+        }
+    ]
+}

@@ -51,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="ja" className={`bg-zinc-900 text-white ${inter.className}`}>
+    <html lang="ja" className={`dark bg-zinc-900 text-white ${inter.className}`}>
       <ClerkProvider appearance={{baseTheme: dark}}>
         {children}
       </ClerkProvider>
