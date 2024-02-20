@@ -102,6 +102,22 @@ export default function Home() {
                                         </p>
                                     </a>
                                 </div>
+                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                    <a href={links_config['site_url_docs/terms']} className='cursor-pointer'>
+                                        <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - 利用規約</h2>
+                                        <p className='mb-[10px]'>
+                                        以下の利用規約をよくお読みいただき、ご理解いただいた上で、本サイトをご利用ください
+                                        </p>
+                                    </a>
+                                </div>
+                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                    <a href={links_config['site_url_docs/guideline']} className='cursor-pointer'>
+                                        <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - ガイドライン</h2>
+                                        <p className='mb-[10px]'>
+                                        コミュニティーの健全な環境を保つためのお手伝いをしてください
+                                        </p>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
