@@ -112,34 +112,48 @@ export default function Home() {
                         </li>
                         <li>
                           <h2 className='font-bold text-[20px]'>1. フレンドリーで礼儀正しく</h2>
-                          <li><span className='select-none pointer-events-none'>・</span>コミュニティーのメンバー全員を尊重しましょう。失礼な発言や攻撃的な振る舞いは禁止です。</li>
-                          <li><span className='select-none pointer-events-none'>・</span>他のメンバーに対して常に礼儀正しく、親切に接しましょう。</li>
+                          <ul>
+                            <li><span className='select-none pointer-events-none'>・</span>コミュニティーのメンバー全員を尊重しましょう。失礼な発言や攻撃的な振る舞いは禁止です。</li>
+                            <li><span className='select-none pointer-events-none'>・</span>他のメンバーに対して常に礼儀正しく、親切に接しましょう。</li>
+                          </ul>
                         </li>
                         <li>
                           <h2 className='font-bold text-[20px]'>2. コメントの適切な使用</h2>
-                          <li><span className='select-none pointer-events-none'>・</span>コメントは建設的でプラスのフィードバックやアイデアを共有するために使用しましょう。</li>
-                          <li><span className='select-none pointer-events-none'>・</span>誹謗中傷や不適切な言葉の使用は禁止です。子供たちも利用することを考えて、言葉遣いには十分に気を付けてください。</li>
+                          <ul>
+                            <li><span className='select-none pointer-events-none'>・</span>コメントは建設的でプラスのフィードバックやアイデアを共有するために使用しましょう。</li>
+                            <li><span className='select-none pointer-events-none'>・</span>誹謗中傷や不適切な言葉の使用は禁止です。子供たちも利用することを考えて、言葉遣いには十分に気を付けてください。</li>
+                          </ul>
                         </li>
                         <li>
                           <h2 className='font-bold text-[20px]'>3. プライバシーの尊重</h2>
-                          <li><span className='select-none pointer-events-none'>・</span>他のメンバーのプライバシーを尊重しましょう。個人情報や他人の作品を無断で共有しないでください。</li>
+                          <ul>
+                            <li><span className='select-none pointer-events-none'>・</span>他のメンバーのプライバシーを尊重しましょう。個人情報や他人の作品を無断で共有しないでください。</li>
+                          </ul>
                         </li>
                         <li>
                           <h2 className='font-bold text-[20px]'>4. コンテンツの適切な投稿</h2>
-                          <li><span className='select-none pointer-events-none'>・</span>コンテンツの投稿はコミュニティーのテーマに関連している必要があります。</li>
-                          <li><span className='select-none pointer-events-none'>・</span>不適切なコンテンツやスパムは禁止されています。</li>
+                          <ul>
+                            <li><span className='select-none pointer-events-none'>・</span>コンテンツの投稿はコミュニティーのテーマに関連している必要があります。</li>
+                            <li><span className='select-none pointer-events-none'>・</span>不適切なコンテンツやスパムは禁止されています。</li>
+                          </ul>
                         </li>
                         <li>
                           <h2 className='font-bold text-[20px]'>5. モデレーションの従順</h2>
-                          <li><span className='select-none pointer-events-none'>・</span>モデレーターの指示に従いましょう。彼らはコミュニティーの秩序を保つために働いています。</li>
+                          <ul>
+                            <li><span className='select-none pointer-events-none'>・</span>モデレーターの指示に従いましょう。彼らはコミュニティーの秩序を保つために働いています。</li>
+                          </ul>
                         </li>
                         <li>
                           <h2 className='font-bold text-[20px]'>6. フォーラムの適切な利用</h2>
-                          <li><span className='select-none pointer-events-none'>・</span>フォーラムはコミュニティーのメンバーが意見を交換する場です。しかし、トピックはコミュニティーのテーマに沿ったものに限ります。</li>
+                          <ul>
+                            <li><span className='select-none pointer-events-none'>・</span>フォーラムはコミュニティーのメンバーが意見を交換する場です。しかし、トピックはコミュニティーのテーマに沿ったものに限ります。</li>
+                          </ul>
                         </li>
                         <li>
                           <h2 className='font-bold text-[20px]'>7. 問題の報告</h2>
-                          <li><span className='select-none pointer-events-none'>・</span>問題が発生した場合は、直ちにモデレーターに報告してください。問題を早期に解決するために、皆さんの協力が必要です。</li>
+                          <ul>
+                            <li><span className='select-none pointer-events-none'>・</span>問題が発生した場合は、直ちにモデレーターに報告してください。問題を早期に解決するために、皆さんの協力が必要です。</li>
+                          </ul>
                         </li>
                         <li>
                         これらのガイドラインに従うことで、Scratch Building コミュニティーは皆さんにとって楽しい場所となります。皆さんの協力と理解に感謝します！

@@ -6,8 +6,12 @@ export const FadeUpTrigger = (val_offsetTop: number = 0) => {
     useEffect(() => {
         const fadeAnime = () => {
             document.querySelectorAll('.fadeUpTrigger').forEach(function (element) {
+                (element as HTMLElement).classList.remove('fadeUpTrigger');
+                (element as HTMLElement).classList.add('fadeUpTriggerSet');
+            });
+            document.querySelectorAll('.fadeUpTriggerSet').forEach(function (element) {
                 const elemPos = (element as HTMLElement).offsetTop + val_offsetTop;
-                const scroll = window.scrollY || window.pageYOffset;
+                const scroll = window.scrollY
                 const windowHeight = window.innerHeight;
         
                 if (scroll >= elemPos - windowHeight) {

@@ -195,7 +195,7 @@
     }
 }
 /* スクロールをしたら出現する要素にはじめに透過0を指定　*/
-.fadeUpTrigger{
+.fadeUpTriggerSet{
     opacity: 0;
 }
 
