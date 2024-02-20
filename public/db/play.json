@@ -1,0 +1,88 @@
+{
+    "createdBy": "selcold",
+    "version": "0.0.1",
+    "release_time": "2024-02-16",
+    "last_change_time": "2024-02-16",
+    "content_list": [
+        {
+            "group": "リリース版",
+            "mode": "pre",
+            "content": [
+                {
+                    "date": "2023-12-01",
+                    "version": "v7.1.1a",
+                    "description": "部屋を長押ししてみると、、、？？？",
+                    "creator": "Masaabu-YT",
+                    "projectId": "927111186",
+                    "links": [
+                    ]
+                },
+                {
+                    "date": "2023-02-01",
+                    "version": "v6.2",
+                    "description": "ビル経営ゲームv7.0が 12月01日-17時 に公開！",
+                    "creator": "Masaabu-YT",
+                    "projectId": "790875411",
+                    "links": [
+                    ]
+                },
+                {
+                    "date": "2022-10-01",
+                    "version": "v5.6.2",
+                    "description": "1周年記念セール中！",
+                    "creator": "Masaabu-YT",
+                    "projectId": "708711034",
+                    "links": [
+                    ]
+                },
+                {
+                    "date": "2022-05-28",
+                    "version": "v4.4.12",
+                    "description": "",
+                    "creator": "Masaabu-YT",
+                    "projectId": "687086358",
+                    "links": [
+                    ]
+                },
+                {
+                    "date": "2022-03-05",
+                    "version": "v3.2 thx",
+                    "description": "設置時のバーに表示されている金額は　設置費 / 維持費　です。",
+                    "creator": "Masaabu-YT",
+                    "projectId": "646046731",
+                    "links": [
+                    ]
+                },
+                {
+                    "date": "2022-01-01",
+                    "version": "v2.5",
+                    "description": "部屋をクリックすると建築リストが表示され、選択すると建築ができます。",
+                    "creator": "Masaabu-YT",
+                    "projectId": "621801822",
+                    "links": [
+                    ]
+                }
+            ]
+        },
+        {
+            "group": "Alpha版",
+            "mode": "beta",
+            "content": [
+                {
+                    "date": "2023-10-20",
+                    "version": "alpha7.0.0",
+                    "description": "部屋が表示されるだけで、その他のことはまだできません。",
+                    "creator": "Masaabu-YT",
+                    "image_url": "",
+                    "links": [
+                        {
+                            "name": "プレイ",
+                            "url": "#",
+                            "target": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -4,6 +4,7 @@ const links_config = {
     "game_play_platform":"Scratch",
     "game_play_url":"https://scratch.mit.edu/projects/927111186/",
     "game_play_img":"/assets/img/game/banner.png",
+    "game_play_img_bgBlock":"/assets/img/game/banner_bg.png",
 
     "ScratchBuilding_logo_url":"/assets/img/ScratchBuilding.png",
 
@@ -12,6 +13,7 @@ const links_config = {
     "site_url_home":"/",
     "site_url_changelog":"/changelog",
     "site_url_wiki":"/wiki",
+    "site_url_play":"/play",
     "site_url_mods":"/mods",
     "site_url_qa":"/qa",
 

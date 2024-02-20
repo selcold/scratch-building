@@ -10,22 +10,16 @@ import { HeadCustom_config } from '../../../components/site/headCustom';
 import { FadeUpTrigger } from '../../../components/site/fadeUpTrigger';
 import { UserInfo_avatar_url, UserInfo_userId, UserInfo_username } from '../../../components/clerk/userInfo';
 import '../../../components/siteView/site_view'
-import { ViewLocked_check, updatePassword } from '../../../components/siteView/site_view';
 import { UserInfo_publicMetadata_beta } from '../../../components/clerk/UserInfo_publicMetadata';
-import Giscus from '@giscus/react';
 import { API_commentForm_send, sendGetRequestToGAS } from '../../../components/api/comments';
 import { CommentAddHtml } from '../../../components/page/comp';
 import { SignInButton } from '@clerk/nextjs';
+import { TopImage } from '../../../components/element/topimage';
+import { PageLoading } from '../../../components/element/pageLoading';
+import { SiteViewCheck, SiteViewSetVal } from '../../../components/element/siteViewCheck';
+import { validationCheck_comment } from '../../../components/site/validation';
 
 export default function Home() {
-    // 表示認証制度機能
-    var isSiteViewLoad;
-    if(process.env.NEXT_PUBLIC_SITE_VIEW_Locked === 'true'){
-        isSiteViewLoad = ViewLocked_check('')
-    }else{
-        isSiteViewLoad = true
-    }
-    const [ViewLocked_password, setViewLocked_password] = useState('');
     // ページロード
     const [isLangLoaded, setPageLoaded] = useState(false);
     useEffect(() => {
@@ -99,14 +93,44 @@ export default function Home() {
                 comment_reply_form_button.classList.add('pointer-events-none');
                 comment_reply_form_button.innerText=(`送信中...`)
             }
-            if(await API_commentForm_send('changelog',username,userId,avatar_url,user_tag,`<h1 class='font-bold text-2xl'>v${form_version}</h1><p class='text-zinc-400'>${form_date}</p><span>${form_comment}</span>`)){
-                window.alert('変更履歴を投稿しました！');
-                window.location.href=(`${window.location}`);
-            }else{
-                alert('スペース以外の文字を最低一文字入力してください！');
+            let formErrorCount = 0;
+            let formErrorText = "";
+
+            if(!validationCheck_comment(form_version)){
+                if(formErrorCount < 1){
+                    formErrorCount+=1;
+                    formErrorText=`versionを記入してください`;
+                }
+            };
+            if(!validationCheck_comment(form_date)){
+                if(formErrorCount < 1){
+                    formErrorCount+=1;
+                    formErrorText=`更新した日を記入してください`;
+                }
+            };
+            if(!validationCheck_comment(form_comment)){
+                if(formErrorCount < 1){
+                    formErrorCount+=1;
+                    formErrorText=`変更履歴を投稿するには、コメントを追加しなければならない`;
+                }
+            };
+
+            if(formErrorCount > 0){
+                alert(formErrorText);
                 if(comment_reply_form_button){
                     comment_reply_form_button.classList.remove('pointer-events-none');
                     comment_reply_form_button.innerText=(`更新履歴を投稿`)
+                }
+            }else{
+                if(await API_commentForm_send('changelog',username,userId,avatar_url,user_tag,`<h1 class='font-bold text-2xl'>v${form_version}</h1><p class='text-zinc-400'>${form_date}</p><span>${form_comment}</span>`)){
+                    window.alert('変更履歴を投稿しました！');
+                    window.location.href=(`${window.location}`);
+                }else{
+                    alert('スペース以外の文字を最低一文字入力してください！');
+                    if(comment_reply_form_button){
+                        comment_reply_form_button.classList.remove('pointer-events-none');
+                        comment_reply_form_button.innerText=(`更新履歴を投稿`)
+                    }
                 }
             }
         }
@@ -116,31 +140,12 @@ export default function Home() {
         <body>
             {isLangLoaded ? (
                 <>
-                {isSiteViewLoad ? (
+                {SiteViewSetVal() ? (
                     <>
                     <Header/>
                     <div>
                         {/* トップイメージ */}
-                        <div id='top_image' className="w-full relative z-1 min-h-[calc(100vh-20%)] flex" style={{background:`linear-gradient(rgb(19, 21, 31) -4.84%, rgb(29, 28, 47) 34.9%, rgb(32 38 54) 48.6%, rgb(40 48 62) 66.41%, rgb(61 85 98) 103.41%, rgb(81 124 140) 132.18%)`}}>
-                            <div className="absolute w-full h-full -z-1 bottom-0 left-0 pointer-events-none overflow-hidden bg-[#97b7d1]">
-                                <img src={links_config.game_play_img} alt="Forest dark" className="w-full absolute bottom-0" />
-                            </div>
-                            <div className="backdrop-blur-sm backdrop-brightness-50 min-h-full w-full flex items-center justify-start">
-                                <div className="mx-auto w-full max-w-screen-lg px-6 lg:px-10 py-6 lg:py-10 pt-10 lg:pt-24">
-                                    <div className='absolute bottom-2 left-2'>
-                                        <h1 className='mb-1'>{links_config.game_name}v{links_config.game_version}</h1>
-                                        <a href={links_config.game_play_url} target='_block'>
-                                            <button className='button_border_1'>
-                                            {links_config.game_play_platform}でプレイ
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div className="w-full text-center mt-10 lg:mt-20">
-                                        <h1 className="text-white min-h-32 font-bold text-2xl md:text-5xl">{links_config.game_name}v{links_config.game_version}</h1>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <TopImage/>
                         {/* 製作者 / 開発者 */}
                         <div className="bg-zinc-800">
                             <div className="mx-auto w-full max-w-[1240px] px-6 lg:px-10 py-6 lg:py-10 undefined">
@@ -220,22 +225,11 @@ export default function Home() {
                     <Footer/>
                     </>
                 ) : (
-                    <div className='fixed flex flex-col justify-center items-center w-full h-full'>
-                        <div className='flex flex-col justify-center items-center p-4 mb-10 gap-2'>
-                            <h1 className='font-bold text-4xl'>ビル経営ゲーム</h1>
-                            <p className='p-5'>サイトは現在限定公開です。表示するにはパスワード認証を行う必要があります。</p>
-                        </div>
-                        <div className='gap-4 flex flex-col justify-center items-center'>
-                            <input type='text' placeholder='パスワード' className='flex min-h-[20px] min-w-[200px] lg:w-[400px] rounded-md border border-zinc-700 border-input bg-zinc-900 px-3 py-2 mt-[10px] text-sm ring-offset-background focus-visible:outline-none' onChange={(e) => setViewLocked_password(e.target.value)}/>
-                            <button className='button_blue_1' onClick={() => updatePassword(ViewLocked_password)}>表示</button>
-                        </div>
-                    </div>
+                    <SiteViewCheck/>
                 )}
                 </>
             ) : (
-                <div className="fixed flex justify-center items-center w-full h-full" aria-label="loading">
-                    <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent"></div>
-                </div>
+                <PageLoading/>
             )}
         </body>
     )

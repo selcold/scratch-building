@@ -9,12 +9,12 @@ import links_config from '../../../public/db/data/links_config';
 import { HeadCustom_config } from '../../../components/site/headCustom';
 import { FadeUpTrigger } from '../../../components/site/fadeUpTrigger';
 import { UserInfo_avatar_url, UserInfo_userId, UserInfo_username } from '../../../components/clerk/userInfo';
-import '../../../components/siteView/site_view'
+import '../../../components/siteView/site_view';
 import { UserInfo_publicMetadata_beta } from '../../../components/clerk/UserInfo_publicMetadata';
-import Giscus from '@giscus/react';
 import { TopImage } from '../../../components/element/topimage';
 import { PageLoading } from '../../../components/element/pageLoading';
 import { SiteViewCheck, SiteViewSetVal } from '../../../components/element/siteViewCheck';
+import { PlayGetListHtml } from '../../../components/page/play';
 
 export default function Home() {
     // ページロード
@@ -33,7 +33,7 @@ export default function Home() {
     }, [isLangLoaded]);
     // headカスタム
     const Head_config = {
-        "title":`${links_config.site_title} - 質問`,
+        "title":`${links_config.site_title} - MOD`,
     };
     HeadCustom_config(Head_config);
     // 読み込みアニメーション
@@ -61,6 +61,25 @@ export default function Home() {
         fetchUserInfo();
     }, []);
 
+    // play 読み込み
+    const [playListHtml, setPlayListHtml] = useState<JSX.Element[]>([]);
+    useEffect(() => {
+        const fetchPlayGetListHtml = async () => {
+            try {
+                const result = await PlayGetListHtml();
+                if (result) {
+                    //console.log(result)
+                    setPlayListHtml(result);
+                } else {
+                    console.error('Playデータが取得できませんでした');
+                }
+            } catch (error) {
+                console.error('エラー:', error);
+            }
+        }
+        fetchPlayGetListHtml();
+    }, [])
+
     return (
         <body>
             {isLangLoaded ? (
@@ -72,35 +91,26 @@ export default function Home() {
                         {/* トップイメージ */}
                         <TopImage/>
                         {/* 製作者 / 開発者 */}
-                        <div className="bg-zinc-800">
+                        <div className=" bg-zinc-800">
                             <div className="mx-auto w-full max-w-[1240px] px-6 lg:px-10 py-6 lg:py-10 undefined">
-                                <div className="flex-col lg:flex-row flex items-center gap-8"></div>
+                                <div className="flex-col lg:flex-row flex items-center gap-8">
+                                </div>
                             </div>
                         </div>
                         {/* メイン */}
                         <div className='mt-20 mb-20'>
                             <div className="items-center">
-                                <div className="fadeUpTrigger flex flex-col justify-center bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] gap-2 md:rounded-[10px] shadow-md">
-                                    <h2 className=' font-bold text-2xl'>ビル経営ゲーム - 質問</h2>
+                                <div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md">
+                                    <h2 className=' font-bold text-2xl'>ビル経営ゲーム プレイ</h2>
                                     <p className='mb-[10px]'>
-                                    気になることなどをここで聞いて解決しよう
+                                    ビル経営ゲームでクラウドセーブを行った人の数が3600人を超えました！<br/>これからもビル経営ゲームをよろしくお願いします！
                                     </p>
                                 </div>
-                                <div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md">
-                                    <Giscus
-                                        id="comments"
-                                        repo="selcold/scratch-building"
-                                        repoId="R_kgDOLLLFdg"
-                                        mapping="number"
-                                        term="2"
-                                        reactionsEnabled="1"
-                                        emitMetadata="0"
-                                        inputPosition="top"
-                                        theme="noborder_gray"
-                                        lang="ja"
-                                        loading="lazy"
-                                    />
-                                </div>
+                                <section className='flex flex-wrap justify-center'>
+                                    <div className='max-w-[800px] mx-auto'>
+                                    {playListHtml}
+                                    </div>
+                                </section>
                             </div>
                         </div>
                     </div>

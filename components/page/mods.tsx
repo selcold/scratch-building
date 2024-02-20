@@ -23,7 +23,7 @@ type ModsList = {
         }[];
     }[];
 };
-export const modsGetListHtml = async () => {
+export const ModsGetListHtml = async () => {
     let modsListGroupHtml: JSX.Element[] = [];
 
     // fetchで取得したデータをmodsListHtmlに追加

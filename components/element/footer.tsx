@@ -52,6 +52,9 @@ export default function Footer() {
                         <a href={links_config.site_url_home} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         ホーム
                         </a>
+                        <a href={links_config.site_url_play} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
+                        プレイ
+                        </a>
                         <a href={links_config.site_url_mods} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         MOD
                         </a>
@@ -61,11 +64,11 @@ export default function Footer() {
                         <a href={links_config.site_url_qa} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         Q&A
                         </a>
+                    </div>
+                    <div className="flex flex-col text-sm md:px-4 mb-4">
                         <a href={links_config.site_url_changelog} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         変更履歴
                         </a>
-                    </div>
-                    <div className="flex flex-col text-sm md:px-4 mb-4">
                         <a href={links_config.github_link_source_code} target='_block' rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         ソースコード
                         </a>
