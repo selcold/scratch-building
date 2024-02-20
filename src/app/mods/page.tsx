@@ -9,7 +9,6 @@ import links_config from '../../../public/db/data/links_config';
 import { HeadCustom_config } from '../../../components/site/headCustom';
 import { FadeUpTrigger } from '../../../components/site/fadeUpTrigger';
 import { UserInfo_avatar_url, UserInfo_userId, UserInfo_username } from '../../../components/clerk/userInfo';
-import '../../../components/siteView/site_view';
 import { UserInfo_publicMetadata_beta } from '../../../components/clerk/UserInfo_publicMetadata';
 import { ModsGetListHtml } from '../../../components/page/mods';
 import { TopImage } from '../../../components/element/topimage';

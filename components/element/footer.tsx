@@ -69,6 +69,12 @@ export default function Footer() {
                         <a href={links_config.site_url_changelog} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         変更履歴
                         </a>
+                        <a href={links_config['site_url_docs/terms']} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
+                        利用規約
+                        </a>
+                        <a href={links_config['site_url_docs/guideline']} rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
+                        ガイドライン
+                        </a>
                         <a href={links_config.github_link_source_code} target='_block' rel="noopener noreferrer" className="font-normal mt-4 text-white/[0.64] hover:text-white/[0.84] transition duration-200">
                         ソースコード
                         </a>

@@ -16,6 +16,8 @@ const links_config = {
     "site_url_play":"/play",
     "site_url_mods":"/mods",
     "site_url_qa":"/qa",
+    "site_url_docs/terms":"/docs/terms",
+    "site_url_docs/guideline":"/docs/guideline",
 
     "github_link_source_code":"https://github.com/selcold/scratch-building",
 
