@@ -3,12 +3,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { formatDateTime } from "../site/formatDateTime";
 import { faLink, faReply } from "@fortawesome/free-solid-svg-icons";
-import { UserInfo_avatar_url } from "../clerk/userInfo";
 import { createRoot } from "react-dom/client";
 import { API_gas_backendApi_new_commentSend } from "../api/comments";
 import { customLog } from "../api/customLog";
 import { validationCheck_comment } from "../site/validation";
 import { SignInButton } from "@clerk/nextjs";
+import { TextCopyToClipboard } from "../site/copy";
 
 interface Comment {
     avatar_url: string;
@@ -22,10 +22,11 @@ interface Comment {
 };
 export function CommentAddHtml(sheetMode: string,commentData: Comment[], username: string, userId: string, user_tag: string, avatar_url: string): JSX.Element[] {
 
+    
     var obj_commentsId: Record<string, any> = {};
     var obj_comments: Record<string, any> = {};
     var obj_comments_reply: Record<string, any> = {};
-
+    
     // コメントデータのタイムスタンプを日時オブジェクトに変換
     commentData.forEach(comment => {
         comment.timestamp = new Date(comment.timestamp);
@@ -46,7 +47,35 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
     // コメントデータをループしてコメントごとにHTMLを生成
     obj_comments_Array.forEach(comment => {
         const formattedTimestamp = formatDateTime(comment.timestamp);
-
+        
+        // コピーされた後にテキストを変更する処理
+        const handleCopy = async (uuid: string,text: string) => {
+            try {
+                await navigator.clipboard.writeText(text);
+    
+                const copyHtml = document.getElementById(`handleCopy_${uuid}`)
+                // コピーされたら状態を更新してテキストを変更
+                if(copyHtml){
+                    copyHtml.innerText=`コピー完了`;
+                    // 一定時間後にテキストを元に戻す
+                    setTimeout(() => {
+                        copyHtml.innerText=`コピー`;
+                    }, 3000); // 3000ミリ秒 = 3秒後に元に戻す
+                };
+                return true
+            } catch (error) {
+                console.error('Error copying to clipboard:', error);
+                return false
+            }
+            
+        };
+    
+        function HandleReport() {
+            if (typeof window !== 'undefined') {
+                window.alert('現在報告機能を使用することはできません。');
+            }
+        }
+        
         // コメントフォーム
         function set_comment_reply_form(mode: string, uuid: string, user_tag: string) {
             const HtmlCommentReplyForm = document.getElementById(`comment_reply_${uuid}`);
@@ -103,7 +132,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                 }
             }
         };
-
+    
         async function CommentReplyForm_send_ButtonClick(username: string, userId: string, user_tag: string, replyGroupId: string, replyId: string = 'false', replyUser: string) {
             const comment_reply_form_button = document.getElementById(`comment_reply_form_button_${replyGroupId}`);
             if (comment_reply_form_button) {
@@ -156,7 +185,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                     </a>
                     <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
                         <div className='flex flex-wrap flex-row justify-start lg:justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
-                            <div className=' flex flex-row justify-center mr-auto text-slate-50 gap-1'>
+                            <div className='flex flex-row justify-center mr-auto text-slate-50 gap-1'>
                                 <a>{comment.name}</a>
                                 <span className="tooltip m-auto">
                                     {comment.tag==='developer' ? (
@@ -188,77 +217,34 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                 </span>
                             </div>
                         </div>
-                        <div className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-zinc-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-zinc-800' style={{width:'calc(100% - 0.5rem)'}}>
-                        <span className='overflow-auto whitespace-break-spaces break-words text-left'>
-                            {sheetMode === 'changelog' ? (
-                                <>
-                                    <span className='whitespace-break-spaces break-words' dangerouslySetInnerHTML={{ __html: comment.comment }}></span>
-                                </>
-                            ) : (
-                                <>
-                                    <span className='whitespace-break-spaces break-words'>{comment.comment}</span>
-                                </>
-                            )}
-                        </span>
-                        <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
-                            <span className='text-zinc-500'>{formattedTimestamp}</span>
-                            {username!=='false' ? (
-                                <>
-                                    <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                        <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                            <FontAwesomeIcon icon={faLink}/>
-                                            <span className='tooltiptext'>コピー</span>
-                                        </button>
-                                        <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                            報告
-                                            <span className='tooltiptext'>コメントを報告します</span>
-                                        </button>
-                                        {sheetMode === 'comment' ? (
-                                            <>
-                                                <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,user_tag)}>
-                                                    返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                    <span className='tooltiptext'>コメントに返信</span>
-                                                </button>
-                                            </>
-                                        ) : (
-                                            <>
-                                                {sheetMode === 'changelog' ? (
-                                                    <>
-                                                        {user_tag === 'developer' ? (
-                                                            <>
-                                                                <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,user_tag)}>
-                                                                    返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                                    <span className='tooltiptext'>コメントに返信</span>
-                                                                </button>
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                            </>
-                                                        )}
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                    </>
-                                                )}
-                                            </>
-                                        )}
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <SignInButton>
+                        <div id={`commentId_${comment.uuid}`} className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-zinc-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-zinc-800' style={{width:'calc(100% - 0.5rem)'}}>
+                            <span className='overflow-auto whitespace-break-spaces break-words text-left'>
+                                {sheetMode === 'changelog' ? (
+                                    <>
+                                        <span className='whitespace-break-spaces break-words' dangerouslySetInnerHTML={{ __html: comment.comment }}></span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className='whitespace-break-spaces break-words'>{comment.comment}</span>
+                                    </>
+                                )}
+                            </span>
+                            <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
+                                <span className='text-zinc-500'>{formattedTimestamp}</span>
+                                {username!=='false' ? (
+                                    <>
                                         <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.uuid,`${window.location.href}?#commentId_${comment.uuid}`)}>
                                                 <FontAwesomeIcon icon={faLink}/>
-                                                <span className='tooltiptext'>コピー</span>
+                                                <span id={`handleCopy_${comment.uuid}`} className='tooltiptext'>コピー</span>
                                             </button>
-                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={HandleReport}>
                                                 報告
                                                 <span className='tooltiptext'>コメントを報告します</span>
                                             </button>
                                             {sheetMode === 'comment' ? (
                                                 <>
-                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,user_tag)}>
                                                         返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                         <span className='tooltiptext'>コメントに返信</span>
                                                     </button>
@@ -269,7 +255,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                         <>
                                                             {user_tag === 'developer' ? (
                                                                 <>
-                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,user_tag)}>
                                                                         返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                                         <span className='tooltiptext'>コメントに返信</span>
                                                                     </button>
@@ -286,10 +272,53 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                 </>
                                             )}
                                         </div>
-                                    </SignInButton>
-                                </>
-                            )}
-                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <SignInButton>
+                                            <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                    <FontAwesomeIcon icon={faLink}/>
+                                                    <span className='tooltiptext'>コピー</span>
+                                                </button>
+                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                    報告
+                                                    <span className='tooltiptext'>コメントを報告します</span>
+                                                </button>
+                                                {sheetMode === 'comment' ? (
+                                                    <>
+                                                        <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                            返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
+                                                            <span className='tooltiptext'>コメントに返信</span>
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {sheetMode === 'changelog' ? (
+                                                            <>
+                                                                {user_tag === 'developer' ? (
+                                                                    <>
+                                                                        <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                            返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
+                                                                            <span className='tooltiptext'>コメントに返信</span>
+                                                                        </button>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                    </>
+                                                                )}
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                            </>
+                                                        )}
+                                                    </>
+                                                )}
+                                            </div>
+                                        </SignInButton>
+                                    </>
+                                )}
+                            </div>
                         </div>
                         <div id={`comment_reply_${comment.uuid}`} className='flex flex-row flex-wrap justify-around items-center w-full'></div>
                     </div>
@@ -337,78 +366,35 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-zinc-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-zinc-800' style={{width:'calc(100% - 0.5rem)'}}>
-                                        <span className='overflow-auto whitespace-break-spaces break-words text-left'>
-                                            <span className="text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2">@{obj_commentsId[commentReply.replyId].name}</span>
-                                            {sheetMode === 'changelog' ? (
-                                                <>
-                                                    <span className='whitespace-break-spaces break-words' dangerouslySetInnerHTML={{ __html: comment.comment }}></span>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <span className='whitespace-break-spaces break-words'>{comment.comment}</span>
-                                                </>
-                                            )}
-                                        </span>
-                                        <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
-                                            <span className='text-zinc-500'>{formattedTimestamp}</span>
-                                            {username!=='false' ? (
-                                                <>
-                                                    <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                                        <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                            <FontAwesomeIcon icon={faLink}/>
-                                                            <span className='tooltiptext'>コピー</span>
-                                                        </button>
-                                                        <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                            報告
-                                                            <span className='tooltiptext'>コメントを報告します</span>
-                                                        </button>
-                                                        {sheetMode === 'comment' ? (
-                                                            <>
-                                                                <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid,user_tag)}>
-                                                                    返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                                    <span className='tooltiptext'>コメントに返信</span>
-                                                                </button>
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                {sheetMode === 'changelog' ? (
-                                                                    <>
-                                                                        {user_tag === 'developer' ? (
-                                                                            <>
-                                                                                <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid,user_tag)}>
-                                                                                    返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                                                    <span className='tooltiptext'>コメントに返信</span>
-                                                                                </button>
-                                                                            </>
-                                                                        ) : (
-                                                                            <>
-                                                                            </>
-                                                                        )}
-                                                                    </>
-                                                                ) : (
-                                                                    <>
-                                                                    </>
-                                                                )}
-                                                            </>
-                                                        )}
-                                                    </div>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <SignInButton>
+                                        <div id={`commentId_${commentReply.uuid}`} className='relative bg-zinc-800 ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-zinc-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-zinc-800' style={{width:'calc(100% - 0.5rem)'}}>
+                                            <span className='overflow-auto whitespace-break-spaces break-words text-left'>
+                                                <span className="text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2">@{obj_commentsId[commentReply.replyId].name}</span>
+                                                {sheetMode === 'changelog' ? (
+                                                    <>
+                                                        <span className='whitespace-break-spaces break-words' dangerouslySetInnerHTML={{ __html: comment.comment }}></span>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <span className='whitespace-break-spaces break-words'>{comment.comment}</span>
+                                                    </>
+                                                )}
+                                            </span>
+                                            <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
+                                                <span className='text-zinc-500'>{formattedTimestamp}</span>
+                                                {username!=='false' ? (
+                                                    <>
                                                         <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.uuid,`${window.location.href}?#commentId_${commentReply.uuid}`)}>
                                                                 <FontAwesomeIcon icon={faLink}/>
-                                                                <span className='tooltiptext'>コピー</span>
+                                                                <span id={`handleCopy_${commentReply.uuid}`} className='tooltiptext'>コピー</span>
                                                             </button>
-                                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={HandleReport}>
                                                                 報告
                                                                 <span className='tooltiptext'>コメントを報告します</span>
                                                             </button>
                                                             {sheetMode === 'comment' ? (
                                                                 <>
-                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid,user_tag)}>
                                                                         返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                                         <span className='tooltiptext'>コメントに返信</span>
                                                                     </button>
@@ -419,7 +405,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                                         <>
                                                                             {user_tag === 'developer' ? (
                                                                                 <>
-                                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid,user_tag)}>
                                                                                         返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                                                         <span className='tooltiptext'>コメントに返信</span>
                                                                                     </button>
@@ -436,10 +422,53 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                                 </>
                                                             )}
                                                         </div>
-                                                    </SignInButton>
-                                                </>
-                                            )}
-                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <SignInButton>
+                                                            <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+                                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                    <FontAwesomeIcon icon={faLink}/>
+                                                                    <span className='tooltiptext'>コピー</span>
+                                                                </button>
+                                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                    報告
+                                                                    <span className='tooltiptext'>コメントを報告します</span>
+                                                                </button>
+                                                                {sheetMode === 'comment' ? (
+                                                                    <>
+                                                                        <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                            返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
+                                                                            <span className='tooltiptext'>コメントに返信</span>
+                                                                        </button>
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        {sheetMode === 'changelog' ? (
+                                                                            <>
+                                                                                {user_tag === 'developer' ? (
+                                                                                    <>
+                                                                                        <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                                            返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
+                                                                                            <span className='tooltiptext'>コメントに返信</span>
+                                                                                        </button>
+                                                                                    </>
+                                                                                ) : (
+                                                                                    <>
+                                                                                    </>
+                                                                                )}
+                                                                            </>
+                                                                        ) : (
+                                                                            <>
+                                                                            </>
+                                                                        )}
+                                                                    </>
+                                                                )}
+                                                            </div>
+                                                        </SignInButton>
+                                                    </>
+                                                )}
+                                            </div>
                                         </div>
                                         <div id={`comment_reply_${commentReply.uuid}`} className='flex flex-row flex-wrap justify-around items-center ml-[-3.5rem] w-full' style={{width:'calc(100% + 3.5rem)'}}></div>
                                     </div>

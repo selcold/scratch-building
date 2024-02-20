@@ -97,7 +97,7 @@ export default function Home() {
         window.alert('コメントを投稿しました！');
         window.location.href=(`${window.location}`);
       }else{
-        alert('スペース以外の文字を最低一文字入力してください！');
+        window.alert('スペース以外の文字を最低一文字入力してください！');
         if(comment_reply_form_button){
           comment_reply_form_button.classList.remove('pointer-events-none');
           comment_reply_form_button.innerText=(`コメントを投稿`)
