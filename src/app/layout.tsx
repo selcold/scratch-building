@@ -15,7 +15,10 @@ export const metadata: Metadata = {
   generator: "Next.js",
   metadataBase: new URL('https://scratch-building.vercel.app'),
 
-  title: 'ビル経営ゲーム',
+  title: {
+		template: '%s | ビル経営ゲーム',
+		default: 'ビル経営ゲーム'
+	},
   description: 'A building management game is a simulation game where you create buildings using Scratch.',
 
   manifest: "/webmanifest.json",
@@ -53,7 +56,9 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`dark bg-zinc-900 text-white ${inter.className}`}>
       <ClerkProvider appearance={{baseTheme: dark}}>
-        {children}
+        <body>
+          {children}
+        </body>
       </ClerkProvider>
     </html>
   )

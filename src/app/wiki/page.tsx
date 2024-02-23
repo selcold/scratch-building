@@ -31,7 +31,7 @@ export default function Home() {
     }, [isLangLoaded]);
     // headカスタム
     const Head_config = {
-        "title":`${links_config.site_title} - Wiki`,
+        "title":`Wiki | ${links_config.site_title}`,
     };
     HeadCustom_config(Head_config);
     // 読み込みアニメーション
@@ -60,7 +60,7 @@ export default function Home() {
     }, []);
 
     return (
-        <body>
+        <>
             {isLangLoaded ? (
                 <>
                 {SiteViewSetVal() ? (
@@ -91,6 +91,14 @@ export default function Home() {
                                         <h2 className=' font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - Q&A</h2>
                                         <p className='mb-[10px]'>
                                         ビル経営ゲームに関することで、気になることなどをここで聞いて解決しよう
+                                        </p>
+                                    </a>
+                                </div>
+                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                    <a href={links_config['site_url_docs/ad']} className='cursor-pointer'>
+                                        <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - AD</h2>
+                                        <p className='mb-[10px]'>
+                                        作品を広告で宣伝したいと思ったことはありませんか？そんなあなたへ！誰でも簡単に広告を作成して公開することができるサービスを利用しましょう！
                                         </p>
                                     </a>
                                 </div>
@@ -130,6 +138,6 @@ export default function Home() {
             ) : (
                 <PageLoading/>
             )}
-        </body>
+        </>
     )
 };

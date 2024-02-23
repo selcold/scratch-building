@@ -35,7 +35,7 @@ export default function Home() {
     }, [isLangLoaded]);
     // headカスタム
     const Head_config = {
-        "title":`${links_config.site_title} - 変更履歴`,
+        "title":`変更履歴 | ${links_config.site_title}`,
     };
     HeadCustom_config(Head_config);
     // 読み込みアニメーション
@@ -136,7 +136,7 @@ export default function Home() {
     };
 
     return (
-        <body>
+        <>
             {isLangLoaded ? (
                 <>
                 {SiteViewSetVal() ? (
@@ -230,6 +230,6 @@ export default function Home() {
             ) : (
                 <PageLoading/>
             )}
-        </body>
+        </>
     )
 };

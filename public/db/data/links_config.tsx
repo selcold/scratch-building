@@ -16,6 +16,7 @@ const links_config = {
     "site_url_play":"/play",
     "site_url_mods":"/mods",
     "site_url_qa":"/qa",
+    "site_url_docs/ad":"/docs/ad",
     "site_url_docs/terms":"/docs/terms",
     "site_url_docs/guideline":"/docs/guideline",
 
