@@ -77,7 +77,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
         }
         
         // コメントフォーム
-        function set_comment_reply_form(mode: string, uuid: string, user_tag: string) {
+        function set_comment_reply_form(mode: string, group: string, uuid: string, user_tag: string, replyUser: string = '') {
             const HtmlCommentReplyForm = document.getElementById(`comment_reply_${uuid}`);
             if (HtmlCommentReplyForm) {
                 if (HtmlCommentReplyForm.children.length > 0) {
@@ -99,8 +99,8 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
-                                            <button id={`comment_reply_form_button_${uuid}`} className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,user_tag,uuid,'',comment.name)}>投稿する</button>
-                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',uuid,user_tag)}>キャンセル</button>
+                                            <button id={`comment_reply_form_button_${uuid}`} className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,user_tag,group,uuid,comment.name)}>投稿する</button>
+                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',group,uuid,user_tag)}>キャンセル</button>
                                         </div>
                                     </div>
                                 </div>
@@ -121,8 +121,8 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
-                                            <button id={`comment_reply_form_button_${uuid}`} className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,user_tag,uuid,'',comment.name)}>投稿する</button>
-                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',uuid,user_tag)}>キャンセル</button>
+                                            <button id={`comment_reply_form_button_${uuid}`} className='inline-block bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => CommentReplyForm_send_ButtonClick(username,userId,user_tag,group,uuid,replyUser)}>投稿する</button>
+                                            <button className='inline-block bg-gray-500 hover:shadow-gray-500/20 hover:scale-105 active:shadow-gray-900/10 active:scale-95 shadow-lg rounded-lg px-[16px] py-[12px] text-sm transition duration-300 ease-in-out' onClick={() => set_comment_reply_form('comment',group,uuid,user_tag)}>キャンセル</button>
                                         </div>
                                     </div>
                                 </div>
@@ -134,17 +134,17 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
         };
     
         async function CommentReplyForm_send_ButtonClick(username: string, userId: string, user_tag: string, replyGroupId: string, replyId: string = 'false', replyUser: string) {
-            const comment_reply_form_button = document.getElementById(`comment_reply_form_button_${replyGroupId}`);
+            const comment_reply_form_button = document.getElementById(`comment_reply_form_button_${replyId}`);
             if (comment_reply_form_button) {
                 comment_reply_form_button.classList.add('pointer-events-none');
                 comment_reply_form_button.innerText = (`送信中...`);
                 
                 // この時点で要素が存在するので、以降のコードを実行
-                if (!obj_commentsId[replyGroupId].replyGroupId) {
-                    replyId = replyGroupId;
+                if (!obj_commentsId[replyId].replyId) {
+                    replyId = replyId;
                 }
                 
-                const text_CommentReplyForm = document.getElementById(`comment_reply_form_textarea_${replyGroupId}`) as HTMLInputElement;
+                const text_CommentReplyForm = document.getElementById(`comment_reply_form_textarea_${replyId}`) as HTMLInputElement;
                 if (text_CommentReplyForm) {
                     const comment = text_CommentReplyForm.value;
                     if (validationCheck_comment(comment)) {
@@ -244,7 +244,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                             </button>
                                             {sheetMode === 'comment' ? (
                                                 <>
-                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,user_tag)}>
+                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,comment.uuid,user_tag)}>
                                                         返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                         <span className='tooltiptext'>コメントに返信</span>
                                                     </button>
@@ -255,7 +255,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                         <>
                                                             {user_tag === 'developer' ? (
                                                                 <>
-                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,user_tag)}>
+                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment',comment.uuid,comment.uuid,user_tag)}>
                                                                         返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                                         <span className='tooltiptext'>コメントに返信</span>
                                                                     </button>
@@ -371,11 +371,11 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                 <span className="text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2">@{obj_commentsId[commentReply.replyId].name}</span>
                                                 {sheetMode === 'changelog' ? (
                                                     <>
-                                                        <span className='whitespace-break-spaces break-words' dangerouslySetInnerHTML={{ __html: comment.comment }}></span>
+                                                        <span className='whitespace-break-spaces break-words' dangerouslySetInnerHTML={{ __html: commentReply.comment }}></span>
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <span className='whitespace-break-spaces break-words'>{comment.comment}</span>
+                                                        <span className='whitespace-break-spaces break-words'>{commentReply.comment}</span>
                                                     </>
                                                 )}
                                             </span>
@@ -394,7 +394,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                             </button>
                                                             {sheetMode === 'comment' ? (
                                                                 <>
-                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid,user_tag)}>
+                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',comment.uuid,commentReply.uuid,user_tag,commentReply.name)}>
                                                                         返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                                         <span className='tooltiptext'>コメントに返信</span>
                                                                     </button>
@@ -405,7 +405,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                                                                         <>
                                                                             {user_tag === 'developer' ? (
                                                                                 <>
-                                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',commentReply.uuid,user_tag)}>
+                                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',comment.uuid,commentReply.uuid,user_tag,commentReply.name)}>
                                                                                         返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                                                         <span className='tooltiptext'>コメントに返信</span>
                                                                                     </button>
