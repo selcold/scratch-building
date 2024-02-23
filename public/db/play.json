@@ -69,6 +69,62 @@
             "mode": "beta",
             "content": [
                 {
+                    "date": "2023-11-17",
+                    "version": "alpha7.0.6",
+                    "description": "所持金などのステータスのセーブ/ロードを追加・新規作成画面を追加・サムネイルを更新・タブレットのUIを更新・ステータスバーを更新",
+                    "creator": "Masaabu-YT",
+                    "image_url": "",
+                    "links": [
+                        {
+                            "name": "プレイ",
+                            "url": "https://masaabu.github.io/Scratch-Building/pages/game/play/a7-0-6.html",
+                            "target": "_block"
+                        }
+                    ]
+                },
+                {
+                    "date": "2023-11-16",
+                    "version": "alpha7.0.5",
+                    "description": "ポーズメニューを追加・ビルのセーブ/ロードを追加・猫のコスチュームを追加・建築関連のバグ修正",
+                    "creator": "Masaabu-YT",
+                    "image_url": "",
+                    "links": [
+                        {
+                            "name": "プレイ",
+                            "url": "https://masaabu.github.io/Scratch-Building/pages/game/play/a7-0-5.html",
+                            "target": "_block"
+                        }
+                    ]
+                },
+                {
+                    "date": "2023-11-15",
+                    "version": "alpha7.0.4",
+                    "description": "猫を追加・トーストを追加・地下に影を追加・建築リストを更新・設定更新方法を変更・タブレットのUIを更新",
+                    "creator": "Masaabu-YT",
+                    "image_url": "",
+                    "links": [
+                        {
+                            "name": "プレイ",
+                            "url": "https://masaabu.github.io/Scratch-Building/pages/game/play/a7-0-4.html",
+                            "target": "_block"
+                        }
+                    ]
+                },
+                {
+                    "date": "2023-10-22",
+                    "version": "alpha7.0.1",
+                    "description": "設定を追加・ダイアログにアニメーションを追加",
+                    "creator": "Masaabu-YT",
+                    "image_url": "",
+                    "links": [
+                        {
+                            "name": "プレイ",
+                            "url": "https://masaabu.github.io/Scratch-Building/pages/game/play/a7-0-1.html",
+                            "target": "_block"
+                        }
+                    ]
+                },
+                {
                     "date": "2023-10-20",
                     "version": "alpha7.0.0",
                     "description": "部屋が表示されるだけで、その他のことはまだできません。",
@@ -77,8 +133,8 @@
                     "links": [
                         {
                             "name": "プレイ",
-                            "url": "#",
-                            "target": ""
+                            "url": "https://masaabu.github.io/Scratch-Building/pages/game/play/a7-0-0.html",
+                            "target": "_block"
                         }
                     ]
                 }

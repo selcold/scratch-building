@@ -169,6 +169,36 @@ export default function Home() {
 												これからもビル経営ゲームをよろしくお願いします！
 											</p>
 										</div>
+										{username==='false' ? (
+											<>
+											<div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+												<a href={links_config['site_url_docs/terms']} className='cursor-pointer'>
+														<h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - 利用規約</h2>
+														<p className='mb-[10px]'>
+														以下の利用規約をよくお読みいただき、ご理解いただいた上で、本サイトをご利用ください
+														</p>
+												</a>
+											</div>
+											</>
+										):(
+											<></>
+										)}
+										{user_tag==='member' ? (
+											<div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md">
+												<h2 className=' font-bold text-2xl'>アカウント認証</h2>
+												<p className='mb-[10px]'>
+													ウェブサイトで登録したアカウントを認証して、認証バッチを取得しよう！
+												</p>
+												<a href={`https://scratch.mit.edu/projects/968979013/`} target='_block'>
+													<button className='bg-blue-500 hover:shadow-blue-500/20 hover:scale-105 active:shadow-blue-900/10 active:scale-95 shadow-lg rounded-lg m-auto px-[18px] py-[10px] text-sm transition duration-300 ease-in-out'>
+													認証する
+													</button>
+												</a>
+											</div>
+										):(
+											<>
+											</>
+										)}
 										<div className='fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md'>
 											<h2 className=' font-bold text-2xl'>コメント欄</h2>
 											<div className='flex flex-col justify-center items-center max-w-[600px] m-auto mt-[10px] pt-2 pb-5 gap-2 border-b-[2px] border-zinc-700'>
@@ -223,20 +253,6 @@ export default function Home() {
 												)}
 											</ul>
 										</div>
-										{username==='false' ? (
-											<>
-											<div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
-												<a href={links_config['site_url_docs/terms']} className='cursor-pointer'>
-														<h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - 利用規約</h2>
-														<p className='mb-[10px]'>
-														以下の利用規約をよくお読みいただき、ご理解いただいた上で、本サイトをご利用ください
-														</p>
-												</a>
-											</div>
-											</>
-										):(
-											<></>
-										)}
 										<div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto hidden">
 											<div className="animate-pulse flex space-x-4">
 												<div className="rounded-full bg-slate-700 h-10 w-10"></div>
