@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   applicationName: "ビル経営ゲーム",
   openGraph: {
     type: "website",
-    url: "https://generated.vercel.app/",
+    url: "https://scratch-building.vercel.app/",
     title: "ビル経営ゲーム",
     description: "A building management game is a simulation game where you create buildings using Scratch.",
     siteName: "ビル経営ゲーム",

@@ -1,6 +1,6 @@
 {
-  "name":"Scratch Building",
-  "short_name":"Scratch Building",
+  "name":"ビル経営ゲーム",
+  "short_name":"ビル経営ゲーム",
   "description":"ビル経営ゲームはScratchで作られたビルを作るシミュレーションゲームです。",
   "start_url":"/",
   "display_override": [
