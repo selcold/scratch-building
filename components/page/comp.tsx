@@ -148,7 +148,7 @@ export function CommentAddHtml(sheetMode: string,commentData: Comment[], usernam
                 if (text_CommentReplyForm) {
                     const comment = text_CommentReplyForm.value;
                     if (validationCheck_comment(comment)) {
-                        if (await API_gas_backendApi_new_commentSend(username, userId, user_tag, comment, replyGroupId, replyId, replyUser)) {
+                        if (await API_gas_backendApi_new_commentSend('comment',username, userId, avatar_url, user_tag, comment, replyGroupId, replyId, replyUser)) {
                             if (typeof window !== 'undefined') {
                                 window.alert('コメントを投稿しました！');
                                 window.location.href = (`${window.location}`);
