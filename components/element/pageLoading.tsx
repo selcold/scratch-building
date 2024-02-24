@@ -1,3 +1,5 @@
+'use client'
+
 export function PageLoading() {
     return (
         <div className="fixed flex justify-center items-center w-full h-full" aria-label="loading">

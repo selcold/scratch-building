@@ -83,10 +83,11 @@ export const API_gas_backendApi_new_commentSend = async (sheetMode:string,userna
         const compileTime = Math.round(compileEndTime - compileStartTime);
         //customLog(`Communicating with the comment database took ${compileTime}ms.`, '✓', '32', '0', 'log');
         if(sheetMode === 'comment'){
+            let commentEm = "```"+comment+"```";
             if(replyGroupId==='false'){
-                sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`### ${comment}`,`discord`,username,avatar_url);
+                sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`### ${commentEm}`,`discord`,username,avatar_url);
             }else{
-                sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`_@${replyUser}に返信_\n### ${comment}`,`discord`,username,avatar_url);
+                sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`_@${replyUser}に返信_\n### ${commentEm}`,`discord`,username,avatar_url);
             };
         };
         return true

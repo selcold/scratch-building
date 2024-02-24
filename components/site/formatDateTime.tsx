@@ -1,3 +1,5 @@
+'use client'
+
 export function formatDateTime(dateTime: Date): string {
     const year = dateTime.getFullYear();
     const month = ('0' + (dateTime.getMonth() + 1)).slice(-2);

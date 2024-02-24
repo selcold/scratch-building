@@ -1,5 +1,6 @@
-import links_config from "../../public/db/data/links_config";
+'use client'
 
+import links_config from "../../public/db/data/links_config";
 
 export const TopImage = ({ title }: { title?: string | null }) => {
     const defaultTitle = `${links_config.game_name}v${links_config.game_version}`;
@@ -16,9 +17,9 @@ export const TopImage = ({ title }: { title?: string | null }) => {
                         <div className='absolute bottom-2 left-2'>
                             <h1 className='mb-1'>{defaultTitle}</h1>
                             <a href={links_config.game_play_url} target='_block'>
-                            <button className='button_border_1'>
-                            {links_config.game_play_platform}でプレイ
-                            </button>
+                                <button className='button_border_1'>
+                                {links_config.game_play_platform}でプレイ
+                                </button>
                             </a>
                         </div>
                         <div className="w-full text-center mt-10 lg:mt-20">

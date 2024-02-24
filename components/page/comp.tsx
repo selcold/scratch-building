@@ -8,7 +8,7 @@ import { API_gas_backendApi_new_commentSend } from "../api/comments";
 import { customLog } from "../api/customLog";
 import { validationCheck_comment } from "../site/validation";
 import { SignInButton } from "@clerk/nextjs";
-import { TextCopyToClipboard } from "../site/copy";
+import { TextCopyToClipboard } from "../site/site";
 
 interface Comment {
     avatar_url: string;

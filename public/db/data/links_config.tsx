@@ -1,3 +1,5 @@
+'use client'
+
 const links_config = {
     "game_version":"7.0",
     "game_name":"ビル経営ゲーム",

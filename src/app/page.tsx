@@ -16,6 +16,14 @@ import { CommentAddHtml } from '../../components/page/comp';
 import { TopImage } from '../../components/element/topimage';
 import { PageLoading } from '../../components/element/pageLoading';
 import { SiteViewCheck, SiteViewSetVal } from '../../components/element/siteViewCheck';
+import Image from 'next/image';
+
+const ad_config = {
+	"title": "ビル経営ゲーム",
+	"description": "ビル経営ゲームはScratchで作られたビルを作るシミュレーションゲームです。",
+	"projectId": "927111186",
+	"creator": "User",
+}
 
 export default function Home() {
 	// ページロード
@@ -168,6 +176,40 @@ export default function Home() {
 												<br/>
 												これからもビル経営ゲームをよろしくお願いします！
 											</p>
+										</div>
+										<div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md" style={{backgroundImage: `url(https://uploads.scratch.mit.edu/get_image/project/${ad_config.projectId}_480x360.png)`, backgroundRepeat: `no-repeat`, backgroundSize: `cover`, backgroundPosition: `center`}}>
+											<a href={`https://scratch.mit.edu/projects/${ad_config.projectId}/`} className='relative select-none' target='_block' title={ad_config.description}>
+												<Image
+													src={`https://uploads.scratch.mit.edu/get_image/project/${ad_config.projectId}_480x360.png`}
+													alt="Landscape picture"
+													width={400}
+													height={300}
+													className='rounded-lg pointer-events-none opacity-0'
+												/>
+											</a>
+											<div>
+												<h2 className='absolute top-0 left-0 rounded-md bg-zinc-700/80 px-[3px] py-[2px] m-[8px] font-[450] break-all'>{ad_config.title}</h2>
+												<p className='hidden md:block absolute bottom-0 left-0 rounded-md bg-zinc-700/80 px-[3px] py-[2px] m-[8px] break-all'>{ad_config.description}</p>
+											</div>
+										</div>
+										<div className="fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md">
+											<h2 className='font-bold text-2xl mb-1'>広告</h2>
+											<p className='mb-2 text-zinc-400'>提供: Masaabu-YT</p>
+											<div className='max-w-[400px] w-auto max-h-[300px] h-auto m-auto'>
+												<a href={`https://scratch.mit.edu/projects/${ad_config.projectId}/`} className='relative select-none' target='_block' title={ad_config.description}>
+													<Image
+														src={`https://uploads.scratch.mit.edu/get_image/project/${ad_config.projectId}_480x360.png`}
+														alt="Landscape picture"
+														width={400}
+														height={300}
+														className='rounded-lg pointer-events-none'
+														/>
+													<div>
+														<h2 className='absolute top-0 left-0 rounded-md bg-zinc-700/80 px-[3px] py-[2px] m-[8px] font-[450] break-all'>{ad_config.title}</h2>
+														<p className='hidden md:block absolute bottom-0 left-0 rounded-md bg-zinc-700/80 px-[3px] py-[2px] m-[8px] break-all'>{ad_config.description}</p>
+													</div>
+												</a>
+											</div>
 										</div>
 										{username==='false' ? (
 											<>

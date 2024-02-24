@@ -1,3 +1,5 @@
+'use client'
+
 import { useUser, useAuth } from '@clerk/nextjs';
 
 export const UserInfo_username = () => {
