@@ -6,7 +6,7 @@
     "content_list": [
         {
             "group": "SB MOD [v7]",
-            "description": "使い方は<a href='../wiki/content/sbmod/' class='text-[#6094F8]' target='_blank'>こちら</a>",
+            "description": "使い方は<a href='../wiki/content/sbmod/' style='color: #6094F8;' target='_blank'>こちら</a>",
             "creator": "@Masaabu-YT",
             "content": [
                 {
@@ -25,7 +25,7 @@
         },
         {
             "group": "SBAPI [v7]",
-            "description": "使い方は<a href='https://note.com/metaroro/n/n8a8ed937bb04' class='text-[#6094F8]' target='_blank'>こちら</a>",
+            "description": "使い方は<a href='https://note.com/metaroro/n/n8a8ed937bb04' style='color: #6094F8;' target='_blank'>こちら</a>",
             "creator": "@dmmo-com-jp",
             "content": [
                 {
@@ -99,7 +99,7 @@
         },
         {
             "group": "SB Addon API [v6]",
-            "description": "使い方は<a href='https://note.com/metaroro/n/n8a8ed937bb04' class='text-[#6094F8]' target='_blank'>こちら</a>",
+            "description": "使い方は<a href='https://note.com/metaroro/n/n8a8ed937bb04' style='color: #6094F8;' target='_blank'>こちら</a>",
             "creator": "@dmmo-com-jp",
             "content": [
                 {

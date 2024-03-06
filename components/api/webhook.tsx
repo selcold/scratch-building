@@ -11,7 +11,7 @@ export const sendWebhook = async (_webhookUrl:string, webhookSendData:string, mo
         const compileStartTime = performance.now();
         const webhookUrl = _webhookUrl;
         let dataToSend = {
-            content: `${webhookSendData}`,
+            content: `${webhookSendData.replace(/@/g, '@\u200B')}`,
             username: '',
             avatar_url: '',
         };

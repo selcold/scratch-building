@@ -77,56 +77,85 @@ export default function Home() {
                         </div>
                         {/* メイン */}
                         <div className='mt-20 mb-20'>
-                            <div className="items-center">
-                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
-                                    <a href={links_config.site_url_mods} className='cursor-pointer'>
-                                        <h2 className=' font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - MOD</h2>
-                                        <p className='mb-[10px]'>
-                                        ビル経営ゲームのMODはゲームをより面白くできる拡張機能のようなものです！自分で作ることもできるので是非 [前提MOD] と書いてあるプロジェクトを見てみてください！
-                                        </p>
-                                    </a>
-                                </div>
-                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
-                                    <a href={links_config.site_url_qa} className='cursor-pointer'>
-                                        <h2 className=' font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - Q&A</h2>
-                                        <p className='mb-[10px]'>
-                                        ビル経営ゲームに関することで、気になることなどをここで聞いて解決しよう
-                                        </p>
-                                    </a>
-                                </div>
-                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
-                                    <a href={links_config['site_url_docs/ad']} className='cursor-pointer'>
-                                        <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - AD</h2>
-                                        <p className='mb-[10px]'>
-                                        作品を広告で宣伝したいと思ったことはありませんか？そんなあなたへ！誰でも簡単に広告を作成して公開することができるサービスを利用しましょう！
-                                        </p>
-                                    </a>
-                                </div>
-                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
-                                    <a href={links_config.site_url_changelog} className='cursor-pointer'>
-                                        <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - 変更履歴</h2>
-                                        <p className='mb-[10px]'>
-                                            ビル経営ゲームのアップデート情報などを確認できる
-                                        </p>
-                                    </a>
-                                </div>
-                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
-                                    <a href={links_config['site_url_docs/terms']} className='cursor-pointer'>
-                                        <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - 利用規約</h2>
-                                        <p className='mb-[10px]'>
-                                        以下の利用規約をよくお読みいただき、ご理解いただいた上で、本サイトをご利用ください
-                                        </p>
-                                    </a>
-                                </div>
-                                <div className="animated-slideIn-up bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
-                                    <a href={links_config['site_url_docs/guideline']} className='cursor-pointer'>
-                                        <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - ガイドライン</h2>
-                                        <p className='mb-[10px]'>
-                                        コミュニティーの健全な環境を保つためのお手伝いをしてください
-                                        </p>
-                                    </a>
-                                </div>
-                            </div>
+                            <ul className="flex flex-col justify-center items-center gap-5 *:max-w-[800px] *:w-full *:m-auto">
+                                <li>
+                                    <div className='border-zinc-600 border-b-2 p-2 mb-5'>
+                                        <h1 className='font-bold text-3xl text-start'>全体</h1>
+                                    </div>
+                                    <section className='flex flex-col justify-center gap-3'>
+                                        <div className="animated-slideIn-up bg-zinc-800 w-full p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                            <a href={links_config.site_url_qa} className='cursor-pointer'>
+                                                <h2 className=' font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - Q&A</h2>
+                                                <p className='mb-[10px]'>
+                                                ビル経営ゲームに関することで、気になることなどをここで聞いて解決しよう
+                                                </p>
+                                            </a>
+                                        </div>
+                                    </section>
+                                </li>
+                                <li>
+                                    <div className='border-zinc-600 border-b-2 p-2 mb-5'>
+                                        <h1 className='font-bold text-3xl text-start'>ゲーム関係</h1>
+                                    </div>
+                                    <section className='flex flex-col justify-center gap-3'>
+                                        <div className="animated-slideIn-up bg-zinc-800 w-full ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                            <a href={links_config.site_url_mods} className='cursor-pointer'>
+                                                <h2 className=' font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - MOD</h2>
+                                                <p className='mb-[10px]'>
+                                                ビル経営ゲームのMODはゲームをより面白くできる拡張機能のようなものです！自分で作ることもできるので是非 [前提MOD] と書いてあるプロジェクトを見てみてください！
+                                                </p>
+                                            </a>
+                                        </div>
+                                        <div className="animated-slideIn-up bg-zinc-800 w-full ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                            <a href={links_config['site_url_wiki/mods/sbmod']} className='cursor-pointer'>
+                                                <h2 className=' font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - SB MOD</h2>
+                                                <p className='mb-[10px]'>
+                                                SB MODとは、ビル経営ゲームv7でMODを作成する時に役に立つツールである。スプライトを好きなビル経営ゲームクライアントに追加することで自分の好きな要素を追加できる。
+                                                </p>
+                                            </a>
+                                        </div>
+                                    </section>
+                                </li>
+                                <li>
+                                    <div className='border-zinc-600 border-b-2 p-2 mb-5'>
+                                        <h1 className='font-bold text-3xl text-start'>サイト関係</h1>
+                                    </div>
+                                    <section className='flex flex-col justify-center gap-3'>
+                                        <div className="animated-slideIn-up bg-zinc-800 w-full ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                            <a href={links_config['site_url_docs/ad']} className='cursor-pointer'>
+                                                <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - AD</h2>
+                                                <p className='mb-[10px]'>
+                                                作品を広告で宣伝したいと思ったことはありませんか？そんなあなたへ！誰でも簡単に広告を作成して公開することができるサービスを利用しましょう！
+                                                </p>
+                                            </a>
+                                        </div>
+                                        <div className="animated-slideIn-up bg-zinc-800 w-full ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                            <a href={links_config.site_url_changelog} className='cursor-pointer'>
+                                                <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - 変更履歴</h2>
+                                                <p className='mb-[10px]'>
+                                                    ビル経営ゲームのアップデート情報などを確認できる
+                                                </p>
+                                            </a>
+                                        </div>
+                                        <div className="animated-slideIn-up bg-zinc-800 w-full ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                            <a href={links_config['site_url_docs/terms']} className='cursor-pointer'>
+                                                <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - 利用規約</h2>
+                                                <p className='mb-[10px]'>
+                                                以下の利用規約をよくお読みいただき、ご理解いただいた上で、本サイトをご利用ください
+                                                </p>
+                                            </a>
+                                        </div>
+                                        <div className="animated-slideIn-up bg-zinc-800 w-full ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md hover:shadow-zinc-500/20 hover:scale-[1.02] active:shadow-zinc-900/10 active:scale-95 transition duration-300 ease-in-out">
+                                            <a href={links_config['site_url_docs/guideline']} className='cursor-pointer'>
+                                                <h2 className='font-bold text-2xl text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2'>ビル経営ゲーム - ガイドライン</h2>
+                                                <p className='mb-[10px]'>
+                                                コミュニティーの健全な環境を保つためのお手伝いをしてください
+                                                </p>
+                                            </a>
+                                        </div>
+                                    </section>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <Footer/>

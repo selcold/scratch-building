@@ -17,6 +17,7 @@ import { TopImage } from '../../components/element/topimage';
 import { PageLoading } from '../../components/element/pageLoading';
 import { SiteViewCheck, SiteViewSetVal } from '../../components/element/siteViewCheck';
 import Image from 'next/image';
+import Script from 'next/script';
 
 const ad_config = {
 	"title": "ビル経営ゲーム",
@@ -208,17 +209,20 @@ export default function Home() {
 												)}
 											</>
 										)}
-										<div>
-											<a href={`https://scratch.mit.edu/projects/${ad_config.projectId}/`} className='relative' target='_block' title={ad_config.description}>
-												<div className="relative fadeUpTrigger bg-zinc-800 border-zinc-500 border-2 max-w-[800px] min-h-[239.183px] md:min-h-[400px] h-full my-[20px] mx-2 md:mx-auto rounded-[10px] shadow-md select-none" style={{backgroundImage: `url(https://uploads.scratch.mit.edu/get_image/project/${ad_config.projectId}_480x360.png)`, backgroundRepeat: `no-repeat`, backgroundSize: `cover`, backgroundPosition: `center`}}>
-													<div>
-														<h2 className='absolute top-0 left-0 rounded-md bg-zinc-700/90 px-[5px] py-[3px] m-[8px] font-[450] break-all'>広告：{ad_config.title}</h2>
-														<p className='hidden md:block absolute bottom-0 left-0 rounded-md bg-zinc-700/90 px-[5px] py-[3px] m-[8px] break-all'>{ad_config.description}</p>
-														<p className='block md:hidden absolute bottom-0 left-0 rounded-md bg-orange-400/80 px-[5px] py-[3px] m-[8px] break-all'>広告</p>
+										<details className='fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto py-[5px] md:p-[10px] md:rounded-[10px] shadow-md group' open>
+											<summary className='ml-3 md:ml-0'>広告</summary>
+											<div>
+												<a href={`https://scratch.mit.edu/projects/${ad_config.projectId}/`} target='_block' title={ad_config.description}>
+													<div className="relative bg-zinc-800 border-zinc-500 border-[1px] max-w-[800px] min-h-[239.183px] md:min-h-[400px] h-full mt-[20px] mx-2 md:mx-auto rounded-[10px] shadow-md select-none" style={{backgroundImage: `url(https://uploads.scratch.mit.edu/get_image/project/${ad_config.projectId}_480x360.png)`, backgroundRepeat: `no-repeat`, backgroundSize: `cover`, backgroundPosition: `center`}}>
+														<div>
+															<h2 className='absolute top-0 left-0 rounded-md bg-zinc-700/90 px-[5px] py-[3px] m-[8px] font-[450] break-all'>広告：{ad_config.title}</h2>
+															<p className='hidden md:block absolute bottom-0 left-0 rounded-md bg-zinc-700/90 px-[5px] py-[3px] m-[8px] break-all'>{ad_config.description}</p>
+															<p className='block md:hidden absolute bottom-0 left-0 rounded-md bg-orange-400/80 px-[5px] py-[3px] m-[8px] break-all'>広告</p>
+														</div>
 													</div>
-												</div>
-											</a>
-										</div>
+												</a>
+											</div>
+										</details>
 										<div className='fadeUpTrigger bg-zinc-800 max-w-[800px] mt-[20px] mb-[20px] ml-auto mr-auto p-[20px] md:rounded-[10px] shadow-md'>
 											<h2 className=' font-bold text-2xl'>コメント欄</h2>
 											<div className='flex flex-col justify-center items-center max-w-[600px] m-auto mt-[10px] pt-2 pb-5 gap-2 border-b-[2px] border-zinc-700'>
