@@ -109,23 +109,23 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                         const root = createRoot(HtmlCommentReplyForm);
                         root.render(
                             <div id={`comment_reply_form_${ComRepFo_id}`} className="animated-slideIn-up relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem]">
-                            <a className='select-none pointer-events-none'>
-                                <img src={userImage} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
-                            </a>
-                            <div className='flex flex-wrap flex-col justify-center items-center ml-1 w-full bg-card text-card-foreground'>
-                                <div className='w-full'>
+                                <a className='select-none pointer-events-none'>
+                                    <img src={userImage} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
+                                </a>
+                                <div className='flex flex-wrap flex-col justify-center items-center ml-1 w-full bg-card text-card-foreground'>
                                     <div className='w-full'>
-                                        <div>
-                                            <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                        <div className='w-full'>
+                                            <div>
+                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
-                                        <Button id={`comment_reply_form_button_${ComRepFo_id}`} onClick={() => CommentReplyForm_send_ButtonClick(username, userId, ComRepFo_user_tag, ComRepFo_group, ComRepFo_id, ComRepFo_replyUser)}>投稿する</Button>
-                                        <Button id={`comment_reply_form_button_${ComRepFo_id}`} variant="outline" onClick={() => set_comment_reply_form('comment',ComRepFo_group, ComRepFo_id, ComRepFo_user_tag)}>キャンセル</Button>
+                                        <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
+                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} onClick={() => CommentReplyForm_send_ButtonClick(username, userId, ComRepFo_user_tag, ComRepFo_group, ComRepFo_id, ComRepFo_replyUser)}>投稿する</Button>
+                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} variant="outline" onClick={() => set_comment_reply_form('comment',ComRepFo_group, ComRepFo_id, ComRepFo_user_tag)}>キャンセル</Button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         );
                     } else {
                         const root = createRoot(HtmlCommentReplyForm);
@@ -138,7 +138,7 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                     <div className='w-full'>
                                         <div className='w-full'>
                                             <div>
-                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
