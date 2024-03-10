@@ -378,3 +378,38 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
 
 // htmlとしてコメントを出力
 // <span className='whitespace-break-spaces break-words' dangerouslySetInnerHTML={{ __html: comment.comment }}></span>
+
+export function CommentsHtmlContents({ commentsRes, comments, username, userId, userImage } : { commentsRes: boolean, comments: any, username: string | null, userId: string, userImage: string }) {
+    return (
+        <>
+            <section className="p-6 pt-0">
+                <ul className="flex flex-col justify-center items-center gap-1 w-full mt-10 *:flex *:flex-row *:flex-wrap *:justify-end *:items-center *:w-full *:p-1">
+                {commentsRes? (
+                <>
+                {comments.length > 0 ? (
+                    <>
+                    {CommentsHTML(comments, username? username: '',userId,userImage)}
+                    </>
+                ) : (
+                    <>
+                        <li className='animated-slideIn-up p-2'>
+                            <h1 className='text-zinc-400 text-[1.2rem] m-auto'>コメントがまだ投稿されていません</h1>
+                        </li>
+                    </>
+                )}
+                </>
+                ):(
+                <>
+                    <div className='w-full m-auto'>
+                        <div className='flex flex-col justify-center items-center gap-2 w-full m-auto'>
+                            <div className="animate-spin h-10 w-10 border-4 border-neutral-300 rounded-full border-t-transparent"></div>
+                            <span className='text-neutral-300 dark:text-neutral-700'>コメント取得中...</span>
+                        </div>
+                    </div>
+                </>
+                )}
+                </ul>
+            </section>
+        </>
+    )
+}

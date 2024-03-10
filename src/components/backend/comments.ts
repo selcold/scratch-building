@@ -62,11 +62,3 @@ export const API_gas_backendApi_new_commentSend = async ( user_name: string, use
         return false
     };
 };
-
-function ValidationCheck_comment(content: string){
-    const newContent = content.replace(/\s+/g,'');
-    if(newContent.length > 0){
-        return content;
-    }
-    return false;
-};

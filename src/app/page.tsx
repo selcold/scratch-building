@@ -11,7 +11,7 @@ import Loading from "@/components/frontend/elements/loading";
 import { ElementGroup, Main } from "@/components/frontend/elements/main";
 import Image from "next/image";
 import { _locales } from "@/components/frontend/site/_locales";
-import { ScratchAuth_logout, ScratchAuth_redirectToAuth } from "@/components/frontend/_scratch";
+import { ScratchAuth_logout, ScratchAuth_redirectToAuth, ValidationCheck_comment } from "@/components/frontend/_scratch";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/select"
 import { CardContents } from "@/components/frontend/elements/card";
 import { Textarea } from "@/components/ui/textarea";
-import { CommentsHTML } from "@/components/frontend/elements/comments";
+import { CommentsHTML, CommentsHtmlContents } from "@/components/frontend/elements/comments";
 import { API_gas_backendApi_new_commentSend, Server_GetRequest_Comments } from "@/components/backend/comments";
 
 export default function Home() {
@@ -75,7 +75,8 @@ export default function Home() {
 							}
 						}
                         setUserData(userData);
-                    }
+                    } else {
+					}
                 }
                 setPageLoaded(true);
             } catch (error) {
@@ -102,6 +103,8 @@ export default function Home() {
 					}else{
 						setCommentsRes(true);
 					}
+				}else{
+					setCommentsRes(true);
 				}
 			} catch (error) {
 				console.error('コメントの取得中にエラーが発生しました:', error);
@@ -115,15 +118,23 @@ export default function Home() {
 	// コメント送信
 	const CommentForm_send_ButtonClick = async () => {
 		if (typeof window !== 'undefined') {
-			if(username && userId && comment){
+			if(userData.username && userData.id){
 				const comment_reply_form_button = document.getElementById(`commentForm_send`);
 				if(comment_reply_form_button){
 					comment_reply_form_button.classList.add('pointer-events-none');
 					comment_reply_form_button.innerText=(`送信中...`)
 				}
-				if(await API_gas_backendApi_new_commentSend(username, userId, "null", comment)){
-					window.alert('コメントを投稿しました！');
-					window.location.href=(`${window.location}`);
+				if(ValidationCheck_comment(comment)) {					
+					if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, "null", comment)){
+						window.alert('コメントを投稿しました！');
+						window.location.href=(`${window.location}`);
+					}else{
+						window.alert('スペース以外の文字を最低一文字入力してください！');
+						if(comment_reply_form_button){
+							comment_reply_form_button.classList.remove('pointer-events-none');
+							comment_reply_form_button.innerText=(`コメントを投稿`)
+						}
+					}
 				}else{
 					window.alert('スペース以外の文字を最低一文字入力してください！');
 					if(comment_reply_form_button){
@@ -171,7 +182,7 @@ export default function Home() {
 								<CardHeader>
 									<CardTitle>コメント</CardTitle>
 								</CardHeader>
-								{username? (
+								{userData? (
 								<>
 								<CardContent>
 									<Textarea placeholder="コメント内容" onChange={(e) => setComment(e.target.value)} />
@@ -183,36 +194,15 @@ export default function Home() {
 								</>
 								):(
 								<>
+								<CardContent>
+									<Textarea placeholder="ログインすることでコメント機能を利用できます。" />
+								</CardContent>
+								<CardFooter className="flex flex-wrap gap-2">
+									<Button onClick={() => ScratchAuth_redirectToAuth()}>ログインして利用する</Button>
+								</CardFooter>
 								</>
 								)}
-								<section className="p-6 pt-0">
-									<ul className="flex flex-col justify-center items-center gap-1 w-full mt-10 *:flex *:flex-row *:flex-wrap *:justify-end *:items-center *:w-full *:p-1">
-									{commentsRes? (
-									<>
-									{comments.length > 0 ? (
-										<>
-										{CommentsHTML(comments, username? username: '',userId,userImage)}
-										</>
-									) : (
-										<>
-											<li className='animated-slideIn-up p-2'>
-												<h1 className='text-zinc-400 text-[1.2rem] m-auto'>コメントがまだ投稿されていません</h1>
-											</li>
-										</>
-									)}
-									</>
-									):(
-									<>
-										<div className='w-full m-auto'>
-											<div className='flex flex-col justify-center items-center gap-2 w-full m-auto'>
-												<div className="animate-spin h-10 w-10 border-4 border-neutral-300 rounded-full border-t-transparent"></div>
-												<span className='text-neutral-300 dark:text-neutral-700'>コメント取得中...</span>
-											</div>
-										</div>
-									</>
-									)}
-									</ul>
-								</section>
+								<CommentsHtmlContents commentsRes={commentsRes} comments={comments} username={username} userId={userId} userImage={userImage} />
 							</CardContents>
 						</section>
 					</Main>
