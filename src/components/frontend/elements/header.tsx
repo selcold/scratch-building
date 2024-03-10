@@ -63,7 +63,11 @@ const HeaderNav = [
 	{ name: _locales('Home'), href: _cfgSite.links_home, target: '_self' },
 ]
 
-export default function Header({ username, userData }: { username: string | null, userData: any | null}) {
+export default function Header({ userData }: { userData: any }) {
+    let username = "";
+    if(userData){
+        username = userData.username;
+    }
 
     return (
         <>
@@ -89,7 +93,7 @@ export default function Header({ username, userData }: { username: string | null
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
                                 <Avatar className="w-[30px] h-[30px]">
-                                    <AvatarImage src={userData? userData.profile.images['90x90'] : ''} alt={username? `@${username}` : '@guest'}/>
+                                    <AvatarImage src={userData? userData.profile.images['90x90'] : '/icons/scratch/scratch_guest.png'} alt={username? `@${username}` : '@guest'}/>
                                     <AvatarFallback>ICO</AvatarFallback>
                                 </Avatar>
                             </Button>
@@ -192,7 +196,7 @@ export default function Header({ username, userData }: { username: string | null
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
                                         <Avatar className="w-[30px] h-[30px]">
-                                            <AvatarImage src={userData? userData.profile.images['90x90'] : ''} alt={username? `@${username}` : '@guest'}/>
+                                            <AvatarImage src={userData? userData.profile.images['90x90'] : '/icons/scratch/scratch_guest.png'} alt={username? `@${username}` : '@guest'}/>
                                             <AvatarFallback>ICO</AvatarFallback>
                                         </Avatar>
                                     </Button>

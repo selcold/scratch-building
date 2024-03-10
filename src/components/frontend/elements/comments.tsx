@@ -408,7 +408,7 @@ export function CommentsHtmlContents({ commentsRes, comments, userData } : { com
 
     let username = "";
     let userId = "";
-    let userImage = "";
+    let userImage = "/icons/scratch/scratch_guest.png";
     if(userData){
         username = userData.username;
         userId = userData.id;
@@ -423,7 +423,7 @@ export function CommentsHtmlContents({ commentsRes, comments, userData } : { com
                 <>
                 {comments.length > 0 ? (
                     <>
-                    {CommentsHTML(comments, username? username: '',userId,userImage)}
+                    {CommentsHTML(comments, username, userId, userImage)}
                     </>
                 ) : (
                     <>

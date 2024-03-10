@@ -171,7 +171,7 @@ export default function Home() {
 		<>
 			<div>
 				<ElementGroup>
-					<Header username={username} userData={userData}/>
+					<Header userData={userData}/>
 					<Main>
 						<section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
 							<CardContents>
