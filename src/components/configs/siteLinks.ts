@@ -1,6 +1,9 @@
 export const _cfgSite = {
-    origin: "http://localhost:3000",
+    origin: "https://scratch-building-beta.vercel.app",
     title: "Scratch Building",
 
     links_home: "/",
 }
+
+// https://scratch-building-beta.vercel.app
+// http://localhost:3000

@@ -183,11 +183,6 @@ export default function Home() {
 								</>
 								):(
 								<>
-								<CardContent>
-									<div className='flex flex-col justify-center items-center gap-2 w-full m-auto'>
-										<span className='text-neutral-300 dark:text-neutral-700'>ユーザー認証中...</span>
-									</div>
-								</CardContent>
 								</>
 								)}
 								<section className="p-6 pt-0">
