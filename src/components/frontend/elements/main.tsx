@@ -13,7 +13,7 @@ export function ElementGroup({ children, className }: { children: React.ReactNod
 export function Main({ children, className }: { children: React.ReactNode, className?: string}) {
     return (
         <>
-            <main className={`w-full h-full mt-[78px] ${className? className:''}`}>
+            <main className={`w-full h-full mt-[78px] p-0 ${className? className:''}`}>
                 {children}
             </main>
         </>

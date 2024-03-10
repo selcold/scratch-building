@@ -6,6 +6,19 @@ import { createRoot } from "react-dom/client";
 import { API_gas_backendApi_new_commentSend, Server_GetRequest_Comments } from "@/components/backend/comments";
 import { formatDateTime } from "../site/formatDateTime";
 import { Button } from "@/components/ui/button";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import { ScratchAuth_redirectToAuth, Scratch_GET_user_image } from "../_scratch";
+import { AlertDialogCustomButton_NotRelease, AlertDialogCustomButton_loginUserOnly } from "../site/AlertDialog";
 
 interface Comments {
     timestamp: Date,
@@ -233,15 +246,17 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                 <span className='text-zinc-500'>{formattedTimestamp}</span>
                                 {username? (
                                     <>
-                                        <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.id,`${window.location.href}?#commentId_${comment.id}`)}>
+                                        <div className="flex flex-wrap gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.id,`${window.location.origin}${window.location.pathname}#commentId_${comment.id}`)}>
                                                 <FontAwesomeIcon icon={faLink}/>
                                                 <span id={`handleCopy_${comment.id}`} className='tooltiptext'>コピー</span>
                                             </button>
-                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={HandleReport}>
-                                                報告
-                                                <span className='tooltiptext'>コメントを報告します</span>
-                                            </button>
+                                            <AlertDialogCustomButton_NotRelease>
+                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                    報告
+                                                    <span className='tooltiptext'>コメントを報告します</span>
+                                                </button>
+                                            </AlertDialogCustomButton_NotRelease>
                                             <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form("comment", comment.id, comment.id, "", comment.author.username)}>
                                                 返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                 <span className='tooltiptext'>コメントに返信</span>
@@ -251,19 +266,23 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                 ) : (
                                     <>
                                         <div>
-                                            <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                            <div className="flex flex-wrap gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.id,`${window.location.origin}${window.location.pathname}#commentId_${comment.id}`)}>
                                                     <FontAwesomeIcon icon={faLink}/>
-                                                    <span className='tooltiptext'>コピー</span>
+                                                    <span id={`handleCopy_${comment.id}`} className='tooltiptext'>コピー</span>
                                                 </button>
-                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                    報告
-                                                    <span className='tooltiptext'>コメントを報告します</span>
-                                                </button>
-                                                <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                    返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                    <span className='tooltiptext'>コメントに返信</span>
-                                                </button>
+                                                <AlertDialogCustomButton_loginUserOnly>
+                                                    <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                        報告
+                                                        <span className='tooltiptext'>コメントを報告します</span>
+                                                    </button>
+                                                </AlertDialogCustomButton_loginUserOnly>
+                                                <AlertDialogCustomButton_loginUserOnly>
+                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                        返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
+                                                        <span className='tooltiptext'>コメントに返信</span>
+                                                    </button>
+                                                </AlertDialogCustomButton_loginUserOnly>
                                             </div>
                                         </div>
                                     </>
@@ -325,15 +344,17 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                                 <span className='text-zinc-500'>{formattedTimestamp}</span>
                                                 {username? (
                                                     <>
-                                                        <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.id,`${window.location.href}?#commentId_${commentReply.id}`)}>
+                                                        <div className="flex flex-wrap gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+                                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(commentReply.id,`${window.location.origin}${window.location.pathname}?#commentId_${commentReply.id}`)}>
                                                                 <FontAwesomeIcon icon={faLink}/>
                                                                 <span id={`handleCopy_${commentReply.id}`} className='tooltiptext'>コピー</span>
                                                             </button>
-                                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={HandleReport}>
-                                                                報告
-                                                                <span className='tooltiptext'>コメントを報告します</span>
-                                                            </button>
+                                                            <AlertDialogCustomButton_NotRelease>
+                                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                    報告
+                                                                    <span className='tooltiptext'>コメントを報告します</span>
+                                                                </button>
+                                                            </AlertDialogCustomButton_NotRelease>
                                                             <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',comment.id,commentReply.id,"",commentReply.author.username)}>
                                                                 返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                                 <span className='tooltiptext'>コメントに返信</span>
@@ -343,19 +364,23 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                                 ) : (
                                                     <>
                                                         <div>
-                                                            <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                            <div className="flex flex-wrap gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
+                                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(commentReply.id,`${window.location.origin}${window.location.pathname}?#commentId_${commentReply.id}`)}>
                                                                     <FontAwesomeIcon icon={faLink}/>
-                                                                    <span className='tooltiptext'>コピー</span>
+                                                                    <span id={`handleCopy_${commentReply.id}`} className='tooltiptext'>コピー</span>
                                                                 </button>
-                                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                                    報告
-                                                                    <span className='tooltiptext'>コメントを報告します</span>
-                                                                </button>
-                                                                <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                                    返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                                    <span className='tooltiptext'>コメントに返信</span>
-                                                                </button>
+                                                                <AlertDialogCustomButton_loginUserOnly>
+                                                                    <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                        報告
+                                                                        <span className='tooltiptext'>コメントを報告します</span>
+                                                                    </button>
+                                                                </AlertDialogCustomButton_loginUserOnly>
+                                                                <AlertDialogCustomButton_loginUserOnly>
+                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                        返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
+                                                                        <span className='tooltiptext'>コメントに返信</span>
+                                                                    </button>
+                                                                </AlertDialogCustomButton_loginUserOnly>
                                                             </div>
                                                         </div>
                                                     </>
@@ -379,7 +404,17 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
 // htmlとしてコメントを出力
 // <span className='whitespace-break-spaces break-words' dangerouslySetInnerHTML={{ __html: comment.comment }}></span>
 
-export function CommentsHtmlContents({ commentsRes, comments, username, userId, userImage } : { commentsRes: boolean, comments: any, username: string | null, userId: string, userImage: string }) {
+export function CommentsHtmlContents({ commentsRes, comments, userData } : { commentsRes: boolean, comments: any, userData: any }) {
+
+    let username = "";
+    let userId = "";
+    let userImage = "";
+    if(userData){
+        username = userData.username;
+        userId = userData.id;
+        userImage = Scratch_GET_user_image(userId);
+    };
+
     return (
         <>
             <section className="p-6 pt-0">

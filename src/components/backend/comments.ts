@@ -36,7 +36,7 @@ export const API_gas_backendApi_new_commentSend = async ( user_name: string, use
         if(reply_group_id!=='false'){
             apiUrl = `${process.env.COMMENT_SERVER_API_URL}?apikey=${process.env.COMMENT_SERVER_API_KEY}&sheet=${process.env.COMMENT_SERVER_SHEET_ID}&mode=post_comment&user_name=${user_name}&user_id=${user_id}&user_tag=${user_tag}&content=${content}&reply_group_id=${reply_group_id}&reply_id=${reply_id}`
         };
-        console.log("> apiUrl:\n",apiUrl)
+        //console.log("> apiUrl:\n",apiUrl)
         const response = await fetch(apiUrl, {
             method: 'GET',
             cache: 'no-store'
@@ -50,11 +50,11 @@ export const API_gas_backendApi_new_commentSend = async ( user_name: string, use
         const result = await response.json();
         const compileTime = Math.round(compileEndTime - compileStartTime);
         //customLog(`Communicating with the comment database took ${compileTime}ms.`, '✓', '32', '0', 'log');
-        let commentEm = "```"+content+"```";
+        let commentEm = ""+content+"";
         if(reply_group_id==='false'){
-            sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`### ${commentEm}`,`discord`,user_name,user_image);
+            sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`${commentEm}`,`discord`,user_name,user_image);
         }else{
-            sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`_@${replyUser}に返信_\n### ${commentEm}`,`discord`,user_name,user_image);
+            sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`> @${replyUser}に返信\n${commentEm}`,`discord`,user_name,user_image);
         };
         return true
     } catch (error: any) {

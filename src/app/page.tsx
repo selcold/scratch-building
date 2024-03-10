@@ -11,7 +11,7 @@ import Loading from "@/components/frontend/elements/loading";
 import { ElementGroup, Main } from "@/components/frontend/elements/main";
 import Image from "next/image";
 import { _locales } from "@/components/frontend/site/_locales";
-import { ScratchAuth_logout, ScratchAuth_redirectToAuth, ValidationCheck_comment } from "@/components/frontend/_scratch";
+import { ScratchAuth_logout, ScratchAuth_redirectToAuth, Scratch_GET_user_image, ValidationCheck_comment } from "@/components/frontend/_scratch";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -35,6 +35,17 @@ import { CardContents } from "@/components/frontend/elements/card";
 import { Textarea } from "@/components/ui/textarea";
 import { CommentsHTML, CommentsHtmlContents } from "@/components/frontend/elements/comments";
 import { API_gas_backendApi_new_commentSend, Server_GetRequest_Comments } from "@/components/backend/comments";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 export default function Home() {
 
@@ -132,14 +143,14 @@ export default function Home() {
 						window.alert('スペース以外の文字を最低一文字入力してください！');
 						if(comment_reply_form_button){
 							comment_reply_form_button.classList.remove('pointer-events-none');
-							comment_reply_form_button.innerText=(`コメントを投稿`)
+							comment_reply_form_button.innerText=(`投稿する`)
 						}
 					}
 				}else{
 					window.alert('スペース以外の文字を最低一文字入力してください！');
 					if(comment_reply_form_button){
 						comment_reply_form_button.classList.remove('pointer-events-none');
-						comment_reply_form_button.innerText=(`コメントを投稿`)
+						comment_reply_form_button.innerText=(`投稿する`)
 					}
 				}
 			} else {
@@ -182,27 +193,34 @@ export default function Home() {
 								<CardHeader>
 									<CardTitle>コメント</CardTitle>
 								</CardHeader>
-								{userData? (
-								<>
 								<CardContent>
 									<Textarea placeholder="コメント内容" onChange={(e) => setComment(e.target.value)} />
 								</CardContent>
 								<CardFooter className="flex flex-wrap gap-2">
-									<Button onClick={CommentForm_send_ButtonClick}>投稿する</Button>
+									{userData? (
+										<Button id="commentForm_send" onClick={CommentForm_send_ButtonClick}>投稿する</Button>
+									):(									
+										<AlertDialog>
+											<AlertDialogTrigger asChild>
+											<Button>投稿する</Button>
+											</AlertDialogTrigger>
+											<AlertDialogContent>
+												<AlertDialogHeader>
+												<AlertDialogTitle>あなたはコメント機能を利用できません！</AlertDialogTitle>
+												<AlertDialogDescription>
+													コメント機能はScratchアカウントでログインすることで、利用ができるようになります。もしScratchアカウントがない場合はアカウントを作成し、ログインしてから利用してください。
+												</AlertDialogDescription>
+												</AlertDialogHeader>
+												<AlertDialogFooter>
+												<AlertDialogCancel>閉じる</AlertDialogCancel>
+												<AlertDialogAction onClick={() => ScratchAuth_redirectToAuth()}>ログイン</AlertDialogAction>
+												</AlertDialogFooter>
+											</AlertDialogContent>
+										</AlertDialog>
+									)}
 									<Button variant="outline">キャンセル</Button>
 								</CardFooter>
-								</>
-								):(
-								<>
-								<CardContent>
-									<Textarea placeholder="ログインすることでコメント機能を利用できます。" />
-								</CardContent>
-								<CardFooter className="flex flex-wrap gap-2">
-									<Button onClick={() => ScratchAuth_redirectToAuth()}>ログインして利用する</Button>
-								</CardFooter>
-								</>
-								)}
-								<CommentsHtmlContents commentsRes={commentsRes} comments={comments} username={username} userId={userId} userImage={userImage} />
+								<CommentsHtmlContents commentsRes={commentsRes} comments={comments} userData={userData}/>
 							</CardContents>
 						</section>
 					</Main>
