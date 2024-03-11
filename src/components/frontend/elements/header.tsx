@@ -103,16 +103,19 @@ export default function Header({ userData }: { userData: any }) {
 						))}
                     </ul>
                 </nav>
-                <div className="hidden md:block w-[30px] h-[30px]">
+                <div className="hidden md:block h-[30px]">
                     <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
-                                <Avatar className="w-[30px] h-[30px]">
-                                    <AvatarImage src={userData? userData.profile.images['90x90'] : '/icons/scratch/scratch_guest.png'} alt={username? `@${username}` : '@guest'}/>
-                                    <AvatarFallback>ICO</AvatarFallback>
-                                </Avatar>
-                            </Button>
-                        </DropdownMenuTrigger>
+                        <div className="flex items-center gap-3">
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
+                                    <Avatar className="w-[30px] h-[30px]">
+                                        <AvatarImage src={userData? userData.profile.images['90x90'] : '/icons/scratch/scratch_guest.png'} alt={username? `@${username}` : '@guest'}/>
+                                        <AvatarFallback>ICO</AvatarFallback>
+                                    </Avatar>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <span>{username}</span>
+                        </div>
                         <DropdownMenuContent className="w-56 select-none">
                             <DropdownMenuLabel>{_locales('My Account')}</DropdownMenuLabel>
                             <DropdownMenuSeparator />
@@ -239,16 +242,19 @@ export default function Header({ userData }: { userData: any }) {
                         <Button variant="outline" className="w-auto h-auto m-auto"><FontAwesomeIcon icon={faBars} className="text-[18px]"/></Button>
                     </SheetTrigger>
                     <SheetContent>
-                        <div className="border-neutral-300 dark:border-neutral-800 border-b-[1px] pb-2">
+                        <div className="border-neutral-300 dark:border-neutral-800 border-b-[1px] pb-3">
                             <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
-                                        <Avatar className="w-[30px] h-[30px]">
-                                            <AvatarImage src={userData? userData.profile.images['90x90'] : '/icons/scratch/scratch_guest.png'} alt={username? `@${username}` : '@guest'}/>
-                                            <AvatarFallback>ICO</AvatarFallback>
-                                        </Avatar>
-                                    </Button>
-                                </DropdownMenuTrigger>
+                                <div className="flex items-center gap-3">
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
+                                            <Avatar className="w-[30px] h-[30px]">
+                                                <AvatarImage src={userData? userData.profile.images['90x90'] : '/icons/scratch/scratch_guest.png'} alt={username? `@${username}` : '@guest'}/>
+                                                <AvatarFallback>ICO</AvatarFallback>
+                                            </Avatar>
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <span>{username}</span>
+                                </div>
                                 <DropdownMenuContent className="w-56 select-none">
                                     <DropdownMenuLabel>{_locales('My Account')}</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
