@@ -15,9 +15,9 @@ export function _locales(text: string) {
     if(typeof window !== 'undefined') {
         const res = GetUserLanguage() === 'ja'? _locales_ja[text] : _locales_en[text];
         if(res){
-            return res || "";
+            return res || text;
         }
-        CustomWeb.console.error(`_locales: ${text} not found`);
+        CustomWeb.console.warn(`_locales: ${text} not found`);
     }
     return "";
 }

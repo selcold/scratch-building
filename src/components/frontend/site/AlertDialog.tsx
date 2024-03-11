@@ -11,6 +11,7 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { ScratchAuth_redirectToAuth } from "../_scratch";
+import { _locales } from "./_locales";
 
 export function AlertDialogCustomButton_loginUserOnly({ children, title, description }: { children: React.ReactNode, title?: string, description?: string }) {
     return (
@@ -21,14 +22,14 @@ export function AlertDialogCustomButton_loginUserOnly({ children, title, descrip
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>{title? title : "あなたはこの機能を利用できません！"}</AlertDialogTitle>
+                    <AlertDialogTitle>{title? title : _locales('You cannot access this feature!')}</AlertDialogTitle>
                     <AlertDialogDescription>
-                        {description? description : "この機能はScratchアカウントでログインすることで、利用ができるようになります。もしScratchアカウントがない場合はアカウントを作成し、ログインしてから利用してください。"}
+                        {description? description : _locales(`This feature is only available with a Scratch account. If you don't have one, please create an account and log in to access this feature.`)}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>閉じる</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => ScratchAuth_redirectToAuth()}>ログイン</AlertDialogAction>
+                    <AlertDialogCancel>{_locales('Close')}</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => ScratchAuth_redirectToAuth()}>{_locales('Login')}</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
@@ -45,13 +46,13 @@ export function AlertDialogCustomButton_NotRelease({ children, title, descriptio
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>{title? title : "この機能は現在使用できません！"}</AlertDialogTitle>
+                    <AlertDialogTitle>{title? title : _locales('This feature is currently unavailable!')}</AlertDialogTitle>
                     <AlertDialogDescription>
-                        {description? description : "この機能は現在製作中、または一時的に無効化されている機能の為使用することはできません。"}
+                        {description? description : _locales('This feature is currently under development or temporarily disabled and cannot be used.')}
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>閉じる</AlertDialogCancel>
+                    <AlertDialogCancel>{_locales('Close')}</AlertDialogCancel>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

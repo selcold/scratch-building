@@ -3,7 +3,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { getDecryptedSessionId } from "@/components/backend/cookie";
+import { getDecryptedSessionId, setEncryptedUsername } from "@/components/backend/cookie";
 import { ScratchAuthGET_UserProfile } from "@/components/backend/scratch";
 import Footer from "@/components/frontend/elements/footer";
 import Header from "@/components/frontend/elements/header";
@@ -46,8 +46,18 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { DarkModeSET } from "@/components/frontend/site/main";
+import { AlertDialogCustomButton_loginUserOnly } from "@/components/frontend/site/AlertDialog";
+import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
+import { _cfgSite } from "@/components/configs/siteLinks";
 
 export default function Home() {
+
+	// headカスタム
+	const Head_config = {
+		title: _locales(_cfgSite.title),
+	};
+	HeadCustom_config(Head_config);
 
 	const [NetworkStatus, setNetworkStatus] = useState<string>("online");
 	const [isLangLoaded, setPageLoaded] = useState(false);
@@ -61,6 +71,7 @@ export default function Home() {
         const fetchUserData = async () => {
             try {
                 if (typeof window !== 'undefined') {
+					DarkModeSET();
 					window.addEventListener("offline", (e) => {
 						setNetworkStatus("offline")
 					});
@@ -86,8 +97,7 @@ export default function Home() {
 							}
 						}
                         setUserData(userData);
-                    } else {
-					}
+                    }
                 }
                 setPageLoaded(true);
             } catch (error) {
@@ -133,28 +143,28 @@ export default function Home() {
 				const comment_reply_form_button = document.getElementById(`commentForm_send`);
 				if(comment_reply_form_button){
 					comment_reply_form_button.classList.add('pointer-events-none');
-					comment_reply_form_button.innerText=(`送信中...`)
+					comment_reply_form_button.innerText=(_locales('Sending...'))
 				}
 				if(ValidationCheck_comment(comment)) {					
 					if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, "null", comment)){
-						window.alert('コメントを投稿しました！');
+						window.alert(_locales('Comment posted!'));
 						window.location.href=(`${window.location}`);
 					}else{
-						window.alert('スペース以外の文字を最低一文字入力してください！');
+						window.alert(_locales('There was a problem posting the comment!'));
 						if(comment_reply_form_button){
 							comment_reply_form_button.classList.remove('pointer-events-none');
-							comment_reply_form_button.innerText=(`投稿する`)
+							comment_reply_form_button.innerText=(_locales('Post'))
 						}
 					}
 				}else{
-					window.alert('スペース以外の文字を最低一文字入力してください！');
+					window.alert(_locales('At least one non-space character is required!'));
 					if(comment_reply_form_button){
 						comment_reply_form_button.classList.remove('pointer-events-none');
-						comment_reply_form_button.innerText=(`投稿する`)
+						comment_reply_form_button.innerText=(_locales('Post'))
 					}
 				}
 			} else {
-				window.alert('ユーザー情報の処理中です。');
+				window.alert(_locales('Processing user information!'));
 			}
 		}
 	};
@@ -191,34 +201,20 @@ export default function Home() {
 							</CardContents>
 							<CardContents durationPls={100}>
 								<CardHeader>
-									<CardTitle>コメント</CardTitle>
+									<CardTitle>{_locales('Comments')}</CardTitle>
 								</CardHeader>
 								<CardContent>
-									<Textarea placeholder="コメント内容" onChange={(e) => setComment(e.target.value)} />
+									<Textarea placeholder={_locales('Write a comment')} onChange={(e) => setComment(e.target.value)} />
 								</CardContent>
-								<CardFooter className="flex flex-wrap gap-2">
+								<CardFooter className="flex flex-wrap gap-2 animate-fade-down animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
 									{userData? (
-										<Button id="commentForm_send" onClick={CommentForm_send_ButtonClick}>投稿する</Button>
+										<Button id="commentForm_send" onClick={CommentForm_send_ButtonClick}>{_locales('Post')}</Button>
 									):(									
-										<AlertDialog>
-											<AlertDialogTrigger asChild>
-											<Button>投稿する</Button>
-											</AlertDialogTrigger>
-											<AlertDialogContent>
-												<AlertDialogHeader>
-												<AlertDialogTitle>あなたはコメント機能を利用できません！</AlertDialogTitle>
-												<AlertDialogDescription>
-													コメント機能はScratchアカウントでログインすることで、利用ができるようになります。もしScratchアカウントがない場合はアカウントを作成し、ログインしてから利用してください。
-												</AlertDialogDescription>
-												</AlertDialogHeader>
-												<AlertDialogFooter>
-												<AlertDialogCancel>閉じる</AlertDialogCancel>
-												<AlertDialogAction onClick={() => ScratchAuth_redirectToAuth()}>ログイン</AlertDialogAction>
-												</AlertDialogFooter>
-											</AlertDialogContent>
-										</AlertDialog>
+										<AlertDialogCustomButton_loginUserOnly>
+											<Button>{_locales('Post')}</Button>
+										</AlertDialogCustomButton_loginUserOnly>
 									)}
-									<Button variant="outline">キャンセル</Button>
+									<Button variant="outline">{_locales('Cancel')}</Button>
 								</CardFooter>
 								<CommentsHtmlContents commentsRes={commentsRes} comments={comments} userData={userData}/>
 							</CardContents>

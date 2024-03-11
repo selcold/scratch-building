@@ -6,14 +6,25 @@ import { useEffect, useState } from 'react';
 import { setEncryptedUsername } from '@/components/backend/cookie';
 import { ScratchAuth_verifyToken } from '@/components/backend/scratch';
 import Loading from '@/components/frontend/elements/loading';
+import { DarkModeSET } from '@/components/frontend/site/main';
+import { HeadCustom_config } from '@/components/frontend/site/metaCustom';
+import { _locales } from '@/components/frontend/site/_locales';
+import { _cfgSite } from '@/components/configs/siteLinks';
 
 export default function Home() {
+
+    // headカスタム
+	const Head_config = {
+		title: `${_locales('Auth')} | ${_locales(_cfgSite.title)}`,
+	};
+	HeadCustom_config(Head_config);
 
     const [isLangLoaded, setPageLoaded] = useState(false);
     useEffect(() => {
         const fetchLanguage = async () => {
             try {
                 if(typeof window !== 'undefined') {
+                    DarkModeSET();
                     const paramsString = window.location.search;
                     const searchParams = new URLSearchParams(paramsString);
                     const privateCode = searchParams.get("privateCode");
@@ -29,7 +40,7 @@ export default function Home() {
                         }
                     }else{
                         window.location.href=(window.location.origin);
-                    }
+                    };
                 }
                 setPageLoaded(true);
             } catch (error) {
@@ -47,8 +58,6 @@ export default function Home() {
     }
     
     return (
-        <>
-        <h1>loading</h1>
-        </>
+        <Loading />
     );
 }

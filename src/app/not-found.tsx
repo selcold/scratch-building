@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { _locales } from '@/components/frontend/site/_locales';
 import { HeadCustom_config } from '@/components/frontend/site/metaCustom';
 import Loading from '@/components/frontend/elements/loading';
+import { _cfgSite } from '@/components/configs/siteLinks';
 
 export default function Home() {
 
@@ -18,7 +19,7 @@ export default function Home() {
 			try {
 				setPageLoaded(true);
 			} catch (error) {
-				console.error("取得エラー:", error);
+				console.error("error:", error);
 			}
 		};
 		if (!isLangLoaded) {
@@ -28,7 +29,7 @@ export default function Home() {
 
     // headカスタム
 	const Head_config = {
-		title:`${_locales('Page not found')} | SafeEncode`,
+		title:`${_locales('Page not found')} | ${_locales(_cfgSite.title)}`,
 	};
 	HeadCustom_config(Head_config);
 	

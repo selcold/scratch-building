@@ -6,19 +6,11 @@ import { createRoot } from "react-dom/client";
 import { API_gas_backendApi_new_commentSend, Server_GetRequest_Comments } from "@/components/backend/comments";
 import { formatDateTime } from "../site/formatDateTime";
 import { Button } from "@/components/ui/button";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
 import { ScratchAuth_redirectToAuth, Scratch_GET_user_image } from "../_scratch";
 import { AlertDialogCustomButton_NotRelease, AlertDialogCustomButton_loginUserOnly } from "../site/AlertDialog";
+import Image from "next/image";
+import { Skeleton } from "@/components/ui/skeleton"
+import { _locales } from "../site/_locales";
 
 interface Comments {
     timestamp: Date,
@@ -77,10 +69,10 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                 const copyHtml = document.getElementById(`handleCopy_${uuid}`)
                 // コピーされたら状態を更新してテキストを変更
                 if(copyHtml){
-                    copyHtml.innerText=`コピー完了`;
+                    copyHtml.innerText=_locales('Copy completed');
                     // 一定時間後にテキストを元に戻す
                     setTimeout(() => {
-                        copyHtml.innerText=`コピー`;
+                        copyHtml.innerText=_locales('Copy');
                     }, 3000); // 3000ミリ秒 = 3秒後に元に戻す
                 };
                 return true
@@ -90,12 +82,6 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
             }
             
         };
-    
-        function HandleReport() {
-            if (typeof window !== 'undefined') {
-                window.alert('現在報告機能を使用することはできません。');
-            }
-        }
         
         // コメントフォーム
         function set_comment_reply_form(ComRepFo_mode: string, ComRepFo_group: string, ComRepFo_id: string, ComRepFo_user_tag: string, ComRepFo_replyUser: string = '') {
@@ -108,20 +94,28 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                     if (ComRepFo_mode === 'comment') {
                         const root = createRoot(HtmlCommentReplyForm);
                         root.render(
-                            <div id={`comment_reply_form_${ComRepFo_id}`} className="animated-slideIn-up relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem]">
-                                <a className='select-none pointer-events-none'>
-                                    <img src={userImage} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
-                                </a>
+                            <div id={`comment_reply_form_${ComRepFo_id}`} className="relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem] animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
+                                <span className='select-none pointer-events-none'>
+                                    <Image
+                                    priority
+                                    src={userImage}
+                                    alt="ico"
+                                    width={48}
+                                    height={48}
+                                    className="border-neutral-200 dark:border-neutral-800 border-[1px] mr-[0.5rem] overflow-clip rounded-[5px] shadow-lg"
+                                    unoptimized={true}
+                                    />
+                                </span>
                                 <div className='flex flex-wrap flex-col justify-center items-center ml-1 w-full bg-card text-card-foreground'>
                                     <div className='w-full'>
                                         <div className='w-full'>
                                             <div>
-                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} placeholder={_locales('Write a comment')} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
-                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} onClick={() => CommentReplyForm_send_ButtonClick(username, userId, ComRepFo_user_tag, ComRepFo_group, ComRepFo_id, ComRepFo_replyUser)}>投稿する</Button>
-                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} variant="outline" onClick={() => set_comment_reply_form('comment',ComRepFo_group, ComRepFo_id, ComRepFo_user_tag)}>キャンセル</Button>
+                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} onClick={() => CommentReplyForm_send_ButtonClick(username, userId, ComRepFo_user_tag, ComRepFo_group, ComRepFo_id, ComRepFo_replyUser)}>{_locales('Post')}</Button>
+                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} variant="outline" onClick={() => set_comment_reply_form('comment',ComRepFo_group, ComRepFo_id, ComRepFo_user_tag)}>{_locales('Cancel')}</Button>
                                         </div>
                                     </div>
                                 </div>
@@ -130,20 +124,28 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                     } else {
                         const root = createRoot(HtmlCommentReplyForm);
                         root.render(
-                            <div id={`comment_reply_form_${ComRepFo_id}`} className="animated-slideIn-up relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem]">
-                                <a className='select-none pointer-events-none'>
-                                    <img src={userImage} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
-                                </a>
+                            <div id={`comment_reply_form_${ComRepFo_id}`} className="relative flex flex-row flex-nowrap justify-between items-start w-full p-1 mt-[2rem] mb-[0.5rem] animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
+                                <span className='select-none pointer-events-none'>
+                                    <Image
+                                    priority
+                                    src={userImage}
+                                    alt="ico"
+                                    width={48}
+                                    height={48}
+                                    className="border-neutral-200 dark:border-neutral-800 border-[1px] mr-[0.5rem] overflow-clip rounded-[5px] shadow-lg"
+                                    unoptimized={true}
+                                    />
+                                </span>
                                 <div className='flex flex-wrap flex-col justify-center items-center ml-1 w-full bg-card text-card-foreground'>
                                     <div className='w-full'>
                                         <div className='w-full'>
                                             <div>
-                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} placeholder={_locales('Write a comment')} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
-                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} onClick={() => CommentReplyForm_send_ButtonClick(username, userId, ComRepFo_user_tag, ComRepFo_group, ComRepFo_id, ComRepFo_replyUser)}>投稿する</Button>
-                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} variant="outline" onClick={() => set_comment_reply_form('comment', ComRepFo_group, ComRepFo_id, ComRepFo_user_tag)}>キャンセル</Button>
+                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} onClick={() => CommentReplyForm_send_ButtonClick(username, userId, ComRepFo_user_tag, ComRepFo_group, ComRepFo_id, ComRepFo_replyUser)}>{_locales('Post')}</Button>
+                                            <Button id={`comment_reply_form_button_${ComRepFo_id}`} variant="outline" onClick={() => set_comment_reply_form('comment', ComRepFo_group, ComRepFo_id, ComRepFo_user_tag)}>{_locales('Cancel')}</Button>
                                         </div>
                                     </div>
                                 </div>
@@ -158,7 +160,7 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
             const comment_reply_form_button = document.getElementById(`comment_reply_form_button_${FoSendBtCl_reply_id}`);
             if (comment_reply_form_button) {
                 comment_reply_form_button.classList.add('pointer-events-none');
-                comment_reply_form_button.innerText = (`送信中...`);
+                comment_reply_form_button.innerText = (_locales('Sending...'));
                 
                 // この時点で要素が存在するので、以降のコードを実行
                 if (!obj_commentsId[FoSendBtCl_reply_id].reply_Id) {
@@ -171,23 +173,31 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                     if (ValidationCheck_comment(comment)) {
                         if (await API_gas_backendApi_new_commentSend(FoSendBtCl_user_name, FoSendBtCl_user_Id, "null", comment, FoSendBtCl_reply_group_id, FoSendBtCl_reply_id, FoSendBtCl_replyUser)) {
                             if (typeof window !== 'undefined') {
-                                window.alert('コメントを投稿しました！');
+                                window.alert(_locales('Comment posted!'));
                                 window.location.href = (`${window.location}`);
+                            }
+                        } else {
+                            if (typeof window !== 'undefined') {
+                                window.alert(_locales('There was a problem posting the comment!'));
+                                if (comment_reply_form_button) {
+                                    comment_reply_form_button.classList.remove('pointer-events-none');
+                                    comment_reply_form_button.innerText = (_locales('Post'));
+                                }
                             }
                         }
                     } else {
                         if (typeof window !== 'undefined') {
-                            window.alert('スペース以外の文字を最低一文字入力してください！');
+                            window.alert(_locales('At least one non-space character is required!'));
                             if (comment_reply_form_button) {
                                 comment_reply_form_button.classList.remove('pointer-events-none');
-                                comment_reply_form_button.innerText = (`投稿する`);
+                                comment_reply_form_button.innerText = (_locales('Post'));
                             }
                         }
                     }
                     return text_CommentReplyForm.value;
                 } else {
                     if (typeof window !== 'undefined') {
-                        window.alert('コメント投稿中に問題が発生しました！');
+                        window.alert(_locales('Failed to retrieve comment form!'));
                         window.location.href = (`${window.location}`);
                     }
                     return false;
@@ -200,21 +210,29 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
         // コメントのHTMLを生成し、commentsHtmlに追加
         commentsHtml.push(
             <li key={comment.id} className='relative flex flex-col md:flex-row flex-wrap items-center justify-end w-full'>
-                <div id={`comment_${comment.id}`} className='animated-slideIn-up flex flex-row flex-nowrap justify-between items-start w-full p-1 group'>
-                    <a className='select-none pointer-events-none'>
-                        <img src={comment.author.image} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
-                    </a>
+                <div id={`comment_${comment.id}`} className='flex flex-row flex-nowrap justify-between items-start w-full p-1 group animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards'>
+                    <span className='select-none pointer-events-none'>
+                        <Image
+                        priority
+                        src={comment.author.image}
+                        alt="ico"
+                        width={48}
+                        height={48}
+                        className="border-neutral-200 dark:border-neutral-800 border-[1px] mr-[0.5rem] overflow-clip rounded-[5px] shadow-lg"
+                        unoptimized={true}
+                        />
+                    </span>
                     <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
                         <div className='flex flex-wrap flex-row justify-start lg:justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
                             <div className='flex flex-row justify-center mr-auto text-slate-900 dark:text-slate-50 gap-1'>
-                                <a>{comment.author.username}</a>
+                                <span>{comment.author.username}</span>
                                 <span className="tooltip m-auto">
                                 {comment.author.tag==='developer' ? (
                                 <>
                                     <svg className="m-auto h-5 w-5 text-blue-500 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
                                     </svg>
-                                    <span className="tooltiptext">開発者</span>
+                                    <span className="tooltiptext">{_locales('Developer')}</span>
                                 </>
                                 ) : (
                                 <>
@@ -223,14 +241,14 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                         <svg className="m-auto h-5 w-5 text-orange-500 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
                                         </svg>
-                                        <span className="tooltiptext">認証者</span>
+                                        <span className="tooltiptext">{_locales('Authenticator')}</span>
                                     </>
                                     ) : (
                                     <>
                                         <svg className="m-auto h-5 w-5 text-gray-400 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
                                         </svg>
-                                        <span className="tooltiptext">登録者</span>
+                                        <span className="tooltiptext">{_locales('Subscriber')}</span>
                                     </>
                                     )}
                                 </>
@@ -247,19 +265,17 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                 {username? (
                                     <>
                                         <div className="flex flex-wrap gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.id,`${window.location.origin}${window.location.pathname}#commentId_${comment.id}`)}>
+                                            <button title={_locales('Copy')} className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.id,`${window.location.origin}${window.location.pathname}#commentId_${comment.id}`)}>
                                                 <FontAwesomeIcon icon={faLink}/>
-                                                <span id={`handleCopy_${comment.id}`} className='tooltiptext'>コピー</span>
+                                                <span id={`handleCopy_${comment.id}`} className='tooltiptext'>{_locales('Copy')}</span>
                                             </button>
                                             <AlertDialogCustomButton_NotRelease>
-                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                    報告
-                                                    <span className='tooltiptext'>コメントを報告します</span>
+                                                <button title={_locales('Report')} className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                    {_locales('Report')}
                                                 </button>
                                             </AlertDialogCustomButton_NotRelease>
-                                            <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form("comment", comment.id, comment.id, "", comment.author.username)}>
-                                                返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                <span className='tooltiptext'>コメントに返信</span>
+                                            <button  title={_locales('Reply')} className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form("comment", comment.id, comment.id, "", comment.author.username)}>
+                                                {_locales('Reply')}<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                             </button>
                                         </div>
                                     </>
@@ -267,20 +283,18 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                     <>
                                         <div>
                                             <div className="flex flex-wrap gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.id,`${window.location.origin}${window.location.pathname}#commentId_${comment.id}`)}>
+                                                <button title={_locales('Copy')} className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(comment.id,`${window.location.origin}${window.location.pathname}#commentId_${comment.id}`)}>
                                                     <FontAwesomeIcon icon={faLink}/>
-                                                    <span id={`handleCopy_${comment.id}`} className='tooltiptext'>コピー</span>
+                                                    <span id={`handleCopy_${comment.id}`} className='tooltiptext'>{_locales('Copy')}</span>
                                                 </button>
                                                 <AlertDialogCustomButton_loginUserOnly>
-                                                    <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                        報告
-                                                        <span className='tooltiptext'>コメントを報告します</span>
+                                                    <button title={_locales('Report')} className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                        {_locales('Report')}
                                                     </button>
                                                 </AlertDialogCustomButton_loginUserOnly>
                                                 <AlertDialogCustomButton_loginUserOnly>
-                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                        返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                        <span className='tooltiptext'>コメントに返信</span>
+                                                    <button title={_locales('Reply')} className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                        {_locales('Reply')}<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                     </button>
                                                 </AlertDialogCustomButton_loginUserOnly>
                                             </div>
@@ -297,21 +311,29 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                     {obj_comments_reply_Array.map(commentReply => {
                         if (commentReply.reply_group_id === comment.id) {
                             return (
-                                <div key={commentReply.id} id={`comment_${commentReply.id}`} className='animated-slideIn-up flex flex-row flex-nowrap justify-between items-start w-full p-1 group'>
-                                    <a className="select-none pointer-events-none">
-                                        <img src={commentReply.author.image} className='overflow-clip w-[3rem] h-[3rem] rounded-[5px] mr-[0.5rem] shadow-lg'/>
-                                    </a>
+                                <div key={commentReply.id} id={`comment_${commentReply.id}`} className='flex flex-row flex-nowrap justify-between items-start w-full p-1 group animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards'>
+                                    <span className="select-none pointer-events-none">
+                                        <Image
+                                        priority
+                                        src={commentReply.author.image}
+                                        alt="ico"
+                                        width={48}
+                                        height={48}
+                                        className="border-neutral-200 dark:border-neutral-800 border-[1px] mr-[0.5rem] overflow-clip rounded-[5px] shadow-lg"
+                                        unoptimized={true}
+                                        />
+                                    </span>
                                     <div className='flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3'>
                                         <div className='flex flex-wrap flex-row justify-around items-center w-full ml-[0.5rem] mb-[8px]'>
                                             <div className='flex flex-row justify-center mr-auto text-slate-900 dark:text-slate-50 gap-1'>
-                                                <a>{commentReply.author.username}</a>
+                                                <span>{commentReply.author.username}</span>
                                                 <span className="tooltip m-auto">
                                                     {commentReply.author.tag==='developer' ? (
                                                     <>
                                                         <svg className="m-auto h-5 w-5 text-blue-500 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                             <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
                                                         </svg>
-                                                        <span className="tooltiptext">開発者</span>
+                                                        <span className="tooltiptext">{_locales('Developer')}</span>
                                                     </>
                                                     ) : (
                                                     <>
@@ -320,14 +342,14 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                                         <svg className="m-auto h-5 w-5 text-orange-500 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                             <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
                                                         </svg>
-                                                        <span className="tooltiptext">認証者</span>
+                                                        <span className="tooltiptext">{_locales('Authenticator')}</span>
                                                     </>
                                                     ) : (
                                                     <>
                                                         <svg className="m-auto h-5 w-5 text-gray-400 stroke-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                             <path d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" fill="currentColor" strokeWidth="0"></path>
                                                         </svg>
-                                                        <span className="tooltiptext">登録者</span>
+                                                        <span className="tooltiptext">{_locales('Subscriber')}</span>
                                                     </>
                                                     )}
                                                     </>
@@ -345,19 +367,17 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                                 {username? (
                                                     <>
                                                         <div className="flex flex-wrap gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                                            <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(commentReply.id,`${window.location.origin}${window.location.pathname}?#commentId_${commentReply.id}`)}>
+                                                            <button title={_locales('Copy')} className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(commentReply.id,`${window.location.origin}${window.location.pathname}?#commentId_${commentReply.id}`)}>
                                                                 <FontAwesomeIcon icon={faLink}/>
-                                                                <span id={`handleCopy_${commentReply.id}`} className='tooltiptext'>コピー</span>
+                                                                <span id={`handleCopy_${commentReply.id}`} className='tooltiptext'>{_locales('Copy')}</span>
                                                             </button>
                                                             <AlertDialogCustomButton_NotRelease>
-                                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                                    報告
-                                                                    <span className='tooltiptext'>コメントを報告します</span>
+                                                                <button title={_locales('Report')} className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                    {_locales('Report')}
                                                                 </button>
                                                             </AlertDialogCustomButton_NotRelease>
-                                                            <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',comment.id,commentReply.id,"",commentReply.author.username)}>
-                                                                返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                                <span className='tooltiptext'>コメントに返信</span>
+                                                            <button title={_locales('Reply')} className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => set_comment_reply_form('comment_reply',comment.id,commentReply.id,"",commentReply.author.username)}>
+                                                                {_locales('Reply')}<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                             </button>
                                                         </div>
                                                     </>
@@ -365,20 +385,18 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                                     <>
                                                         <div>
                                                             <div className="flex flex-wrap gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out">
-                                                                <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(commentReply.id,`${window.location.origin}${window.location.pathname}?#commentId_${commentReply.id}`)}>
+                                                                <button title={_locales('Copy')} className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease' onClick={() => handleCopy(commentReply.id,`${window.location.origin}${window.location.pathname}?#commentId_${commentReply.id}`)}>
                                                                     <FontAwesomeIcon icon={faLink}/>
-                                                                    <span id={`handleCopy_${commentReply.id}`} className='tooltiptext'>コピー</span>
+                                                                    <span id={`handleCopy_${commentReply.id}`} className='tooltiptext'>{_locales('Copy')}</span>
                                                                 </button>
                                                                 <AlertDialogCustomButton_loginUserOnly>
-                                                                    <button className='tooltip text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                                        報告
-                                                                        <span className='tooltiptext'>コメントを報告します</span>
+                                                                    <button title={_locales('Report')} className='text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                        {_locales('Report')}
                                                                     </button>
                                                                 </AlertDialogCustomButton_loginUserOnly>
                                                                 <AlertDialogCustomButton_loginUserOnly>
-                                                                    <button className='tooltip inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
-                                                                        返信<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
-                                                                        <span className='tooltiptext'>コメントに返信</span>
+                                                                    <button title={_locales('Reply')} className='inline-block text-zinc-500 hover:text-zinc-400 transition duration-500 ease'>
+                                                                        {_locales('Reply')}<FontAwesomeIcon icon={faReply} className='text-sm ml-1'/>
                                                                     </button>
                                                                 </AlertDialogCustomButton_loginUserOnly>
                                                             </div>
@@ -427,20 +445,30 @@ export function CommentsHtmlContents({ commentsRes, comments, userData } : { com
                     </>
                 ) : (
                     <>
-                        <li className='animated-slideIn-up p-2'>
-                            <h1 className='text-zinc-400 text-[1.2rem] m-auto'>コメントがまだ投稿されていません</h1>
+                        <li className='animated-slideIn-up p-2 animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards'>
+                            <h1 className='text-zinc-400 text-[1.2rem] m-auto'>{_locales('No comments yet')}</h1>
                         </li>
                     </>
                 )}
                 </>
                 ):(
                 <>
-                    <div className='w-full m-auto'>
-                        <div className='flex flex-col justify-center items-center gap-2 w-full m-auto'>
-                            <div className="animate-spin h-10 w-10 border-4 border-neutral-300 rounded-full border-t-transparent"></div>
-                            <span className='text-neutral-300 dark:text-neutral-700'>コメント取得中...</span>
+                <li className="relative flex flex-col md:flex-row flex-wrap items-center justify-end w-full">
+                    <div
+                        className="flex flex-row flex-nowrap justify-between items-start w-full p-1 group animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards"
+                    >
+                        <a className="select-none pointer-events-none">
+                        <Skeleton className="h-[48px] w-[48px] mr-[0.5rem] overflow-clip rounded-full shadow-lg" />
+                        </a>
+                        <div className="flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3">
+                            <div className="flex flex-wrap flex-row justify-start lg:justify-around items-center w-full ml-[0.5rem] mb-[8px]">
+                            <Skeleton className="hidden sm:block w-40 h-5 mr-auto rounded-lg"/>
+                            </div>
+                            <Skeleton className="relative h-15 ml-[0.6rem] mb-1 p-[0.75rem] rounded-[0.5rem] text-left box-border" style={{ width: "calc(100% - 0.5rem)" }}/>
+                            <Skeleton className="relative w-[70%] h-15 ml-[0.6rem] my-1 p-[0.75rem] rounded-[0.5rem] text-left box-border"/>
                         </div>
                     </div>
+                    </li>
                 </>
                 )}
                 </ul>
