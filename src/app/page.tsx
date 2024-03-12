@@ -85,7 +85,7 @@ export default function Home() {
                     console.log('login:',storedUsername);
                     if (storedUsername) {
                         const userData = await ScratchAuthGET_UserProfile(storedUsername);
-						if(userData){
+						if(userData && !userData.response){
 							console.log(userData);
 							if(userData.id){
 								setUserId(userData.id)
