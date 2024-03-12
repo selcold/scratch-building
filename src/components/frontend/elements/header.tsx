@@ -60,45 +60,48 @@ import {
 import { useEffect, useState } from "react";
 import { ScratchAuth_logout, ScratchAuth_redirectToAuth } from "../_scratch";
 import { _locales } from "../site/_locales";
-import { _cfgSite } from "@/components/configs/siteLinks"
+import { _cfgImages, _cfgSite } from "@/components/configs/siteLinks"
 import { getDecryptedSessionId, setEncryptedUsername } from "@/components/backend/cookie"
 import { DarkModeChange, DarkModeGET } from "../site/main"
 import Image from "next/image"
+import Link from "next/link"
+import { HeaderBtmSpace } from "./main"
 
 const HeaderNav = [
 	{ name: _locales('Home'), href: _cfgSite.links_home, target: '_self' },
 ]
 
-export default function Header({ userData }: { userData: any }) {
+export default function Header({ userData, btmSpace }: { userData: any, btmSpace?: boolean }) {
     let username = "";
     if(userData){
         username = userData.username;
     }
-//setEncryptedUsername('dark', "false", 30);
     return (
         <>
-            <header className="fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md border-[1px] border-neutral-500/50 text-black dark:text-white w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
-                <div className="flex flex-row items-center gap-3">
-                    <Image
-                    priority
-                    src={_cfgSite.links_icon_png}
-                    alt={_locales(_cfgSite.title)}
-                    width={33}
-                    height={33}
-                    />
-                    <h1 className="font-semibold">{_locales(_cfgSite.title)}</h1>
-                </div>
+            <header className="fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md backdrop-brightness-[120%] dark:backdrop-brightness-[80%] border-[1px] border-neutral-500/50 text-black dark:text-white w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
+                <Link href={_cfgSite.links_home}>
+                    <div className="flex flex-row items-center gap-3">
+                        <Image
+                        priority
+                        src={_cfgImages.links_icon_png}
+                        alt={`Logo`}
+                        width={33}
+                        height={33}
+                        />
+                        <h1 className="font-semibold">{_locales(_cfgSite.title)}</h1>
+                    </div>
+                </Link>
                 <nav className="hidden md:block">
                     <ul className="flex flex-row items-center gap-3">
                         {HeaderNav.map((item) => (
                         <li key={item.name}>
-                            <a
+                            <Link
                                 href={item.href}
                                 target={item.target}
                                 className={`hover:text-neutral-500 dark:hover:text-neutral-400 transition duration-200`}
                             >
                                 {item.name}
-                            </a>
+                            </Link>
                         </li>
 						))}
                     </ul>
@@ -109,7 +112,7 @@ export default function Header({ userData }: { userData: any }) {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
                                     <Avatar className="w-[30px] h-[30px]">
-                                        <AvatarImage src={userData? userData.profile.images['90x90'] : '/icons/scratch/scratch_guest.png'} alt={username? `@${username}` : '@guest'}/>
+                                        <AvatarImage src={userData? userData.profile.images['90x90'] : _cfgImages.links_icon_user_guest_png} alt={username? `@${username}` : '@guest'}/>
                                         <AvatarFallback>ICO</AvatarFallback>
                                     </Avatar>
                                 </Button>
@@ -239,7 +242,7 @@ export default function Header({ userData }: { userData: any }) {
                 <div className="block md:hidden">
                 <Sheet>
                     <SheetTrigger asChild className="flex border-none bg-transparent p-0">
-                        <Button variant="outline" className="w-auto h-auto m-auto"><FontAwesomeIcon icon={faBars} className="text-[18px]"/></Button>
+                        <Button variant="outline" className="w-auto h-auto m-auto"><FontAwesomeIcon icon={faBars} className="text-[18px] text-neutral-900 dark:text-neutral-100"/></Button>
                     </SheetTrigger>
                     <SheetContent>
                         <div className="border-neutral-300 dark:border-neutral-800 border-b-[1px] pb-3">
@@ -248,7 +251,7 @@ export default function Header({ userData }: { userData: any }) {
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
                                             <Avatar className="w-[30px] h-[30px]">
-                                                <AvatarImage src={userData? userData.profile.images['90x90'] : '/icons/scratch/scratch_guest.png'} alt={username? `@${username}` : '@guest'}/>
+                                                <AvatarImage src={userData? userData.profile.images['90x90'] : _cfgImages.links_icon_user_guest_png} alt={username? `@${username}` : '@guest'}/>
                                                 <AvatarFallback>ICO</AvatarFallback>
                                             </Avatar>
                                         </Button>
@@ -387,13 +390,13 @@ export default function Header({ userData }: { userData: any }) {
                             <ul className="flex flex-col items-start gap-3">
                                 {HeaderNav.map((item) => (
                                 <li key={item.name}>
-                                    <a
+                                    <Link
                                         href={item.href}
                                         target={item.target}
                                         className={`transition duration-200`}
                                     >
                                         {item.name}
-                                    </a>
+                                    </Link>
                                 </li>
                                 ))}
                             </ul>
@@ -409,6 +412,11 @@ export default function Header({ userData }: { userData: any }) {
                 </Sheet>
                 </div>
             </header>
+            {btmSpace? (
+                <HeaderBtmSpace/>
+            ):(
+                <></>
+            )}
         </>
     );
 }

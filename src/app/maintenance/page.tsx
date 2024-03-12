@@ -147,7 +147,7 @@ export default function Home() {
 		<>
 			<div>
 				<ElementGroup>
-					<Header userData={userData}/>
+					<Header userData={userData} btmSpace/>
 					<Main>
 						<section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
 							<Alert>

@@ -8,6 +8,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css'; // Import the CSS
 import { _cfgSite } from "@/components/configs/siteLinks";
 import { Toaster } from "sonner";
+import Head from "next/head";
 config.autoAddCss = false; // Disable the automatic CSS injection
 
 export const metadata: Metadata = {
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
 		siteName: `${_cfgSite.title}`,
 	},
 
-	bookmarks: "https://scratch-building.vercel.app/"
+	bookmarks: "https://scratch-building.vercel.app/",
 };
 
 export default function RootLayout({
@@ -51,6 +52,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
+			<head>
+				<link rel="preconnect" href="https://cdn2.scratch.mit.edu" />
+			</head>
 			<body className={`animate-fade animate-once animate-duration-[800ms] animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards ${inter.className}`}>
 				{children}
 				<Toaster />

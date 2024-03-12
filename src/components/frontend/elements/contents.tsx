@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card"
 import { contents_json } from "../../../../contents/contentsObj";
 import { CardContents } from "./card";
+import Link from "next/link";
 
 export function ContentsSET({ contentTitle }: { contentTitle: string }) {
     const contentsObj = contents_json;
@@ -32,19 +33,19 @@ export function ContentsSET({ contentTitle }: { contentTitle: string }) {
                         <Button
                             variant={action.variant} 
                             onClick={() => {
-                                if (action.url) {
-                                    const newTab = window.open(action.url, action.target || '_self'); // URLがある場合は新しいタブで開く
-                                    if (action.target === '_blank') {
-                                        newTab?.focus(); // 新しいタブが開かれたらフォーカスする
-                                    }
-                                }
                                 if (action.onclick) {
                                     eval(action.onclick); // onclick関数が定義されている場合は実行
                                 }
                             }}
                             key={index}
                         >
-                            {action.label}
+                            {action.url ? (
+                                <Link href={action.url} target={action.target || '_self'}>
+                                    {action.label}
+                                </Link>
+                            ):(
+                                action.label
+                            )}
                         </Button>
                     ))}
                     </CardFooter>
