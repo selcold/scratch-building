@@ -85,16 +85,18 @@ export default function Home() {
                     console.log('login:',storedUsername);
                     if (storedUsername) {
                         const userData = await ScratchAuthGET_UserProfile(storedUsername);
-                        //console.log('> userData:',userData,'\n\n> profile.bio:',userData.profile.bio);
 						if(userData){
+							console.log(userData);
 							if(userData.id){
 								setUserId(userData.id)
 							}
-							if(userData.profile.images["90x90"]){
-								setUserImage(userData.profile.images["90x90"])
-							}
-							if(userData.profile.bio){
-								set_userData_profile_bio(userData.profile.bio);
+							if(userData.profile){
+								if(userData.profile.images["90x90"]){
+									setUserImage(userData.profile.images["90x90"])
+								}
+								if(userData.profile.bio){
+									set_userData_profile_bio(userData.profile.bio);
+								}
 							}
 						}
                         setUserData(userData);
@@ -116,8 +118,8 @@ export default function Home() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const result = await Server_GetRequest_Comments(); // コメントデータを取得
-				setComments(result); // 取得したコメントデータをstateにセット
+				const result = await Server_GetRequest_Comments();
+				setComments(result);
 				if(result.length > 0){
 					const a = result["0"];
 					if(a.request_mode){

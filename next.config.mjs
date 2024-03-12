@@ -1,7 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['uploads.scratch.mit.edu','cdn2.scratch.mit.edu'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'uploads.scratch.mit.edu',
+            },
+            {
+                protocol: 'https',
+                hostname: 'cdn2.scratch.mit.edu',
+            }
+        ],
     },
 };
 
