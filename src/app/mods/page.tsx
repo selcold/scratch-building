@@ -51,12 +51,13 @@ import { AlertDialogCustomButton_loginUserOnly } from "@/components/frontend/sit
 import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
 import { _cfgSite } from "@/components/configs/siteLinks";
 import { ContentsSET } from "@/components/frontend/elements/contents";
+import { contentObj_mods_json } from "../../../contents/contentObj_mods";
 
 export default function Home() {
 
 	// headカスタム
 	const Head_config = {
-		title: _locales(_cfgSite.title),
+		title: `MOD | ${_locales(_cfgSite.title)}`,
 	};
 	HeadCustom_config(Head_config);
 
@@ -103,65 +104,6 @@ export default function Home() {
         }
     }, [isLangLoaded]);
 
-	const [comments, setComments] = useState<any>([]);
-	const [commentsRes, setCommentsRes] = useState(false);
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const result = await Server_GetRequest_Comments();
-				setComments(result);
-				if(result.length > 0){
-					const a = result["0"];
-					if(a.request_mode){
-						console.log(a.request_mode);
-					}else{
-						setCommentsRes(true);
-					}
-				}else{
-					setCommentsRes(true);
-				}
-			} catch (error) {
-				console.error('コメントの取得中にエラーが発生しました:', error);
-			}
-		};
-		fetchData();
-	}, []);
-
-	const [comment, setComment] = useState('');
-
-	// コメント送信
-	const CommentForm_send_ButtonClick = async () => {
-		if (typeof window !== 'undefined') {
-			if(userData.username && userData.id){
-				const comment_reply_form_button = document.getElementById(`commentForm_send`);
-				if(comment_reply_form_button){
-					comment_reply_form_button.classList.add('pointer-events-none');
-					comment_reply_form_button.innerText=(_locales('Sending...'))
-				}
-				if(ValidationCheck_comment(comment)) {					
-					if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, "null", comment)){
-						window.alert(_locales('Comment posted!'));
-						window.location.href=(`${window.location}`);
-					}else{
-						window.alert(_locales('There was a problem posting the comment!'));
-						if(comment_reply_form_button){
-							comment_reply_form_button.classList.remove('pointer-events-none');
-							comment_reply_form_button.innerText=(_locales('Post'))
-						}
-					}
-				}else{
-					window.alert(_locales('At least one non-space character is required!'));
-					if(comment_reply_form_button){
-						comment_reply_form_button.classList.remove('pointer-events-none');
-						comment_reply_form_button.innerText=(_locales('Post'))
-					}
-				}
-			} else {
-				window.alert(_locales('Processing user information!'));
-			}
-		}
-	};
-
     if (!isLangLoaded) {
         return <Loading />;
     }
@@ -169,6 +111,8 @@ export default function Home() {
 	if (isLangLoaded && NetworkStatus === "offline") {
 		return (<><h1>offline</h1></>);
 	}
+
+	console.log(contentObj_mods_json)
 
 	return (
 		<>
@@ -178,25 +122,6 @@ export default function Home() {
 					<Main>
 						<section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
 							<ContentsSET contentTitle={"home"}/>
-							<CardContents durationPls={100}>
-								<CardHeader>
-									<CardTitle>{_locales('Comments')}</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<Textarea placeholder={_locales('Write a comment')} onChange={(e) => setComment(e.target.value)} />
-								</CardContent>
-								<CardFooter className="flex flex-wrap gap-2 animate-fade-down animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
-									{userData? (
-										<Button id="commentForm_send" onClick={CommentForm_send_ButtonClick}>{_locales('Post')}</Button>
-									):(									
-										<AlertDialogCustomButton_loginUserOnly>
-											<Button>{_locales('Post')}</Button>
-										</AlertDialogCustomButton_loginUserOnly>
-									)}
-									<Button variant="outline">{_locales('Cancel')}</Button>
-								</CardFooter>
-								<CommentsHtmlContents commentsRes={commentsRes} comments={comments} userData={userData}/>
-							</CardContents>
 						</section>
 					</Main>
 				</ElementGroup>

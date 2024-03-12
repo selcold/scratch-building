@@ -57,3 +57,10 @@ export function ContentsSET({ contentTitle }: { contentTitle: string }) {
         </>
     );
 }
+
+export function ContentsSET_ModList({}) {
+    return (
+        <>
+        </>
+    )
+}

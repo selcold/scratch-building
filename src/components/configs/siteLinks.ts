@@ -3,6 +3,9 @@ export const _cfgSite = {
     title: "Scratch Building",
 
     links_home: "/",
+    links_games: "/games",
+    links_mods: "/mods",
+    links_qa: "/qa",
 }
 
 // https://scratch-building-beta.vercel.app

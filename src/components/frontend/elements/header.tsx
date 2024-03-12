@@ -69,13 +69,14 @@ import { HeaderBtmSpace } from "./main"
 
 const HeaderNav = [
 	{ name: _locales('Home'), href: _cfgSite.links_home, target: '_self' },
+    { name: _locales('MOD'), href: _cfgSite.links_mods, target: '_self' },
+    { name: _locales('Q&A'), href: _cfgSite.links_qa, target: '_self' },
 ]
 
 export default function Header({ userData, btmSpace }: { userData: any, btmSpace?: boolean }) {
-    let username = "";
-    if(userData){
-        username = userData.username;
-    }
+    const username = userData?.username || "";
+    const user_image = userData?.profile?.images['90x90'] || _cfgImages.links_icon_user_guest_png;
+
     return (
         <>
             <header className="fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md backdrop-brightness-[120%] dark:backdrop-brightness-[80%] border-[1px] border-neutral-500/50 text-black dark:text-white w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
@@ -112,7 +113,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                             <DropdownMenuTrigger asChild>
                                 <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
                                     <Avatar className="w-[30px] h-[30px]">
-                                        <AvatarImage src={userData? userData.profile.images['90x90'] : _cfgImages.links_icon_user_guest_png} alt={username? `@${username}` : '@guest'}/>
+                                        <AvatarImage src={user_image} alt={username? `@${username}` : '@guest'}/>
                                         <AvatarFallback>ICO</AvatarFallback>
                                     </Avatar>
                                 </Button>
@@ -251,7 +252,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                                     <DropdownMenuTrigger asChild>
                                         <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
                                             <Avatar className="w-[30px] h-[30px]">
-                                                <AvatarImage src={userData? userData.profile.images['90x90'] : _cfgImages.links_icon_user_guest_png} alt={username? `@${username}` : '@guest'}/>
+                                                <AvatarImage src={user_image} alt={username? `@${username}` : '@guest'}/>
                                                 <AvatarFallback>ICO</AvatarFallback>
                                             </Avatar>
                                         </Button>

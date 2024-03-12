@@ -32,5 +32,13 @@ export const contents_json: ContentsJSON = {
                 }
             ]
         }
+    ],
+    "qa": [
+        {
+            "title": "Q&A",
+            "description": "気になることなどをここで聞いて解決しよう！"
+        }
     ]
 }
+
+
