@@ -4,8 +4,8 @@ import { _cfgMaintenancePages } from '@/components/configs/config'
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
     // Check if the path is in the maintenance pages list
-    if (_cfgMaintenancePages.includes(request.url)) {
-        return NextResponse.redirect(new URL(`/maintenance?requestUrl=${request.url}`, request.url))
+    if (_cfgMaintenancePages.includes(request.nextUrl.pathname)) {
+        return NextResponse.redirect(new URL(`/maintenance?requestUrl=${request.nextUrl.href}`, request.url))
     } else {
         return NextResponse.next()
     }

@@ -50,6 +50,7 @@ import { DarkModeSET } from "@/components/frontend/site/main";
 import { AlertDialogCustomButton_loginUserOnly } from "@/components/frontend/site/AlertDialog";
 import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
 import { _cfgSite } from "@/components/configs/siteLinks";
+import { ContentsSET } from "@/components/frontend/elements/contents";
 
 export default function Home() {
 
@@ -93,7 +94,7 @@ export default function Home() {
 								setUserImage(userData.profile.images["90x90"])
 							}
 							if(userData.profile.bio){
-								set_userData_profile_bio(userData.profile.bio.replace(/\n/g, '<br>'));
+								set_userData_profile_bio(userData.profile.bio);
 							}
 						}
                         setUserData(userData);
@@ -184,21 +185,7 @@ export default function Home() {
 					<Header userData={userData}/>
 					<Main>
 						<section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
-							<CardContents>
-								<CardHeader>
-									<CardTitle>お知らせ</CardTitle>
-									<CardDescription>ビル経営ゲームでクラウドセーブを行った人の数が3600人を超えました！<br/>これからもビル経営ゲームをよろしくお願いします！</CardDescription>
-								</CardHeader>
-							</CardContents>
-							<CardContents durationPls={50}>
-								<CardHeader>
-									<CardTitle>気軽にMOD開発！</CardTitle>
-									<CardDescription>ビル経営ゲームのMODを作りたいと思ったことはありませんか？<br/>そんなあなたへ誰でも簡単にMODを作れるプロジェクトを見てみましょう！</CardDescription>
-								</CardHeader>
-								<CardFooter className="flex flex-wrap">
-									<Button>ページを見る</Button>
-								</CardFooter>
-							</CardContents>
+							<ContentsSET contentTitle={"home"}/>
 							<CardContents durationPls={100}>
 								<CardHeader>
 									<CardTitle>{_locales('Comments')}</CardTitle>
