@@ -79,7 +79,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
 
     return (
         <>
-            <header className="fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md backdrop-brightness-[120%] dark:backdrop-brightness-[80%] border-[1px] border-neutral-500/50 text-black dark:text-white w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
+            <header className={`fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md border-[1px] border-neutral-500/50 text-white dark:text-white bg-black/40 dark:bg-white/10 w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards`}>
                 <Link href={_cfgSite.links_home}>
                     <div className="flex flex-row items-center gap-3">
                         <Image

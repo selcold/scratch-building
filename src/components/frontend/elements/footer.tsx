@@ -15,7 +15,7 @@ const nav_Development = [
 
 export default function Footer() {
 
-    const currentFullYear = new Date().getFullYear();;
+    const currentFullYear = new Date().getFullYear();
 
     return (
         <>

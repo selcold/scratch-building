@@ -27,7 +27,7 @@ export function HeaderBtmSpace() {
     return (
         <>
             <div className="w-full h-[250px] md:h-[350px] bg-cover bg-center" style={{backgroundImage: `url(${_cfgImages.links_game_banner_bg})`}}>
-                <div className="relative flex justify-center items-center backdrop-blur-sm backdrop-brightness-[120%] dark:backdrop-brightness-50 text-black dark:text-white w-full h-full">
+                <div className="relative flex justify-center items-center backdrop-blur-sm backdrop-brightness-100 dark:backdrop-brightness-50 text-black dark:text-white w-full h-full">
                     <div>
                         <h1 className="font-bold text-3xl md:text-5xl">{_locales(_cfgSite.title)}</h1>
                     </div>
