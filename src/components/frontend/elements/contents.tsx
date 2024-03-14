@@ -2,7 +2,8 @@
 
 'use client';
 
-import { Button } from "@/components/ui/button"
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
 	Card,
 	CardContent,
@@ -10,10 +11,24 @@ import {
 	CardFooter,
 	CardHeader,
 	CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { contents_json } from "../../../../contents/contentsObj";
-import { CardContents } from "./card";
+import { CardContents, ModCard, ModCardContent, ModCardFooter, ModCardHeader } from "./card";
 import Link from "next/link";
+import { contentObj_modsAll } from "../../../../contents/contentObj_mods";
+import Image from "next/image";
+import Badge from "@/components/badge-ui/ui/badge-ui";
+import { Input } from "@/components/ui/input";
+import { _locales } from "../site/_locales";
 
 export function ContentsSET({ contentTitle }: { contentTitle: string }) {
     const contentsObj = contents_json;
@@ -29,7 +44,7 @@ export function ContentsSET({ contentTitle }: { contentTitle: string }) {
                 </CardHeader>
                 {content.actions ? (
                     <CardFooter className="flex flex-wrap gap-2">
-                    {content.actions.map((action: any, index: number) => (
+                    {content.actions?.map((action: any, index: number) => (
                         <Button
                             variant={action.variant} 
                             onClick={() => {
@@ -58,9 +73,160 @@ export function ContentsSET({ contentTitle }: { contentTitle: string }) {
     );
 }
 
-export function ContentsSET_ModList({}) {
+export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
+    const contentObj_all = contentObj_modsAll.mods;
+    const contentObj_list = contentObj_modsAll.list;
+
+    const [select_search, set_select_search] = React.useState<string>("All");
+    const [select_version, set_select_version] = React.useState<string>("All");
+    const [select_project_type, set_select_project_type] = React.useState<string>("All");
+
+    // 検索結果が空の場合に表示するメッセージ
+    const notFoundMessage = (
+        <div className="flex justify-center items-center h-full text-gray-500">
+            <p>{_locales('No matching MODs found.')}</p>
+        </div>
+    );
+
+    // フィルタリングされたMODを取得する関数
+    const getFilteredMods = () => {
+        return contentObj_all.filter((mod: any) => {
+            const searchMatch = select_search === "All" || mod.title.toLowerCase().includes(select_search.toLowerCase());
+            const versionMatch = select_version === "All" || mod.version === select_version;
+            const typeMatch = select_project_type === "All" || mod.project_type === select_project_type;
+            return searchMatch && versionMatch && typeMatch;
+        });
+    };
+
+    // フィルタリングされたMODを取得
+    const filteredMods = getFilteredMods();
+
+    if( mode === "list" ){
+        return (
+            <div className="flex flex-col gap-2">
+                {contentObj_list.map((list: any, index: number) => (
+                <CardContents durationPls={ 50 * index} key={index}>
+                    <CardHeader>
+                        <CardTitle>{list.title}</CardTitle>
+                        <CardDescription className="whitespace-pre-line" dangerouslySetInnerHTML={{ __html: list.description }}/>
+                    </CardHeader>
+                    <CardContent className="flex flex-wrap justify-start py-3 px-7 gap-2">
+                        {contentObj_all.map((mod: any, index: number) => (
+                        <ModCard key={index} className={`${mod.project_type === list.group_type ? `` : `hidden`}`}>
+                        {mod.project_type === list.group_type ? (
+                        <>
+                            <ModCardHeader>
+                                <Image
+                                src={`https://uploads.scratch.mit.edu/get_image/project/${mod.projects_id}_480x360.png`}
+                                alt="mod image"
+                                width={480}
+                                height={360}
+                                className="w-full h-auto rounded-md"
+                                />
+                            </ModCardHeader>
+                            <ModCardContent>
+                                <CardTitle>{mod.title}</CardTitle>
+                                <CardDescription>{mod.description}</CardDescription>
+                            </ModCardContent>
+                            <ModCardFooter>
+                            <>
+                            {mod.tags?.map((tag: any, index: number) => (
+                            <span key={index}>
+                                {tag.display && tag.display === "none" ? (
+                                    <></>
+                                ):(
+                                    <Badge mode={tag.color}>{tag.label}</Badge>
+                                )}
+                            </span>
+                            ))}
+                            </>
+                            </ModCardFooter>
+                        </>
+                        ):(
+                        <>
+                        </>
+                        )}
+                        </ModCard>
+                        ))}
+                    </CardContent>
+                </CardContents>
+            ))}
+            </div>
+        )
+    }
+
     return (
-        <>
-        </>
+        <CardContents durationPls={0}>
+            <CardHeader>
+                <section className="flex flex-row flex-wrap gap-3">
+                    <Input type="text" placeholder={_locales('Search for MODs')} onChange={(e) => set_select_search(e.target.value)} />
+                    <Select onValueChange={set_select_version}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder={_locales('Select a version')}/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>version</SelectLabel>
+                                <SelectItem value="All">All</SelectItem>
+                                <SelectItem value="7">v7</SelectItem>
+                                <SelectItem value="6">v6</SelectItem>
+                                </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                    <Select onValueChange={set_select_project_type}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder={_locales('Select a type')}/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>type</SelectLabel>
+                                <SelectItem value="All">All</SelectItem>
+                                <SelectItem value="SBMOD">SBMOD</SelectItem>
+                                <SelectItem value="SBAPI">SBAPI</SelectItem>
+                                <SelectItem value="SBAddons">SB Addons</SelectItem>
+                                <SelectItem value="SBaddonAPI">SB addon API</SelectItem>
+                                </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </section>
+            </CardHeader>
+            <CardContent>
+                <div className="flex flex-wrap gap-2 px-2">
+                    {filteredMods.length === 0 ? notFoundMessage : (
+                        filteredMods.map((mod: any, index: number) => (
+                            <ModCard key={index} className={`${select_search === "All" ? ``:`${mod.title.indexOf(select_search) === -1 ? `hidden` : ``}`} ${select_version === "All" ? ``:`${mod.version === select_version ? `` : `hidden`}`} ${select_project_type === "All" ? ``:`${mod.project_type === select_project_type ? `` : `hidden`}`}`}>
+                                <ModCardHeader>
+                                    <Image
+                                    src={`https://uploads.scratch.mit.edu/get_image/project/${mod.projects_id}_480x360.png`}
+                                    alt="mod image"
+                                    width={480}
+                                    height={360}
+                                    className="w-full h-auto rounded-md"
+                                    />
+                                </ModCardHeader>
+                                <ModCardContent>
+                                    <CardTitle>{mod.title}</CardTitle>
+                                    <CardDescription>{mod.description}</CardDescription>
+                                </ModCardContent>
+                                <ModCardFooter>
+                                <>
+                                    {mod.tags?.map((tag: any, index: number) => (
+                                    <span key={index}>
+                                        {tag.display && tag.display === "none" ? (
+                                            <></>
+                                        ):(
+                                            <Badge mode={tag.color}>{tag.label}</Badge>
+                                        )}
+                                    </span>
+                                    ))}
+                                </>
+                                </ModCardFooter>
+                            </ModCard>
+                        ))
+                    )}
+
+                </div>
+            </CardContent>
+        </CardContents>
     )
 }

@@ -1,4 +1,5 @@
 export const _locales_en: { [key: string]: string } = {
+    "_lang": "en",
 
     // site
     "Scratch Building": "Scratch Building",
@@ -18,6 +19,7 @@ export const _locales_en: { [key: string]: string } = {
     "Guest": "Guest",
     "About me": "About me",
 
+    // nav
     "Home": "Home",
     "Docs": "Documentation",
     "Socials": "Socials",
@@ -89,9 +91,18 @@ export const _locales_en: { [key: string]: string } = {
     "For the completion date and time of maintenance, please contact directly the site management or development team members.": "For the completion date and time of maintenance, please contact directly the site management or development team members.",
     "Can't access anymore?": "Can't access anymore?",
     "That's not the case. If the page you accessed is under maintenance or inaccessible, this page will be displayed, indicating temporary access restriction.": "That's not the case. If the page you accessed is under maintenance or inaccessible, this page will be displayed, indicating temporary access restriction.",
+
+    // mods
+    "All": "All",
+    "List": "List",
+    "Search for MODs": "Search for MODs",
+    "Select a version": "Select a version",
+    "Select a type": "Select a type",
+    "No matching MODs found.": "No matching MODs found.",
 }
 
 export const _locales_ja: { [key: string]: string } = {
+    "_lang": "ja",
 
     // site
     "Scratch Building": "ビル経営ゲーム",
@@ -111,6 +122,7 @@ export const _locales_ja: { [key: string]: string } = {
     "Guest": "ゲスト",
     "About me": "自己紹介",
 
+    // nav
     "Home": "ホーム",
     "Docs": "ドキュメント",
     "Socials": "ソーシャル",
@@ -182,4 +194,12 @@ export const _locales_ja: { [key: string]: string } = {
     "For the completion date and time of maintenance, please contact directly the site management or development team members.": "メンテナンスの終了日時は直接サイトの運営または開発チームのメンバーにお問合せしてください。",
     "Can't access anymore?": "もうアクセスできない？",
     "That's not the case. If the page you accessed is under maintenance or inaccessible, this page will be displayed, indicating temporary access restriction.": "それは違います。アクセスしたページがメンテナンス中またはアクセスできない場合このページが表示される為、一時的にアクセスを制限されている状態です。",
+
+    // mods
+    "All": "全て",
+    "List": "リスト",
+    "Search for MODs": "MODを検索",
+    "Select a version": "バージョンを選択",
+    "Select a type": "タイプを選択",
+    "No matching MODs found.": "該当するMODが見つかりません。",
 }

@@ -117,8 +117,8 @@ export default function Home() {
 
 					const currentDate = new Date();
 
-					toast(_locales('Access Denied!'), {
-						description: `${formatDateTime(currentDate)}`,
+					toast(`${_locales('Access Denied!')}`, {
+						description: `${requestUrl}`,
 						action: {
 							label: _locales('Close'),
 							onClick: () => console.log("Close"),

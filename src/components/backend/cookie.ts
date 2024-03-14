@@ -16,7 +16,7 @@ export function setEncryptedUsername(name: string, value: string, days: number) 
     const encryptedValue = encrypt(value + '|' + hmac); // ユーザー名とHMACを結合し、暗号化
     const expires = new Date();
     expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-    document.cookie = `${name}=${encryptedValue};expires=${expires.toUTCString()};path=/`;
+    document.cookie = `${name}=${encryptedValue};${days > 0 ? `expires=${expires.toUTCString()}` : ``};path=/`;
 }
 
 // セッションからユーザー名を削除する関数
@@ -33,7 +33,7 @@ export function setEncryptedSessionId(name: string, value: string, days: number)
     const encryptedValue = encrypt(sessionData); // セッションIDとHMACを暗号化
     const expires = new Date();
     expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
-    document.cookie = `${name}=${encryptedValue};expires=${expires.toUTCString()};path=/`;
+    document.cookie = `${name}=${encryptedValue};${days > 0 ? `expires=${expires.toUTCString()}` : ``};path=/`;
 }
 
 // CookieからセッションIDを取得し、検証してから復号化する関数

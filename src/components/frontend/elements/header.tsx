@@ -99,7 +99,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                             <Link
                                 href={item.href}
                                 target={item.target}
-                                className={`hover:text-neutral-500 dark:hover:text-neutral-400 transition duration-200`}
+                                className={`hover:text-neutral-300 dark:hover:text-neutral-400 transition duration-200`}
                             >
                                 {item.name}
                             </Link>
@@ -243,7 +243,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                 <div className="block md:hidden">
                 <Sheet>
                     <SheetTrigger asChild className="flex border-none bg-transparent p-0">
-                        <Button variant="outline" className="w-auto h-auto m-auto"><FontAwesomeIcon icon={faBars} className="text-[18px] text-neutral-900 dark:text-neutral-100"/></Button>
+                        <Button variant="outline" className="w-auto h-auto m-auto"><FontAwesomeIcon icon={faBars} className="text-[18px]"/></Button>
                     </SheetTrigger>
                     <SheetContent>
                         <div className="border-neutral-300 dark:border-neutral-800 border-b-[1px] pb-3">

@@ -46,7 +46,7 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { DarkModeSET } from "@/components/frontend/site/main";
+import { DarkModeGET, DarkModeSET } from "@/components/frontend/site/main";
 import { AlertDialogCustomButton_loginUserOnly } from "@/components/frontend/site/AlertDialog";
 import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
 import { _cfgSite } from "@/components/configs/siteLinks";
@@ -129,8 +129,8 @@ export default function Home() {
 								reactionsEnabled="1"
 								emitMetadata="0"
 								inputPosition="top"
-								theme="noborder_gray"
-								lang="ja"
+								theme={DarkModeGET() === "false" ? "light" : "dark"}
+								lang={_locales('_lang')}
 								loading="lazy"
 							/>
 						</section>

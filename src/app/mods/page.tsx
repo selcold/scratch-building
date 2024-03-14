@@ -46,12 +46,17 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import {
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger,
+} from "@/components/ui/tabs"
 import { DarkModeSET } from "@/components/frontend/site/main";
 import { AlertDialogCustomButton_loginUserOnly } from "@/components/frontend/site/AlertDialog";
 import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
 import { _cfgSite } from "@/components/configs/siteLinks";
-import { ContentsSET } from "@/components/frontend/elements/contents";
-import { contentObj_mods_json } from "../../../contents/contentObj_mods";
+import { ContentsSET, ContentsSET_ModAll } from "@/components/frontend/elements/contents";
 
 export default function Home() {
 
@@ -112,8 +117,6 @@ export default function Home() {
 		return (<><h1>offline</h1></>);
 	}
 
-	console.log(contentObj_mods_json)
-
 	return (
 		<>
 			<div>
@@ -121,7 +124,19 @@ export default function Home() {
 					<Header userData={userData} btmSpace/>
 					<Main>
 						<section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
-							<ContentsSET contentTitle={"home"}/>
+							<ContentsSET contentTitle={"mods"}/>
+							<Tabs defaultValue="list" className="w-full shadow-lg animate-fade-up animate-once animate-duration-[350ms] animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
+								<TabsList className="grid w-full grid-cols-2">
+									<TabsTrigger value="all">{_locales('All')}</TabsTrigger>
+									<TabsTrigger value="list">{_locales('List')}</TabsTrigger>
+								</TabsList>
+								<TabsContent value="all">
+								<ContentsSET_ModAll mode="all"/>
+								</TabsContent>
+								<TabsContent value="list">
+								<ContentsSET_ModAll mode="list"/>
+								</TabsContent>
+							</Tabs>
 						</section>
 					</Main>
 				</ElementGroup>
@@ -130,3 +145,5 @@ export default function Home() {
 		</>
 	);
 }
+
+// <ContentsSET_ModList/>

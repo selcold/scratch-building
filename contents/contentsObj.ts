@@ -33,6 +33,12 @@ export const contents_json: ContentsJSON = {
             ]
         }
     ],
+    "mods": [
+        {
+            "title": "MOD",
+            "description": "ビル経営ゲームのMODはゲームをより面白くできる拡張機能のようなものです！\n自分で作ることもできるので是非 [前提] と書いてあるプロジェクトを見てみてください！",
+        },
+    ],
     "qa": [
         {
             "title": "Q&A",
