@@ -55,7 +55,7 @@ export default function RootLayout({
 			<head>
 				<link rel="preconnect" href="https://cdn2.scratch.mit.edu" />
 			</head>
-			<body className={`animate-fade animate-once animate-duration-[800ms] animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards ${inter.className}`}>
+			<body className={`animate-fade animate-once animate-duration-[300ms] animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards ${inter.className}`}>
 				{children}
 				<Toaster />
 			</body>

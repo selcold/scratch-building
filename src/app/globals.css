@@ -199,3 +199,49 @@ section {
   font-family: "Open Sans", sans-serif;
   color: #555555;
 }
+
+.animate-duration-\[300ms\] {
+  animation-duration: 300ms;
+}
+.animate-duration-\[350ms\] {
+  animation-duration: 350ms;
+}
+.animate-duration-\[300ms\] {
+  animation-duration: 400ms;
+}
+.animate-duration-\[350ms\] {
+  animation-duration: 450ms;
+}
+.animate-duration-\[300ms\] {
+  animation-duration: 500ms;
+}
+.animate-duration-\[350ms\] {
+  animation-duration: 550ms;
+}
+.animate-duration-\[300ms\] {
+  animation-duration: 600ms;
+}
+.animate-duration-\[350ms\] {
+  animation-duration: 650ms;
+}
+.animate-duration-\[300ms\] {
+  animation-duration: 700ms;
+}
+.animate-duration-\[350ms\] {
+  animation-duration: 750ms;
+}
+.animate-duration-\[300ms\] {
+  animation-duration: 800ms;
+}
+.animate-duration-\[350ms\] {
+  animation-duration: 850ms;
+}
+.animate-duration-\[300ms\] {
+  animation-duration: 900ms;
+}
+.animate-duration-\[350ms\] {
+  animation-duration: 950ms;
+}
+.animate-duration-\[300ms\] {
+  animation-duration: 1000ms;
+}
