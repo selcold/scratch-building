@@ -28,7 +28,7 @@ import { contentObj_modsAll } from "../../../../contents/contentObj_mods";
 import Image from "next/image";
 import Badge from "@/components/badge-ui/ui/badge-ui";
 import { Input } from "@/components/ui/input";
-import { _locales } from "../site/_locales";
+import { _locales, _localesText } from "../site/_locales";
 
 export function ContentsSET({ contentTitle }: { contentTitle: string }) {
     const contentsObj = contents_json;
@@ -78,6 +78,7 @@ export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
     const contentObj_list = contentObj_modsAll.list;
 
     const [select_search, set_select_search] = React.useState<string>("All");
+    const [select_mod_type, set_select_mod_type] = React.useState<string>("All");
     const [select_version, set_select_version] = React.useState<string>("All");
     const [select_project_type, set_select_project_type] = React.useState<string>("All");
 
@@ -92,9 +93,10 @@ export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
     const getFilteredMods = () => {
         return contentObj_all.filter((mod: any) => {
             const searchMatch = select_search === "All" || mod.title.toLowerCase().includes(select_search.toLowerCase());
+            const modTypeMatch = select_mod_type === "All" || mod.mod_type === select_mod_type;
             const versionMatch = select_version === "All" || mod.version === select_version;
             const typeMatch = select_project_type === "All" || mod.project_type === select_project_type;
-            return searchMatch && versionMatch && typeMatch;
+            return searchMatch && modTypeMatch && versionMatch && typeMatch;
         });
     };
 
@@ -112,41 +114,36 @@ export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
                     </CardHeader>
                     <CardContent className="flex flex-wrap justify-start py-3 px-7 gap-2">
                         {contentObj_all.map((mod: any, index: number) => (
-                        <ModCard key={index} className={`${mod.project_type === list.group_type ? `` : `hidden`}`}>
-                        {mod.project_type === list.group_type ? (
-                        <>
-                            <ModCardHeader>
-                                <Image
-                                src={`https://uploads.scratch.mit.edu/get_image/project/${mod.projects_id}_480x360.png`}
-                                alt="mod image"
-                                width={480}
-                                height={360}
-                                className="w-full h-auto rounded-md"
-                                />
-                            </ModCardHeader>
-                            <ModCardContent>
-                                <CardTitle>{mod.title}</CardTitle>
-                                <CardDescription>{mod.description}</CardDescription>
-                            </ModCardContent>
-                            <ModCardFooter>
+                            <ModCard key={index} projectId={mod.projects_id} className={`${mod.project_type === list.group_type ? `` : `hidden`}`}>
+                            {mod.project_type === list.group_type ? (
                             <>
-                            {mod.tags?.map((tag: any, index: number) => (
-                            <span key={index}>
-                                {tag.display && tag.display === "none" ? (
-                                    <></>
-                                ):(
-                                    <Badge mode={tag.color}>{tag.label}</Badge>
-                                )}
-                            </span>
-                            ))}
+                                <ModCardHeader>
+                                    <Image
+                                    src={`https://uploads.scratch.mit.edu/get_image/project/${mod.projects_id}_480x360.png`}
+                                    alt="mod image"
+                                    width={480}
+                                    height={360}
+                                    className="w-full h-auto rounded-md"
+                                    />
+                                </ModCardHeader>
+                                <ModCardContent>
+                                    <CardTitle>{_localesText(mod.title,mod.title_ja)}</CardTitle>
+                                    <CardDescription>{_localesText(mod.description,mod.description_ja)}</CardDescription>
+                                </ModCardContent>
+                                <ModCardFooter>
+                                    {mod.tags?.map((tag: any, index: number) => (
+                                    <span key={index}>
+                                        {tag.display && tag.display === "none" ? (
+                                            <></>
+                                        ):(
+                                            <Badge mode={tag.color}>{_locales(tag.label)}</Badge>
+                                        )}
+                                    </span>
+                                    ))}
+                                </ModCardFooter>
                             </>
-                            </ModCardFooter>
-                        </>
-                        ):(
-                        <>
-                        </>
-                        )}
-                        </ModCard>
+                            ): <></> }
+                            </ModCard>
                         ))}
                     </CardContent>
                 </CardContents>
@@ -160,6 +157,20 @@ export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
             <CardHeader>
                 <section className="flex flex-row flex-wrap gap-3">
                     <Input type="text" placeholder={_locales('Search for MODs')} onChange={(e) => set_select_search(e.target.value)} />
+                    <Select onValueChange={set_select_mod_type}>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder={_locales('Select a mod type')}/>
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectGroup>
+                                <SelectLabel>Mod type</SelectLabel>
+                                <SelectItem value="All">{_locales('All')}</SelectItem>
+                                <SelectItem value="Default">{_locales('Default')}</SelectItem>
+                                <SelectItem value="Official">{_locales('Official')}</SelectItem>
+                                <SelectItem value="Prerequisite">{_locales('Prerequisite')}</SelectItem>
+                                </SelectGroup>
+                        </SelectContent>
+                    </Select>
                     <Select onValueChange={set_select_version}>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder={_locales('Select a version')}/>
@@ -167,7 +178,7 @@ export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>version</SelectLabel>
-                                <SelectItem value="All">All</SelectItem>
+                                <SelectItem value="All">{_locales('All')}</SelectItem>
                                 <SelectItem value="7">v7</SelectItem>
                                 <SelectItem value="6">v6</SelectItem>
                                 </SelectGroup>
@@ -180,7 +191,7 @@ export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
                         <SelectContent>
                             <SelectGroup>
                                 <SelectLabel>type</SelectLabel>
-                                <SelectItem value="All">All</SelectItem>
+                                <SelectItem value="All">{_locales('All')}</SelectItem>
                                 <SelectItem value="SBMOD">SBMOD</SelectItem>
                                 <SelectItem value="SBAPI">SBAPI</SelectItem>
                                 <SelectItem value="SBAddons">SB Addons</SelectItem>
@@ -194,7 +205,7 @@ export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
                 <div className="flex flex-wrap gap-2 px-2">
                     {filteredMods.length === 0 ? notFoundMessage : (
                         filteredMods.map((mod: any, index: number) => (
-                            <ModCard key={index} className={`${select_search === "All" ? ``:`${mod.title.indexOf(select_search) === -1 ? `hidden` : ``}`} ${select_version === "All" ? ``:`${mod.version === select_version ? `` : `hidden`}`} ${select_project_type === "All" ? ``:`${mod.project_type === select_project_type ? `` : `hidden`}`}`}>
+                            <ModCard key={index} projectId={mod.projects_id}>
                                 <ModCardHeader>
                                     <Image
                                     src={`https://uploads.scratch.mit.edu/get_image/project/${mod.projects_id}_480x360.png`}
@@ -205,26 +216,23 @@ export function ContentsSET_ModAll({ mode }: { mode: "all" | "list" }) {
                                     />
                                 </ModCardHeader>
                                 <ModCardContent>
-                                    <CardTitle>{mod.title}</CardTitle>
-                                    <CardDescription>{mod.description}</CardDescription>
+                                    <CardTitle>{_localesText(mod.title,mod.title_ja)}</CardTitle>
+                                    <CardDescription>{_localesText(mod.description,mod.description_ja)}</CardDescription>
                                 </ModCardContent>
                                 <ModCardFooter>
-                                <>
                                     {mod.tags?.map((tag: any, index: number) => (
                                     <span key={index}>
                                         {tag.display && tag.display === "none" ? (
                                             <></>
                                         ):(
-                                            <Badge mode={tag.color}>{tag.label}</Badge>
+                                            <Badge mode={tag.color}>{_locales(tag.label)}</Badge>
                                         )}
                                     </span>
                                     ))}
-                                </>
                                 </ModCardFooter>
                             </ModCard>
                         ))
                     )}
-
                 </div>
             </CardContent>
         </CardContents>

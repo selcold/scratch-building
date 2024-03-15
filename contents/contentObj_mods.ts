@@ -7,11 +7,14 @@ export interface list {
 }
 export interface contentObj_mods {
     version: "7" | "6";
+    mod_type: "Default" | "Official" | "Prerequisite";
     project_type: "SBMOD" | "SBAPI" | "SBAddons" | "SBaddonAPI";
     projects_id: number;
     creator: string;
     title: string;
+    title_ja?: string;
     description: string;
+    description_ja?: string;
     tags?: Tag[]; 
 }
 export interface Tag {
@@ -49,6 +52,7 @@ export const contentObj_modsAll: contentObj = {
     "mods": [
         {
             "version": "7",
+            "mod_type": "Official",
             "project_type": "SBMOD",
             "projects_id": 940232456,
             "creator": "Masaabu-YT",
@@ -56,51 +60,61 @@ export const contentObj_modsAll: contentObj = {
             "description": "",
             "tags": [
                 {
-                    "label": "公式",
+                    "label": "Official",
                     "color": "yellow",
                 },
             ],
         },
         {
             "version": "7",
+            "mod_type": "Prerequisite",
             "project_type": "SBAPI",
             "projects_id": 933515639,
             "creator": "dmmo-com-jp",
             "title": "SBAPI",
-            "description": "ビル経営ゲームの拡張性を上げるツール",
+            "description": "Tool to enhance the extensibility of the Scratch Building.",
+            "description_ja": "ビル経営ゲームの拡張性を上げるツール",
             "tags": [
                 {
-                    "label": "前提",
+                    "label": "Prerequisite",
                     "color": "blue",
                 },
             ],
         },
         {
             "version": "7",
+            "mod_type": "Default",
             "project_type": "SBAPI",
             "projects_id": 939787547,
             "creator": "dmmo-com-jp",
             "title": "cmdplus",
-            "description": "SBAPIのpostに依存した、コマンド強化modです。",
+            "description": "This is a command-enhancing mod that relies on SBAPI's post.",
+            "description_ja": "SBAPIのpostに依存した、コマンド強化modです。",
         },
         {
             "version": "7",
+            "mod_type": "Default",
             "project_type": "SBAPI",
             "projects_id": 933713134,
             "creator": "banana_877_",
-            "title": "隕石経営ゲーム",
-            "description": "隕石！！",
+            "title": "Meteor Management Game",
+            "title_ja": "隕石経営ゲーム",
+            "description": "Meteorite!!",
+            "description_ja": "隕石！！",
         },
         {
             "version": "6",
+            "mod_type": "Default",
             "project_type": "SBAddons",
             "projects_id": 790969288,
             "creator": "Masaabu-YT",
             "title": "SB Addons",
-            "description": "ビル経営ゲームの拡張性を上げるツール",
+            "description": "A tool to increase the extensibility of Scratch Building",
+            "description_ja": "ビル経営ゲームの拡張性を上げるツール",
         },
         {
             "version": "6",
+            "mod_type": "Default",
             "project_type": "SBAddons",
             "projects_id": 791408146,
             "creator": "dmmo-com-jp",
@@ -109,14 +123,18 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": "6",
+            "mod_type": "Default",
             "project_type": "SBAddons",
             "projects_id": 792121597,
             "creator": "dmmo-com-jp",
-            "title": "隕石アドオン",
-            "description": "隕石！！",
+            "title": "Meteor Add-on",
+            "title_ja": "隕石アドオン",
+            "description": "Meteorite!!",
+            "description_ja": "隕石！！",
         },
         {
             "version": "6",
+            "mod_type": "Default",
             "project_type": "SBAddons",
             "projects_id": 817892400,
             "creator": "banana_877_",
@@ -125,6 +143,7 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": "6",
+            "mod_type": "Default",
             "project_type": "SBAddons",
             "projects_id": 795165690,
             "creator": "yoshikunTA",
@@ -133,25 +152,30 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": "6",
+            "mod_type": "Prerequisite",
             "project_type": "SBaddonAPI",
             "projects_id": 926411096,
             "creator": "dmmo-com-jp",
             "title": "SBAPI",
-            "description": "お金の管理や幸福度の管理を簡単に行えます。",
+            "description": "You can easily manage money and happiness levels.",
+            "description_ja": "お金の管理や幸福度の管理を簡単に行えます。",
             "tags": [
                 {
-                    "label": "前提",
+                    "label": "Prerequisite",
                     "color": "blue",
                 },
             ],
         },
         {
             "version": "6",
+            "mod_type": "Default",
             "project_type": "SBaddonAPI",
             "projects_id": 933340996,
             "creator": "dmmo-com-jp",
-            "title": "天候復活アドオン",
-            "description": "天候を6.0に復活させます",
+            "title": "Weather Revival Add-on",
+            "title_ja": "天候復活アドオン",
+            "description": "Restore the weather to 6.0",
+            "description_ja": "天候を6.0に復活させます",
         },
     ],
 }

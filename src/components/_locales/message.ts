@@ -96,9 +96,13 @@ export const _locales_en: { [key: string]: string } = {
     "All": "All",
     "List": "List",
     "Search for MODs": "Search for MODs",
+    "Select a mod type": "Select a mod type",
     "Select a version": "Select a version",
     "Select a type": "Select a type",
     "No matching MODs found.": "No matching MODs found.",
+    "Default": "Default",
+    "Official": "Official",
+    "Prerequisite": "Prerequisite", 
 }
 
 export const _locales_ja: { [key: string]: string } = {
@@ -199,7 +203,11 @@ export const _locales_ja: { [key: string]: string } = {
     "All": "全て",
     "List": "リスト",
     "Search for MODs": "MODを検索",
+    "Select a mod type": "Modタイプを選択",
     "Select a version": "バージョンを選択",
     "Select a type": "タイプを選択",
     "No matching MODs found.": "該当するMODが見つかりません。",
+    "Default": "デフォルト",
+    "Official": "公式",
+    "Prerequisite": "前提", 
 }

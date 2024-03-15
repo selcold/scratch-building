@@ -71,6 +71,7 @@ import { formatDateTime } from "@/components/frontend/site/formatDateTime";
 import { DarkModeSET } from "@/components/frontend/site/main";
 import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
 import { _cfgSite } from "@/components/configs/siteLinks";
+import { _cfg_logs } from "@/components/configs/config";
 
 export default function Home() {
 
@@ -99,10 +100,14 @@ export default function Home() {
 					});
 
                     const storedUsername = getDecryptedSessionId('username');
-                    console.log('login:',storedUsername);
+					if(_cfg_logs.scratchAuth_userData_log){
+						console.log('login:',storedUsername);
+					}
                     if (storedUsername) {
                         const userData = await ScratchAuthGET_UserProfile(storedUsername);
-						console.log(userData);
+						if(_cfg_logs.scratchAuth_userData_log){
+							console.log(userData);
+						}
                         setUserData(userData);
                     }
 

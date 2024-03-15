@@ -52,6 +52,7 @@ import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
 import { _cfgSite } from "@/components/configs/siteLinks";
 import { ContentsSET } from "@/components/frontend/elements/contents";
 import Giscus from '@giscus/react';
+import { _cfg_logs } from "@/components/configs/config";
 
 export default function Home() {
 
@@ -83,10 +84,14 @@ export default function Home() {
 
                     const storedUsername = getDecryptedSessionId('username');
                     setUsername(storedUsername);
-                    console.log('login:',storedUsername);
+					if(_cfg_logs.scratchAuth_userData_log){
+						console.log('login:',storedUsername);
+					}
                     if (storedUsername) {
                         const userData = await ScratchAuthGET_UserProfile(storedUsername);
-						console.log(userData);
+						if(_cfg_logs.scratchAuth_userData_log){
+							console.log(userData);
+						}
 						setUserId(userData?.id || null)
 						setUserImage(userData?.profile?.images['90x90'] || null);
 						set_userData_profile_bio(userData?.profile?.bio || null);
