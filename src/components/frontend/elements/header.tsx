@@ -7,6 +7,7 @@ import {
     Cloud,
     CreditCard,
     Eclipse,
+    Fingerprint,
     Github,
     Keyboard,
     LifeBuoy,
@@ -81,7 +82,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
 
     return (
         <>
-            <header className={`fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-lg border-[1px] border-neutral-500/50 text-white dark:text-white bg-black/40 dark:bg-white/10 w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards`}>
+            <header className={`fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md border-[1px] border-neutral-500/50 text-white bg-black/40 dark:bg-white/10 w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards`}>
                 <Link href={_cfgSiteLinks.home}>
                     <div className="flex flex-row items-center gap-3">
                         <Image
@@ -110,137 +111,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                     </ul>
                 </nav>
                 <div className="hidden md:block h-[30px]">
-                    <DropdownMenu>
-                        <div className="flex items-center gap-3">
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
-                                    <Avatar className="w-[30px] h-[30px]">
-                                        <AvatarImage src={user_image} alt={username? `@${username}` : '@guest'}/>
-                                        <AvatarFallback>ICO</AvatarFallback>
-                                    </Avatar>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <span>{username}</span>
-                        </div>
-                        <DropdownMenuContent className="w-56 select-none">
-                            <DropdownMenuLabel>{_locales('My Account')}</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                {username? (
-                                <>
-                                    <DropdownMenuItem onClick={() => open(`https://scratch.mit.edu/users/${username}/`)}>
-                                        <User className="mr-2 h-4 w-4" />
-                                        <span>{_locales('Profile')}</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => open(`https://scratch.mit.edu/accounts/settings/`)}>
-                                        <Settings className="mr-2 h-4 w-4" />
-                                        <span>{_locales('Settings')}</span>
-                                    </DropdownMenuItem>
-                                </>
-                                ):(
-                                <>
-                                    <DropdownMenuItem disabled>
-                                        <User className="mr-2 h-4 w-4" />
-                                        <span>{_locales('Profile')}</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem disabled>
-                                        <Settings className="mr-2 h-4 w-4" />
-                                        <span>{_locales('Settings')}</span>
-                                    </DropdownMenuItem>
-                                </>
-                                )}
-                                <DropdownMenuSub>
-                                    <DropdownMenuSubTrigger>
-                                        <Eclipse className="mr-2 h-4 w-4" />
-                                        <span>{_locales('Mode')}</span>
-                                    </DropdownMenuSubTrigger>
-                                    <DropdownMenuPortal>
-                                        <DropdownMenuSubContent>
-                                            {DarkModeGET() === "true" ? (
-                                            <>
-                                                <DropdownMenuItem disabled>
-                                                    <Moon className="mr-2 h-4 w-4" />
-                                                    <span>{_locales('dark')}</span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem onClick={() => DarkModeChange("false")}>
-                                                    <SunMoon className="mr-2 h-4 w-4" />
-                                                    <span>{_locales('light')}</span>
-                                                </DropdownMenuItem>
-                                            </>
-                                            ):(
-                                            <>
-                                                <DropdownMenuItem onClick={() => DarkModeChange("true")}>
-                                                    <Moon className="mr-2 h-4 w-4" />
-                                                    <span>{_locales('dark')}</span>
-                                                </DropdownMenuItem>
-                                                <DropdownMenuItem disabled>
-                                                    <SunMoon className="mr-2 h-4 w-4" />
-                                                    <span>{_locales('light')}</span>
-                                                </DropdownMenuItem>
-                                            </>
-                                            )}
-                                        </DropdownMenuSubContent>
-                                    </DropdownMenuPortal>
-                                </DropdownMenuSub>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem disabled>
-                                    <Users className="mr-2 h-4 w-4" />
-                                    <span>{_locales('Team')}</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuSub>
-                                    <DropdownMenuSubTrigger>
-                                        <UserPlus className="mr-2 h-4 w-4" />
-                                        <span>{_locales('Invite users')}</span>
-                                    </DropdownMenuSubTrigger>
-                                    <DropdownMenuPortal>
-                                        <DropdownMenuSubContent>
-                                            <DropdownMenuItem disabled>
-                                                <Mail className="mr-2 h-4 w-4" />
-                                                <span>{_locales('Email')}</span>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem disabled>
-                                                <MessageSquare className="mr-2 h-4 w-4" />
-                                                <span>{_locales('Message')}</span>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem disabled>
-                                                <PlusCircle className="mr-2 h-4 w-4" />
-                                                <span>{_locales('More...')}</span>
-                                            </DropdownMenuItem>
-                                        </DropdownMenuSubContent>
-                                    </DropdownMenuPortal>
-                                </DropdownMenuSub>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem disabled>
-                                <LifeBuoy className="mr-2 h-4 w-4" />
-                                <span>{_locales('Support')}</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem disabled>
-                                <Cloud className="mr-2 h-4 w-4" />
-                                <span>{_locales('API')}</span>
-                                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            {userData? (
-                            <>
-                                <DropdownMenuItem onClick={() => ScratchAuth_logout()}>
-                                    <LogOut className="mr-2 h-4 w-4" />
-                                    <span>{_locales('Log out')}</span>
-                                </DropdownMenuItem>
-                            </>
-                            ):(
-                            <>
-                                <DropdownMenuItem onClick={() => ScratchAuth_redirectToAuth()}>
-                                    <LogIn className="mr-2 h-4 w-4" />
-                                    <span>{_locales('Login')}</span>
-                                </DropdownMenuItem>
-                            </>
-                            )}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    <MyAccount userData={userData} username={username} user_image={user_image}/>
                 </div>
                 <div className="block md:hidden">
                 <Sheet>
@@ -249,137 +120,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                     </SheetTrigger>
                     <SheetContent>
                         <div className="border-neutral-300 dark:border-neutral-800 border-b-[1px] pb-3">
-                            <DropdownMenu>
-                                <div className="flex items-center gap-3">
-                                    <DropdownMenuTrigger asChild>
-                                        <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
-                                            <Avatar className="w-[30px] h-[30px]">
-                                                <AvatarImage src={user_image} alt={username? `@${username}` : '@guest'}/>
-                                                <AvatarFallback>ICO</AvatarFallback>
-                                            </Avatar>
-                                        </Button>
-                                    </DropdownMenuTrigger>
-                                    <span>{username}</span>
-                                </div>
-                                <DropdownMenuContent className="w-56 select-none">
-                                    <DropdownMenuLabel>{_locales('My Account')}</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        {username? (
-                                        <>
-                                            <DropdownMenuItem onClick={() => open(`https://scratch.mit.edu/users/${username}/`)}>
-                                                <User className="mr-2 h-4 w-4" />
-                                                <span>{_locales('Profile')}</span>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem onClick={() => open(`https://scratch.mit.edu/accounts/settings/`)}>
-                                                <Settings className="mr-2 h-4 w-4" />
-                                                <span>{_locales('Settings')}</span>
-                                            </DropdownMenuItem>
-                                        </>
-                                        ):(
-                                        <>
-                                            <DropdownMenuItem disabled>
-                                                <User className="mr-2 h-4 w-4" />
-                                                <span>{_locales('Profile')}</span>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuItem disabled>
-                                                <Settings className="mr-2 h-4 w-4" />
-                                                <span>{_locales('Settings')}</span>
-                                            </DropdownMenuItem>
-                                        </>
-                                        )}
-                                        <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger>
-                                                <Eclipse className="mr-2 h-4 w-4" />
-                                                <span>{_locales('Mode')}</span>
-                                            </DropdownMenuSubTrigger>
-                                            <DropdownMenuPortal>
-                                                <DropdownMenuSubContent>
-                                                    {DarkModeGET() === "true" ? (
-                                                    <>
-                                                        <DropdownMenuItem disabled>
-                                                            <Moon className="mr-2 h-4 w-4" />
-                                                            <span>{_locales('dark')}</span>
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuItem onClick={() => DarkModeChange("false")}>
-                                                            <SunMoon className="mr-2 h-4 w-4" />
-                                                            <span>{_locales('light')}</span>
-                                                        </DropdownMenuItem>
-                                                    </>
-                                                    ):(
-                                                    <>
-                                                        <DropdownMenuItem onClick={() => DarkModeChange("true")}>
-                                                            <Moon className="mr-2 h-4 w-4" />
-                                                            <span>{_locales('dark')}</span>
-                                                        </DropdownMenuItem>
-                                                        <DropdownMenuItem disabled>
-                                                            <SunMoon className="mr-2 h-4 w-4" />
-                                                            <span>{_locales('light')}</span>
-                                                        </DropdownMenuItem>
-                                                    </>
-                                                    )}
-                                                </DropdownMenuSubContent>
-                                            </DropdownMenuPortal>
-                                        </DropdownMenuSub>
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuItem disabled>
-                                            <Users className="mr-2 h-4 w-4" />
-                                            <span>{_locales('Team')}</span>
-                                        </DropdownMenuItem>
-                                        <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger>
-                                                <UserPlus className="mr-2 h-4 w-4" />
-                                                <span>{_locales('Invite users')}</span>
-                                            </DropdownMenuSubTrigger>
-                                            <DropdownMenuPortal>
-                                                <DropdownMenuSubContent>
-                                                    <DropdownMenuItem disabled>
-                                                        <Mail className="mr-2 h-4 w-4" />
-                                                        <span>{_locales('Email')}</span>
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuItem disabled>
-                                                        <MessageSquare className="mr-2 h-4 w-4" />
-                                                        <span>{_locales('Message')}</span>
-                                                    </DropdownMenuItem>
-                                                    <DropdownMenuSeparator />
-                                                    <DropdownMenuItem disabled>
-                                                        <PlusCircle className="mr-2 h-4 w-4" />
-                                                        <span>{_locales('More...')}</span>
-                                                    </DropdownMenuItem>
-                                                </DropdownMenuSubContent>
-                                            </DropdownMenuPortal>
-                                        </DropdownMenuSub>
-                                    </DropdownMenuGroup>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem disabled>
-                                        <LifeBuoy className="mr-2 h-4 w-4" />
-                                        <span>{_locales('Support')}</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem disabled>
-                                        <Cloud className="mr-2 h-4 w-4" />
-                                        <span>{_locales('API')}</span>
-                                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    {userData? (
-                                    <>
-                                        <DropdownMenuItem onClick={() => ScratchAuth_logout()}>
-                                            <LogOut className="mr-2 h-4 w-4" />
-                                            <span>{_locales('Log out')}</span>
-                                        </DropdownMenuItem>
-                                    </>
-                                    ):(
-                                    <>
-                                        <DropdownMenuItem onClick={() => ScratchAuth_redirectToAuth()}>
-                                            <LogIn className="mr-2 h-4 w-4" />
-                                            <span>{_locales('Login')}</span>
-                                        </DropdownMenuItem>
-                                    </>
-                                    )}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
+                            <MyAccount userData={userData} username={username} user_image={user_image}/>
                         </div>
                         <SheetHeader>
                             {/*                            
@@ -422,4 +163,150 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
             )}
         </>
     );
+};
+
+export function MyAccount({ userData, username, user_image }: { userData: any, username: string, user_image: string }) {
+    return (
+        <DropdownMenu>
+            <div className="flex items-center gap-3">
+                <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className=" bg-transparent border-[1px] rounded-full w-[30px] h-[30px] p-0 select-none">
+                        <Avatar className="w-[30px] h-[30px]">
+                            <AvatarImage src={user_image} alt={username? `@${username}` : '@guest'}/>
+                            <AvatarFallback>ICO</AvatarFallback>
+                        </Avatar>
+                    </Button>
+                </DropdownMenuTrigger>
+                <span>{username}</span>
+            </div>
+            <DropdownMenuContent className="w-56 select-none">
+                <DropdownMenuLabel>{_locales('My Account')}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                    {username? (
+                    <>
+                        <Link href={`https://scratch.mit.edu/users/${username}/`} target="_block">
+                            <DropdownMenuItem>
+                                <User className="mr-2 h-4 w-4" />
+                                <span>{_locales('Profile')}</span>
+                            </DropdownMenuItem>
+                        </Link>
+                        <Link href={`https://scratch.mit.edu/accounts/settings/`} target="_block">
+                            <DropdownMenuItem>
+                                <Settings className="mr-2 h-4 w-4" />
+                                <span>{_locales('Settings')}</span>
+                            </DropdownMenuItem>
+                        </Link>
+                        <Link href={`https://auth.itinerary.eu.org/auth?`} target="_block">
+                            <DropdownMenuItem>
+                                <Fingerprint className="mr-2 h-4 w-4" />
+                                <span>{_locales('Auth')}</span>
+                            </DropdownMenuItem>
+                        </Link>
+                    </>
+                    ):(
+                    <>
+                        <DropdownMenuItem disabled>
+                            <User className="mr-2 h-4 w-4" />
+                            <span>{_locales('Profile')}</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled>
+                            <Settings className="mr-2 h-4 w-4" />
+                            <span>{_locales('Settings')}</span>
+                        </DropdownMenuItem>
+                    </>
+                    )}
+                    <DropdownMenuSub>
+                        <DropdownMenuSubTrigger>
+                            <Eclipse className="mr-2 h-4 w-4" />
+                            <span>{_locales('Mode')}</span>
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                                {DarkModeGET() === "true" ? (
+                                <>
+                                    <DropdownMenuItem disabled>
+                                        <Moon className="mr-2 h-4 w-4" />
+                                        <span>{_locales('dark')}</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => DarkModeChange("false")}>
+                                        <SunMoon className="mr-2 h-4 w-4" />
+                                        <span>{_locales('light')}</span>
+                                    </DropdownMenuItem>
+                                </>
+                                ):(
+                                <>
+                                    <DropdownMenuItem onClick={() => DarkModeChange("true")}>
+                                        <Moon className="mr-2 h-4 w-4" />
+                                        <span>{_locales('dark')}</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem disabled>
+                                        <SunMoon className="mr-2 h-4 w-4" />
+                                        <span>{_locales('light')}</span>
+                                    </DropdownMenuItem>
+                                </>
+                                )}
+                            </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                    <DropdownMenuItem disabled>
+                        <Users className="mr-2 h-4 w-4" />
+                        <span>{_locales('Team')}</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSub>
+                        <DropdownMenuSubTrigger>
+                            <UserPlus className="mr-2 h-4 w-4" />
+                            <span>{_locales('Invite users')}</span>
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                                <DropdownMenuItem disabled>
+                                    <Mail className="mr-2 h-4 w-4" />
+                                    <span>{_locales('Email')}</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem disabled>
+                                    <MessageSquare className="mr-2 h-4 w-4" />
+                                    <span>{_locales('Message')}</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem disabled>
+                                    <PlusCircle className="mr-2 h-4 w-4" />
+                                    <span>{_locales('More...')}</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem disabled>
+                    <LifeBuoy className="mr-2 h-4 w-4" />
+                    <span>{_locales('Support')}</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled>
+                    <Cloud className="mr-2 h-4 w-4" />
+                    <span>{_locales('API')}</span>
+                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                {userData? (
+                <>
+                    <DropdownMenuItem onClick={() => ScratchAuth_logout()}>
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>{_locales('Log out')}</span>
+                    </DropdownMenuItem>
+                </>
+                ):(
+                <>
+                    <DropdownMenuItem onClick={() => ScratchAuth_redirectToAuth()}>
+                        <LogIn className="mr-2 h-4 w-4" />
+                        <span>{_locales('Login')}</span>
+                    </DropdownMenuItem>
+                </>
+                )}
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
 }

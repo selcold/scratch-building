@@ -11,6 +11,7 @@ const nav_Socials = [
 
 const nav_Development = [
 	{ name: _locales('Repository'), href: _cfgCredit.Repository_GitHub, target: '_block' },
+    { name: _locales('changelogs'), href: _cfgSiteLinks.docs_changelogs, target: '' },
 ]
 
 const nav_Resources = [
@@ -89,10 +90,11 @@ export default function Footer({ children, Breadcrumb }: { children?: React.Reac
                         </nav>
                     </div>
                 </div>
-                <div className="flex flex-wrap gap-3 justify-between border-neutral-200 dark:border-neutral-800 border-t-[1px] w-full max-w-4xl mx-auto mt-5 pt-5">
-                    <span className="text-neutral-400 dark:text-neutral-600">© {currentFullYear} - {_cfgCredit.creator}. {_locales('All rights reserved.')}</span>
+                <div className="flex flex-wrap gap-3 justify-between text-neutral-400 dark:text-neutral-600 border-neutral-200 dark:border-neutral-800 border-t-[1px] w-full max-w-4xl mx-auto mt-5 pt-5">
+                    <span>© {currentFullYear} - {_cfgCredit.creator}. {_locales('All rights reserved.')}</span>
                     {Breadcrumb}
                 </div>
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90%"></span>
             </footer>
         </>
     );

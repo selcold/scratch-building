@@ -20,6 +20,7 @@ export const _cfgSiteLinks = {
     mods: "/mods",
     qa: "/qa",
     docs: "/docs",
+    docs_changelogs: "/docs/changelogs",
     docs_terms_of_use: "/docs/terms",
     docs_guidelines: "/docs/guidelines",
 }

@@ -21,16 +21,17 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { contents_json } from "../../../../contents/contentsObj";
+import { contents_json } from "../../../../contents/contents";
 import { CardContents, ModCard, ModCardContent, ModCardFooter, ModCardHeader } from "./card";
 import Link from "next/link";
-import { contentObj_modsAll } from "../../../../contents/contentObj_mods";
+import { contentObj_modsAll } from "../../../../contents/mods";
 import Image from "next/image";
 import Badge from "@/components/badge-ui/ui/badge-ui";
 import { Input } from "@/components/ui/input";
 import { _locales, _localesContent, _localesText } from "../site/_locales";
-import { contentObj_gamesAll } from "../../../../contents/contentObj_games";
+import { contentObj_gamesAll } from "../../../../contents/games";
 import { _cfgImages } from "@/components/configs/siteLinks";
+import { changelogs_obj } from "../../../../contents/changelogs";
 
 export function ContentsSET({ contentTitle }: { contentTitle: string }) {
     const contentsObj = contents_json;
@@ -41,8 +42,53 @@ export function ContentsSET({ contentTitle }: { contentTitle: string }) {
             {selectedContents && selectedContents.map((content: any, index: number) => (
             <CardContents durationPls={ 50 * index} key={index}>
                 <CardHeader>
-                    <CardTitle>{content.title}</CardTitle>
-                    <CardDescription className="whitespace-pre-line" dangerouslySetInnerHTML={{ __html: content.description }} />
+                    <CardTitle>{_localesContent(content.title,content.title_en)}</CardTitle>
+                    <CardDescription className="whitespace-pre-line" dangerouslySetInnerHTML={{ __html: _localesContent(content.description,content.description_en) }} />
+                </CardHeader>
+                {content.actions ? (
+                    <CardFooter className="flex flex-wrap gap-2">
+                    {content.actions?.map((action: any, index: number) => (
+                        <Button
+                            variant={action.variant} 
+                            onClick={() => {
+                                if (action.onclick) {
+                                    eval(action.onclick);
+                                }
+                            }}
+                            key={index}
+                        >
+                            {action.url ? (
+                                <Link href={action.url} target={action.target || '_self'}>
+                                    {_locales(action.label)}
+                                </Link>
+                            ):(
+                                _locales(action.label)
+                            )}
+                        </Button>
+                    ))}
+                    </CardFooter>
+                ):(
+                    <></>
+                )}
+            </CardContents>
+            ))}
+        </>
+    );
+};
+
+export function ContentGET_changelogs({ }: { }) {
+    const contentsObj = changelogs_obj;
+
+    return (
+        <>
+            {contentsObj.map((content: any, index: number) => (
+            <CardContents durationPls={ 50 * index} key={index}>
+                <CardHeader>
+                    <CardTitle>{content.version_name}</CardTitle>
+                    <CardDescription className="whitespace-pre-line">{content.date}</CardDescription>
+                    {content.contents.map((log: any, index: number) => (
+                        <li key={index}>{_localesContent(log.title,log.title_en)}</li>
+                    ))}
                 </CardHeader>
                 {content.actions ? (
                     <CardFooter className="flex flex-wrap gap-2">
@@ -95,9 +141,10 @@ export function ContentsGET_ModAll({ mode }: { mode: "all" | "list" }) {
     const getFilteredMods = () => {
         return contentObj_all.filter((mod: any) => {
             const searchMatch = select_search === "All" || mod.title.toLowerCase().includes(select_search.toLowerCase());
-            const modTypeMatch = select_mod_type === "All" || mod.mod_type === select_mod_type;
+            const modTypeMatch = select_mod_type === "All" || mod.tags?.some((tag: any) => tag.label === select_mod_type);
             const versionMatch = select_version === "All" || mod.version === +select_version;
             const typeMatch = select_project_type === "All" || mod.project_type === select_project_type;
+
             return searchMatch && modTypeMatch && versionMatch && typeMatch;
         });
     };

@@ -9,7 +9,6 @@ export interface list {
 }
 export interface contentObj_mods {
     version: number;
-    mod_type: "Default" | "Official" | "Prerequisite";
     project_type: "SBMOD" | "SBAPI" | "SBAddons" | "SBaddonAPI";
     project_id: number;
     project_id_en?: number;
@@ -21,7 +20,7 @@ export interface contentObj_mods {
     tags?: Tag[]; 
 }
 export interface Tag {
-    label: string;
+    label: string | "Official" | "Prerequisite";
     color: "" | "dark" | "blue" | "red" | "green" | "yellow" | "indigo" | "purple" | "pink";
     display?: "block" | "none";
 }
@@ -59,7 +58,6 @@ export const contentObj_modsAll: contentObj = {
     "mods": [
         {
             "version": 7,
-            "mod_type": "Official",
             "project_type": "SBMOD",
             "project_id": 940232456,
             "creator": "Masaabu-YT",
@@ -70,11 +68,34 @@ export const contentObj_modsAll: contentObj = {
                     "label": "Official",
                     "color": "yellow",
                 },
+                {
+                    "label": "Prerequisite",
+                    "color": "blue",
+                },
             ],
         },
         {
             "version": 7,
-            "mod_type": "Prerequisite",
+            "project_type": "SBMOD",
+            "project_id": 945187053,
+            "creator": "dmmo-com-jp",
+            "title": "GUIサンプル",
+            "title_en": "GUI sample",
+            "description": "SBMODのGUIサンプルMOD",
+            "description_en": "SBMOD GUI sample MOD",
+        },
+        {
+            "version": 7,
+            "project_type": "SBMOD",
+            "project_id": 949284994,
+            "creator": "edu_haruton2",
+            "title": "SBMOD非公式アドオン",
+            "title_en": "SBMOD unofficial addon",
+            "description": "GUIサンプルを改造したMOD",
+            "description_en": "MOD that modified the GUI sample",
+        },
+        {
+            "version": 7,
             "project_type": "SBAPI",
             "project_id": 933515639,
             "creator": "dmmo-com-jp",
@@ -90,7 +111,6 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": 7,
-            "mod_type": "Default",
             "project_type": "SBAPI",
             "project_id": 939787547,
             "creator": "dmmo-com-jp",
@@ -100,7 +120,6 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": 7,
-            "mod_type": "Default",
             "project_type": "SBAPI",
             "project_id": 933713134,
             "creator": "banana_877_",
@@ -110,8 +129,16 @@ export const contentObj_modsAll: contentObj = {
             "description_en": "Meteorite!!",
         },
         {
+            "version": 7,
+            "project_type": "SBAPI",
+            "project_id": 945217558,
+            "creator": "dmmo-com-jp",
+            "title": "sorting Mod",
+            "description": "隕石！！",
+            "description_en": "Meteorite!!",
+        },
+        {
             "version": 6,
-            "mod_type": "Default",
             "project_type": "SBAddons",
             "project_id": 790969288,
             "creator": "Masaabu-YT",
@@ -121,7 +148,6 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": 6,
-            "mod_type": "Default",
             "project_type": "SBAddons",
             "project_id": 791408146,
             "creator": "dmmo-com-jp",
@@ -130,7 +156,6 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": 6,
-            "mod_type": "Default",
             "project_type": "SBAddons",
             "project_id": 792121597,
             "creator": "dmmo-com-jp",
@@ -141,7 +166,6 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": 6,
-            "mod_type": "Default",
             "project_type": "SBAddons",
             "project_id": 817892400,
             "creator": "banana_877_",
@@ -150,7 +174,6 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": 6,
-            "mod_type": "Default",
             "project_type": "SBAddons",
             "project_id": 795165690,
             "creator": "yoshikunTA",
@@ -159,7 +182,6 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": 6,
-            "mod_type": "Prerequisite",
             "project_type": "SBaddonAPI",
             "project_id": 926411096,
             "creator": "dmmo-com-jp",
@@ -175,7 +197,6 @@ export const contentObj_modsAll: contentObj = {
         },
         {
             "version": 6,
-            "mod_type": "Default",
             "project_type": "SBaddonAPI",
             "project_id": 933340996,
             "creator": "dmmo-com-jp",
