@@ -45,25 +45,28 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "@/components/ui/tabs"
-import { DarkModeSET } from "@/components/frontend/site/main";
+	Breadcrumb,
+	BreadcrumbEllipsis,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { DarkModeGET, DarkModeSET } from "@/components/frontend/site/main";
 import { AlertDialogCustomButton_loginUserOnly } from "@/components/frontend/site/AlertDialog";
 import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
-import { _cfgSite } from "@/components/configs/siteLinks";
-import { ContentsSET, ContentsGET_ModAll } from "@/components/frontend/elements/contents";
+import { _cfgSite, _cfgSiteLinks } from "@/components/configs/siteLinks";
+import { ContentsSET } from "@/components/frontend/elements/contents";
 import { _cfg_logs } from "@/components/configs/config";
 
 export default function Home() {
 
 	// headカスタム
 	const Head_config = {
-		title: `MOD | ${_locales(_cfgSite.title)}`,
+		title: `${_locales('Docs')} | ${_locales(_cfgSite.title)}`,
 	};
 	HeadCustom_config(Head_config);
 
@@ -129,26 +132,26 @@ export default function Home() {
 					<Header userData={userData} btmSpace/>
 					<Main>
 						<section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
-							<ContentsSET contentTitle={"mods"}/>
-							<Tabs defaultValue="list" className="w-full shadow-lg animate-fade-up animate-once animate-duration-[350ms] animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
-								<TabsList className="grid w-full grid-cols-2">
-									<TabsTrigger value="all">{_locales('All')}</TabsTrigger>
-									<TabsTrigger value="list">{_locales('List')}</TabsTrigger>
-								</TabsList>
-								<TabsContent value="all">
-								<ContentsGET_ModAll mode="all"/>
-								</TabsContent>
-								<TabsContent value="list">
-								<ContentsGET_ModAll mode="list"/>
-								</TabsContent>
-							</Tabs>
+							<ContentsSET contentTitle={"docs"}/>
 						</section>
 					</Main>
 				</ElementGroup>
-				<Footer/>
+				<Footer
+					Breadcrumb={
+						<Breadcrumb>
+							<BreadcrumbList>
+								<BreadcrumbItem>
+									<BreadcrumbLink href={_cfgSiteLinks.home}>{_locales('Home')}</BreadcrumbLink>
+								</BreadcrumbItem>
+								<BreadcrumbSeparator />
+								<BreadcrumbItem>
+									<BreadcrumbPage>{_locales('Docs')}</BreadcrumbPage>
+								</BreadcrumbItem>
+							</BreadcrumbList>
+						</Breadcrumb>
+					}
+				/>
 			</div>
 		</>
 	);
 }
-
-// <ContentsSET_ModList/>

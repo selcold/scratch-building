@@ -60,7 +60,7 @@ import {
 import { useEffect, useState } from "react";
 import { ScratchAuth_logout, ScratchAuth_redirectToAuth } from "../_scratch";
 import { _locales } from "../site/_locales";
-import { _cfgImages, _cfgSite } from "@/components/configs/siteLinks"
+import { _cfgImages, _cfgSite, _cfgSiteLinks } from "@/components/configs/siteLinks"
 import { getDecryptedSessionId, setEncryptedUsername } from "@/components/backend/cookie"
 import { DarkModeChange, DarkModeGET } from "../site/main"
 import Image from "next/image"
@@ -68,9 +68,11 @@ import Link from "next/link"
 import { HeaderBtmSpace } from "./main"
 
 const HeaderNav = [
-	{ name: _locales('Home'), href: _cfgSite.links_home, target: '_self' },
-    { name: _locales('MOD'), href: _cfgSite.links_mods, target: '_self' },
-    { name: _locales('Q&A'), href: _cfgSite.links_qa, target: '_self' },
+	{ name: _locales('Home'), href: _cfgSiteLinks.home, target: '_self' },
+    { name: _locales('Game'), href: _cfgSiteLinks.games, target: '_self' },
+    { name: _locales('MOD'), href: _cfgSiteLinks.mods, target: '_self' },
+    { name: _locales('Q&A'), href: _cfgSiteLinks.qa, target: '_self' },
+    { name: _locales('Docs'), href: _cfgSiteLinks.docs, target: '_self' },
 ]
 
 export default function Header({ userData, btmSpace }: { userData: any, btmSpace?: boolean }) {
@@ -79,8 +81,8 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
 
     return (
         <>
-            <header className={`fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md border-[1px] border-neutral-500/50 text-white dark:text-white bg-black/40 dark:bg-white/10 w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards`}>
-                <Link href={_cfgSite.links_home}>
+            <header className={`fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-lg border-[1px] border-neutral-500/50 text-white dark:text-white bg-black/40 dark:bg-white/10 w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards`}>
+                <Link href={_cfgSiteLinks.home}>
                     <div className="flex flex-row items-center gap-3">
                         <Image
                         priority
@@ -99,7 +101,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                             <Link
                                 href={item.href}
                                 target={item.target}
-                                className={`hover:text-neutral-300 dark:hover:text-neutral-400 transition duration-200`}
+                                className={`hover:opacity-60 transition duration-200`}
                             >
                                 {item.name}
                             </Link>
@@ -394,7 +396,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                                     <Link
                                         href={item.href}
                                         target={item.target}
-                                        className={`transition duration-200`}
+                                        className={`hover:opacity-60 transition duration-200`}
                                     >
                                         {item.name}
                                     </Link>

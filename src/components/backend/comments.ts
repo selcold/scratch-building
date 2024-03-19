@@ -54,7 +54,7 @@ export const API_gas_backendApi_new_commentSend = async ( user_name: string, use
         if(reply_group_id==='false'){
             sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`${commentEm}`,`discord`,user_name,user_image);
         }else{
-            sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`> @${replyUser}に返信\n${commentEm}`,`discord`,user_name,user_image);
+            sendWebhook(`${process.env.WEBHOOK_DISCORD_COMMENT_CHANNEL}`,`*${replyUser}に返信*\n${commentEm}`,`discord`,user_name,user_image);
         };
         return true
     } catch (error: any) {

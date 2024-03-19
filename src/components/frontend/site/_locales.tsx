@@ -38,3 +38,16 @@ export function _localesText( en_content: string, ja_content?: string ) {
     }
     return "";
 }
+
+export function _localesContent( ja_content: string, en_content?: string ) {
+    if(typeof window !== 'undefined') {
+        if(en_content){
+            const res = GetUserLanguage() === 'ja'? ja_content : en_content;
+            if(res){
+                return res;
+            };
+        }
+        return ja_content;
+    }
+    return "";
+}

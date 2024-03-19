@@ -45,25 +45,34 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 	AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog";
 import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "@/components/ui/tabs"
-import { DarkModeSET } from "@/components/frontend/site/main";
+	Breadcrumb,
+	BreadcrumbEllipsis,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { DarkModeGET, DarkModeSET } from "@/components/frontend/site/main";
 import { AlertDialogCustomButton_loginUserOnly } from "@/components/frontend/site/AlertDialog";
 import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
-import { _cfgSite } from "@/components/configs/siteLinks";
-import { ContentsSET, ContentsGET_ModAll } from "@/components/frontend/elements/contents";
+import { _cfgSite, _cfgSiteLinks } from "@/components/configs/siteLinks";
+import { ContentsSET } from "@/components/frontend/elements/contents";
 import { _cfg_logs } from "@/components/configs/config";
 
 export default function Home() {
 
 	// headカスタム
 	const Head_config = {
-		title: `MOD | ${_locales(_cfgSite.title)}`,
+		title: `${_locales('Terms of Use')} | ${_locales(_cfgSite.title)}`,
 	};
 	HeadCustom_config(Head_config);
 
@@ -129,26 +138,71 @@ export default function Home() {
 					<Header userData={userData} btmSpace/>
 					<Main>
 						<section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
-							<ContentsSET contentTitle={"mods"}/>
-							<Tabs defaultValue="list" className="w-full shadow-lg animate-fade-up animate-once animate-duration-[350ms] animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
-								<TabsList className="grid w-full grid-cols-2">
-									<TabsTrigger value="all">{_locales('All')}</TabsTrigger>
-									<TabsTrigger value="list">{_locales('List')}</TabsTrigger>
-								</TabsList>
-								<TabsContent value="all">
-								<ContentsGET_ModAll mode="all"/>
-								</TabsContent>
-								<TabsContent value="list">
-								<ContentsGET_ModAll mode="list"/>
-								</TabsContent>
-							</Tabs>
+							<ContentsSET contentTitle={"terms"}/>
+							<CardContents className="p-5">
+								<section className="flex flex-col gap-3">
+									<div className="flex flex-col gap-2 w-full">
+										<CardTitle>{_locales('Acceptance of Terms of Use')}</CardTitle>
+										<CardDescription>
+											<li>{_locales('Before using this website, please read these terms of use carefully. By agreeing to these terms of use, you may use this website. By using this website, users are deemed to have agreed to these terms of use.')}</li>
+										</CardDescription>
+									</div>
+									<div className="flex flex-col gap-2 w-full">
+										<CardTitle>{_locales('Site Usage')}</CardTitle>
+										<CardDescription>
+											<li>{_locales('This site is intended to provide users with access to games and content. Users are expected to use this site legally and in accordance with the terms of service.')}</li>
+											<li>{_locales('Modification, reproduction, reprinting, sale, or unauthorized use of all or part of this site is prohibited.')}</li>
+										</CardDescription>
+									</div>
+									<div className="flex flex-col gap-2 w-full">
+										<CardTitle>{_locales('Community Rules')}</CardTitle>
+										<CardDescription>
+											<li>{_locales(`Users participating in this site's community are expected to adhere to the community guidelines. Posting inappropriate behavior or content is prohibited.`)}</li>
+										</CardDescription>
+									</div>
+									<div className="flex flex-col gap-2 w-full">
+										<CardTitle>{_locales('Disclaimer')}</CardTitle>
+										<CardDescription>
+											<li>{_locales(`The use of this website is at the user's own risk, and the website administrator shall not be held responsible for any damages incurred by the user's use of this website.`)}</li>
+										</CardDescription>
+									</div>
+									<div className="flex flex-col gap-2 w-full">
+										<CardTitle>{_locales('Changes to the Terms of Use')}</CardTitle>
+										<CardDescription>
+											<li>{_locales(`This Terms of Service may be subject to change at the discretion of the site administrator. Users are encouraged to regularly review this Terms of Service.`)}</li>
+										</CardDescription>
+									</div>
+									<div className="flex flex-col gap-2 w-full">
+										<CardTitle>{_locales('Contact')}</CardTitle>
+										<CardDescription>
+											<li>{_locales('For inquiries or contact regarding this website, please contact the site administrator or management team.')}</li>
+										</CardDescription>
+									</div>
+								</section>
+							</CardContents>
 						</section>
 					</Main>
 				</ElementGroup>
-				<Footer/>
+				<Footer
+					Breadcrumb={
+						<Breadcrumb>
+							<BreadcrumbList>
+								<BreadcrumbItem>
+									<BreadcrumbLink href={_cfgSiteLinks.home}>{_locales('Home')}</BreadcrumbLink>
+								</BreadcrumbItem>
+								<BreadcrumbSeparator />
+								<BreadcrumbItem>
+									<BreadcrumbLink href={_cfgSiteLinks.docs}>{_locales('Docs')}</BreadcrumbLink>
+								</BreadcrumbItem>
+								<BreadcrumbSeparator />
+								<BreadcrumbItem>
+									<BreadcrumbPage>{_locales('Terms of Use')}</BreadcrumbPage>
+								</BreadcrumbItem>
+							</BreadcrumbList>
+						</Breadcrumb>
+					}
+				/>
 			</div>
 		</>
 	);
 }
-
-// <ContentsSET_ModList/>
