@@ -149,6 +149,10 @@ export const _locales_en: { [key: string]: string } = {
     "The forum is a place for community members to exchange ideas. However, topics should be limited to those that align with the community's theme.": "",
     "Report an Issue": "",
     "If you encounter any issues, please report them to the moderators immediately. Your cooperation is needed to resolve issues promptly.": "",
+
+    // Ads
+    "View Advertising Projects": "",
+    "Apply for Advertising":  "",
 }
 
 export const _locales_ja: { [key: string]: string } = {
@@ -300,4 +304,8 @@ export const _locales_ja: { [key: string]: string } = {
     "The forum is a place for community members to exchange ideas. However, topics should be limited to those that align with the community's theme.": "フォーラムはコミュニティーのメンバーが意見を交換する場です。しかし、トピックはコミュニティーのテーマに沿ったものに限ります。",
     "Report an Issue": "問題の報告",
     "If you encounter any issues, please report them to the moderators immediately. Your cooperation is needed to resolve issues promptly.": "問題が発生した場合は、直ちにモデレーターに報告してください。問題を早期に解決するために、皆さんの協力が必要です。",
+
+    // Ads
+    "View Advertising Projects": "広告プロジェクトを見る",
+    "Apply for Advertising":  "広告の申し込み",
 }

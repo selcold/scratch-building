@@ -52,6 +52,7 @@ import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
 import { _cfgSite } from "@/components/configs/siteLinks";
 import { ContentsSET } from "@/components/frontend/elements/contents";
 import { _cfg_logs } from "@/components/configs/config";
+import { ScratchStudioAds } from "@/components/frontend/site/scratchAds";
 
 export default function Home() {
 
@@ -183,6 +184,7 @@ export default function Home() {
 					<Main>
 						<section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
 							<ContentsSET contentTitle={"home"}/>
+							<ScratchStudioAds/>
 							<CardContents durationPls={100}>
 								<CardHeader>
 									<CardTitle>{_locales('Comments')}</CardTitle>
