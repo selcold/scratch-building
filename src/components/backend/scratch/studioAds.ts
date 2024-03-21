@@ -78,7 +78,7 @@ export const filterProjects = async (projects: any[], config: ScratchStudioAdCon
 
 export const ScratchStudioAd = async () => {
     const startTime = new Date();
-    customLog(`ScratchAds loading...`, '○', '0', '0', 'log');
+    //customLog(`ScratchAds loading...`, '○', '0', '0', 'log');
 
     const projects = await fetchProjects(studioAdConfig);
     const filteredProjects = await filterProjects(projects, studioAdConfig);
@@ -88,7 +88,7 @@ export const ScratchStudioAd = async () => {
 
     const endTime = new Date();
 
-    customLog(`ScratchAds success: ${endTime.getTime() - startTime.getTime()}ms`, '✓', '32', '0', 'log');
+    //customLog(`ScratchAds success: ${endTime.getTime() - startTime.getTime()}ms`, '✓', '32', '0', 'log');
 
     return randomProject;
 };
