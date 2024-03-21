@@ -1,0 +1,26 @@
+{
+    "name":"Scratch building",
+    "short_name":"Scratch building",
+    "description":"A building management game is a simulation game where you create buildings using Scratch.",
+    "start_url":"/",
+    "display_override": [
+        "window-control-overlay", 
+        "minimal-ui"
+    ],
+    "display":"standalone",
+    "theme_color": "#18181b",
+    "background_color":"#18181b",
+    "icons": [
+        {
+            "src": "/brand/scratch-building/png/ScratchBuilding192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/brand/scratch-building/png/ScratchBuilding512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "related_application":""
+}

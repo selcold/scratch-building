@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 	generator: "Next.js",
 	metadataBase: new URL('https:/scratch-building.vercel.app'),
 
-	// manifest: "/webmanifest.json",
+	manifest: "/webmanifest.json",
 
 	appleWebApp: { capable: true, title: `${_cfgSite.title}`, statusBarStyle: "black-translucent" },
 	verification: { "me": "https://github.com/selcold" },
