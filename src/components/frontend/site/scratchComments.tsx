@@ -1,3 +1,5 @@
+'use client';
+
 import { _ScratchCommentsConfig } from "@/components/backend/scratch/comments";
 import { ScratchCommentsConfig } from "../../../../scratchComments.config";
 import { API_gas_backendApi_new_commentSend } from "@/components/backend/comments";
@@ -14,16 +16,16 @@ export function ScratchComment_Check(username: string, content: string) {
         error=true;
         error_message="At least one non-space character is required!";
     };
-    if(config.max_length){
-        if(config.max_length < content.length){
-            error=true;
-            error_message="The maximum character limit is 500 characters.";
-        };
-    };
     if(config.min_length){
         if(config.min_length > content.length){
             error=true;
-            error_message="The maximum character limit is 500 characters.";
+            error_message=`The minimum character count is ${config.min_length}.`;
+        };
+    };
+    if(config.max_length){
+        if(config.max_length < content.length){
+            error=true;
+            error_message=`The maximum character count is ${config.max_length}.`;
         };
     };
     
