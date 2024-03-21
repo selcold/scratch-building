@@ -26,17 +26,5 @@ export const ScratchAuthGET_UserProfile = async (username: string): Promise<any>
     const response = await fetch(`https://api.scratch.mit.edu/users/${username}`);
     const userData = await response.json();
 
-    //console.log(await ScratchAuthGET_UserRole_ADMINISTRATOR(username))
-
     return userData;
 };
-
-export async function ScratchAuthGET_UserRole_ADMINISTRATOR( username: string ) {
-    const ADMINISTRATOR = process.env.ADMINISTRATOR;
-    if(ADMINISTRATOR){
-        if(ADMINISTRATOR.includes(username)){
-            return true;
-        }
-    }
-    return false;
-}

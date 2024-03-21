@@ -11,6 +11,7 @@ import { AlertDialogCustomButton_NotRelease, AlertDialogCustomButton_loginUserOn
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton"
 import { _locales } from "../site/_locales";
+import { ScratchComment_Check } from "../site/scratchComments";
 
 interface Comments {
     timestamp: Date,
@@ -170,30 +171,27 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                 const text_CommentReplyForm = document.getElementById(`comment_reply_form_textarea_${FoSendBtCl_reply_id}`) as HTMLInputElement;
                 if (text_CommentReplyForm) {
                     const comment = text_CommentReplyForm.value;
-                    if (ValidationCheck_comment(comment)) {
-                        if (await API_gas_backendApi_new_commentSend(FoSendBtCl_user_name, FoSendBtCl_user_Id, "null", comment, FoSendBtCl_reply_group_id, FoSendBtCl_reply_id, FoSendBtCl_replyUser)) {
-                            if (typeof window !== 'undefined') {
-                                window.alert(_locales('Comment posted!'));
-                                window.location.href = (`${window.location}`);
-                            }
-                        } else {
-                            if (typeof window !== 'undefined') {
-                                window.alert(_locales('There was a problem posting the comment!'));
-                                if (comment_reply_form_button) {
-                                    comment_reply_form_button.classList.remove('pointer-events-none');
-                                    comment_reply_form_button.innerText = (_locales('Post'));
-                                }
+
+                    const validationResult = ScratchComment_Check(FoSendBtCl_user_name, comment);
+                    if(validationResult.status){
+                        if(await API_gas_backendApi_new_commentSend(FoSendBtCl_user_name, FoSendBtCl_user_Id, validationResult.tag? validationResult.tag : "null", comment, FoSendBtCl_reply_group_id, FoSendBtCl_reply_id, FoSendBtCl_replyUser)){
+                            window.alert(_locales('Comment posted!'));
+                            window.location.href=(`${window.location}`);
+                        }else{
+                            window.alert(_locales('There was a problem posting the comment!'));
+                            if(comment_reply_form_button){
+                                comment_reply_form_button.classList.remove('pointer-events-none');
+                                comment_reply_form_button.innerText=(_locales('Post'))
                             }
                         }
-                    } else {
-                        if (typeof window !== 'undefined') {
-                            window.alert(_locales('At least one non-space character is required!'));
-                            if (comment_reply_form_button) {
-                                comment_reply_form_button.classList.remove('pointer-events-none');
-                                comment_reply_form_button.innerText = (_locales('Post'));
-                            }
+                    }else{
+                        window.alert(_locales(validationResult.content?validationResult.content:""));
+                        if(comment_reply_form_button){
+                            comment_reply_form_button.classList.remove('pointer-events-none');
+                            comment_reply_form_button.innerText=(_locales('Post'))
                         }
                     }
+                    
                     return text_CommentReplyForm.value;
                 } else {
                     if (typeof window !== 'undefined') {
@@ -256,9 +254,9 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                 </span>
                             </div>
                         </div>
-                        <div id={`commentId_${comment.id}`} className='relative bg-neutral-100 dark:bg-neutral-900 ml-[0.6rem] p-[0.75rem] border-[1px] border-neutral-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-neutral-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-neutral-100 dark:before:bg-neutral-900' style={{width:'calc(100% - 0.5rem)'}}>
-                            <span className='overflow-auto whitespace-break-spaces break-words text-left'>
-                                <span className='whitespace-break-spaces break-words'>{comment.content}</span>
+                        <div id={`commentId_${comment.id}`} className='relative bg-neutral-100 dark:bg-neutral-900 overflow-scroll max-h-[100px] h-full ml-[0.6rem] p-[0.75rem] border-[1px] border-neutral-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-neutral-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-neutral-100 dark:before:bg-neutral-900' style={{width:'calc(100% - 0.5rem)'}}>
+                            <span className='overflow-scroll whitespace-pre-line break-words text-left max-h-10 h-full'>
+                                <span className='whitespace-pre-line break-words'>{comment.content}</span>
                             </span>
                             <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
                                 <span className='text-zinc-500'>{formattedTimestamp}</span>
@@ -357,10 +355,10 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                                 </span>
                                             </div>
                                         </div>
-                                        <div id={`commentId_${commentReply.id}`} className='relative bg-neutral-100 dark:bg-neutral-900 ml-[0.6rem] p-[0.75rem] border-[1px] border-neutral-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-neutral-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-neutral-100 dark:before:bg-neutral-900' style={{width:'calc(100% - 0.5rem)'}}>
-                                            <span className='overflow-auto whitespace-break-spaces break-words text-left'>
+                                        <div id={`commentId_${commentReply.id}`} className='relative bg-neutral-100 dark:bg-neutral-900 overflow-scroll max-h-[100px] h-full ml-[0.6rem] p-[0.75rem] border-[1px] border-neutral-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-neutral-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-neutral-100 dark:before:bg-neutral-900' style={{width:'calc(100% - 0.5rem)'}}>
+                                            <span className='overflow-auto whitespace-pre-line break-words text-left'>
                                                 <span className="text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2">@{obj_commentsId[commentReply.reply_Id].author.username}</span>
-                                                <span className='whitespace-break-spaces break-words'>{commentReply.content}</span>
+                                                <span className='whitespace-pre-line break-words'>{commentReply.content}</span>
                                             </span>
                                             <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
                                                 <span className='text-zinc-500'>{formattedTimestamp}</span>

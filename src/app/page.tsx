@@ -12,7 +12,6 @@ import { ElementGroup, Main } from "@/components/frontend/elements/main";
 import Image from "next/image";
 import { _locales } from "@/components/frontend/site/_locales";
 import { ScratchAuth_logout, ScratchAuth_redirectToAuth, Scratch_GET_user_image, ValidationCheck_comment } from "@/components/frontend/_scratch";
-
 import { Button } from "@/components/ui/button"
 import {
 	Card,
@@ -53,6 +52,7 @@ import { _cfgSite } from "@/components/configs/siteLinks";
 import { ContentsSET } from "@/components/frontend/elements/contents";
 import { _cfg_logs } from "@/components/configs/config";
 import { ScratchStudioAds } from "@/components/frontend/site/scratchAds";
+import { ScratchComment_Check } from "@/components/frontend/site/scratchComments";
 
 export default function Home() {
 
@@ -143,9 +143,11 @@ export default function Home() {
 				if(comment_reply_form_button){
 					comment_reply_form_button.classList.add('pointer-events-none');
 					comment_reply_form_button.innerText=(_locales('Sending...'))
-				}
-				if(ValidationCheck_comment(comment)) {					
-					if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, "null", comment)){
+				};
+
+				const validationResult = ScratchComment_Check(userData.username, comment);
+				if(validationResult.status){
+					if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, validationResult.tag? validationResult.tag : "null", comment)){
 						window.alert(_locales('Comment posted!'));
 						window.location.href=(`${window.location}`);
 					}else{
@@ -156,7 +158,7 @@ export default function Home() {
 						}
 					}
 				}else{
-					window.alert(_locales('At least one non-space character is required!'));
+					window.alert(_locales(validationResult.content?validationResult.content:""));
 					if(comment_reply_form_button){
 						comment_reply_form_button.classList.remove('pointer-events-none');
 						comment_reply_form_button.innerText=(_locales('Post'))
