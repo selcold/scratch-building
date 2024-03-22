@@ -81,7 +81,7 @@ const HeaderNav = [
     { name: _locales('Docs'), href: _cfgSiteLinks.docs, target: '_self' },
 ]
 
-export default function Header({ userData, btmSpace }: { userData: any, btmSpace?: boolean }) {
+export default function Header({ userData, btmSpace, title }: { userData: any, btmSpace?: boolean, title?: null | string}) {
     const username = userData?.username || "";
     const user_image = userData?.profile?.images['90x90'] || _cfgImages.links_icon_user_guest_png;
 
@@ -162,7 +162,7 @@ export default function Header({ userData, btmSpace }: { userData: any, btmSpace
                 </div>
             </header>
             {btmSpace? (
-                <HeaderBtmSpace/>
+                <HeaderBtmSpace title={title? title : null}/>
             ):(
                 <></>
             )}

@@ -22,6 +22,14 @@ export interface ContentsJSON {
 }
 
 export const contents_json: ContentsJSON = {
+    "page_not_found": [
+        {
+            "title": "ニュース",
+            "title_en": "News",
+            "description": "日本時間（JST）2024年3月22日をもってアカウントシステムを廃止しました。これに伴い、すべてのアカウント情報が削除されました。今後は従来のアカウントシステムに代わり、Scratchアカウントでのログインが必要となります。ログインユーザー限定の機能を利用するには、Scratchアカウントでログインしてください。",
+            "description_en": "As of March 22, 2024, Japan Standard Time (JST), we have discontinued our account system. Consequently, all account information has been deleted. Going forward, instead of the previous account system, you will need to log in with a Scratch account. To access features limited to logged-in users, please log in with your Scratch account.",
+        },
+    ],
     "home": [
         {
             "title": "ニュース",
