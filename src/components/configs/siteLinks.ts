@@ -3,6 +3,7 @@ export const _cfgSite = {
     title: "Scratch Building",
 }
 
+// https://scratch-building.vercel.app
 // https://scratch-building-beta.vercel.app
 // http://localhost:3000
 
@@ -15,7 +16,11 @@ export const _cfgImages = {
 }
 
 export const _cfgLinks = {
-    stats_page: "https://stats.uptimerobot.com/ncjBMaI1yr",
+    scratch_building_play: "https://scratch.mit.edu/projects/927111186/",
+    scratch_building_stats_page: "https://stats.uptimerobot.com/ncjBMaI1yr",
+
+    scratch_auth_pageLink_home: "https://auth.itinerary.eu.org/",
+    scratch_auth_stats_page: "https://stats.uptimerobot.com/4Ggz4Fzo2O",
 }
 
 export const _cfgSiteLinks = {

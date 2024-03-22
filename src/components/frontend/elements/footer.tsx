@@ -18,7 +18,7 @@ const nav_Development = [
 const nav_Resources = [
 	{ name: _locales('Terms of Use'), href: _cfgSiteLinks.docs_terms_of_use, target: '' },
     { name: _locales('Guidelines'), href: _cfgSiteLinks.docs_guidelines, target: '' },
-    { name: _locales('Status page'), href: _cfgLinks.stats_page, target: '_block' },
+    { name: _locales('Status page'), href: _cfgLinks.scratch_building_stats_page, target: '_block' },
 ]
 
 export default function Footer({ children, Breadcrumb }: { children?: React.ReactNode, Breadcrumb?: React.ReactNode}) {

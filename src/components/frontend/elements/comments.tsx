@@ -111,7 +111,7 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                     <div className='w-full'>
                                         <div className='w-full'>
                                             <div>
-                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} placeholder={_locales('Write a comment')} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} placeholder={_locales('Write a comment')} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-900 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
@@ -141,7 +141,7 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                     <div className='w-full'>
                                         <div className='w-full'>
                                             <div>
-                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} placeholder={_locales('Write a comment')} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bg-neutral-100 dark:bg-neutral-800 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
+                                                <textarea id={`comment_reply_form_textarea_${ComRepFo_id}`} placeholder={_locales('Write a comment')} className='relative ml-[0.6rem] p-[0.75rem] border-[1px] bbg-neutral-100 dark:bg-neutral-900 border-zinc-500 rounded-[0.5rem] text-left box-border' style={{width:'calc(100% - 0.5rem)'}}></textarea>
                                             </div>
                                         </div>
                                         <div className='flex flex-wrap items-center justify-start flex-row gap-2 w-full ml-[0.6rem] mt-[0.4rem]' style={{width:'calc(100% - 0.5rem)'}}>
@@ -254,11 +254,11 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                 </span>
                             </div>
                         </div>
-                        <div id={`commentId_${comment.id}`} className='relative bg-neutral-100 dark:bg-neutral-900 overflow-scroll max-h-[100px] h-full ml-[0.6rem] p-[0.75rem] border-[1px] border-neutral-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-neutral-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-neutral-100 dark:before:bg-neutral-900' style={{width:'calc(100% - 0.5rem)'}}>
-                            <span className='overflow-scroll whitespace-pre-line break-words text-left max-h-10 h-full'>
-                                <span className='whitespace-pre-line break-words'>{comment.content}</span>
-                            </span>
-                            <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
+                        <div id={`commentId_${comment.id}`} className='relative bg-neutral-100 dark:bg-neutral-900 ml-[0.6rem] p-[0.75rem] border-[1px] border-neutral-500 rounded-[0.5rem] rounded-tl-none text-left break-words box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-neutral-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-neutral-100 dark:before:bg-neutral-900' style={{width:'calc(100% - 0.5rem)'}}>
+                            <div className='overflow-auto whitespace-break-spaces max-h-[100px]'>
+                                <span>{comment.content}</span>
+                            </div>
+                            <div className='flex flex-wrap flex-row justify-between items-center pt-2'>
                                 <span className='text-zinc-500'>{formattedTimestamp}</span>
                                 {username? (
                                     <>
@@ -355,12 +355,12 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                                                 </span>
                                             </div>
                                         </div>
-                                        <div id={`commentId_${commentReply.id}`} className='relative bg-neutral-100 dark:bg-neutral-900 overflow-scroll max-h-[100px] h-full ml-[0.6rem] p-[0.75rem] border-[1px] border-neutral-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-neutral-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-neutral-100 dark:before:bg-neutral-900' style={{width:'calc(100% - 0.5rem)'}}>
-                                            <span className='overflow-auto whitespace-pre-line break-words text-left'>
+                                        <div id={`commentId_${commentReply.id}`} className='relative bg-neutral-100 dark:bg-neutral-900 ml-[0.6rem] p-[0.75rem] border-[1px] border-neutral-500 rounded-[0.5rem] rounded-tl-none text-left box-border before:inline-block before:absolute before:top-[-1px] before:left-[-10px] before:border-[1px] before:border-r-[0] before:border-neutral-500 before:rounded-bl-[8px] before:w-[10px] before:h-[9px] before:bg-neutral-100 dark:before:bg-neutral-900' style={{width:'calc(100% - 0.5rem)'}}>
+                                            <div className='overflow-auto whitespace-break-spaces max-h-[100px]'>
                                                 <span className="text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2">@{obj_commentsId[commentReply.reply_Id].author.username}</span>
-                                                <span className='whitespace-pre-line break-words'>{commentReply.content}</span>
-                                            </span>
-                                            <div className='flex flex-wrap flex-row justify-between items-center pt-[1rem]'>
+                                                <span>{commentReply.content}</span>
+                                            </div>
+                                            <div className='flex flex-wrap flex-row justify-between items-center pt-2'>
                                                 <span className='text-zinc-500'>{formattedTimestamp}</span>
                                                 {username? (
                                                     <>

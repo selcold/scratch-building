@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css'; // Import the CSS
-import { _cfgSite } from "@/components/configs/siteLinks";
+import { _cfgImages, _cfgSite } from "@/components/configs/siteLinks";
 import { Toaster } from "sonner";
 import Head from "next/head";
 config.autoAddCss = false; // Disable the automatic CSS injection
@@ -40,6 +40,11 @@ export const metadata: Metadata = {
 		title: `${_cfgSite.title}`,
 		description: "A building management game is a simulation game where you create buildings using Scratch.",
 		siteName: `${_cfgSite.title}`,
+		images: [
+			{
+				url: _cfgImages.links_game_banner_bg,
+			},
+		]
 	},
 
 	bookmarks: "https://scratch-building.vercel.app/",

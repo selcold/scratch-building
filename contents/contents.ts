@@ -1,6 +1,6 @@
 // /contents/contentsObj.ts
 
-import { _cfgSiteLinks } from "@/components/configs/siteLinks";
+import { _cfgLinks, _cfgSiteLinks } from "@/components/configs/siteLinks";
 import { _locales } from "@/components/frontend/site/_locales";
 
 export interface Content {
@@ -13,7 +13,7 @@ export interface Content {
 export interface Action {
     label: string;
     url?: string;
-    target?: string;
+    target?: "_self" | "_blank" | "_top" | "_parent";
     variant?: string;
     onclick?: string;
 }
@@ -34,6 +34,13 @@ export const contents_json: ContentsJSON = {
             "title_en": "Announcement",
             "description": "ビル経営ゲームでクラウドセーブを行った人の数が3600人を超えました！\nこれからもビル経営ゲームをよろしくお願いします！",
             "description_en": "The number of people who have performed cloud saves in the scratch building has exceeded 3600!\nThank you for your continued support of the scratch building!",
+            "actions": [
+                {
+                    "label": _locales('Play'),
+                    "url": _cfgLinks.scratch_building_play,
+                    "target": "_blank",
+                },
+            ],
         },
         {
             "title": "気軽にMOD開発！",

@@ -5,6 +5,7 @@ export const _locales_en: { [key: string]: string } = {
     "Scratch Building": "",
 
     // pages
+    "Website": "",
     "Offline": "",
     "Page not found": "",
 
@@ -48,6 +49,7 @@ export const _locales_en: { [key: string]: string } = {
     "More...": "",
     "Support": "",
     "API": "",
+    "App": "",
 
     // footer
     "All rights reserved.": "",
@@ -164,6 +166,7 @@ export const _locales_ja: { [key: string]: string } = {
     "Scratch Building": "ビル経営ゲーム",
 
     // pages
+    "Website": "ウェブサイト",
     "Offline": "オフライン",
     "Page not found": "ページが見つかりません",
 
@@ -207,6 +210,7 @@ export const _locales_ja: { [key: string]: string } = {
     "More...": "もっと見る...",
     "Support": "サポート",
     "API": "API",
+    "App": "アプリ",
 
     // footer
     "All rights reserved.": "全著作権所有",

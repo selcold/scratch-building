@@ -21,7 +21,7 @@ interface alpha {
 interface actions {
     label: string;
     url?: string;
-    target?: string;
+    target?: "_self" | "_blank" | "_top" | "_parent";
     variant?: string;
     onclick?: string;
 }

@@ -4,12 +4,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBars } from "@fortawesome/free-solid-svg-icons"
 
 import {
+    BarChart2,
+    Cat,
     Cloud,
     CreditCard,
     Eclipse,
     Fingerprint,
     Github,
+    HomeIcon,
     Keyboard,
+    LayoutGrid,
+    LayoutPanelLeft,
     LifeBuoy,
     LogIn,
     LogOut,
@@ -61,7 +66,7 @@ import {
 import { useEffect, useState } from "react";
 import { ScratchAuth_logout, ScratchAuth_redirectToAuth } from "../_scratch";
 import { _locales } from "../site/_locales";
-import { _cfgImages, _cfgSite, _cfgSiteLinks } from "@/components/configs/siteLinks"
+import { _cfgImages, _cfgLinks, _cfgSite, _cfgSiteLinks } from "@/components/configs/siteLinks"
 import { getDecryptedSessionId, setEncryptedUsername } from "@/components/backend/cookie"
 import { DarkModeChange, DarkModeGET } from "../site/main"
 import Image from "next/image"
@@ -183,7 +188,7 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                 <DropdownMenuLabel>{_locales('My Account')}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    {username? (
+                    {username?
                     <>
                         <Link href={`https://scratch.mit.edu/users/${username}/`} target="_block">
                             <DropdownMenuItem>
@@ -197,14 +202,7 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                                 <span>{_locales('Settings')}</span>
                             </DropdownMenuItem>
                         </Link>
-                        <Link href={`https://auth.itinerary.eu.org/auth?`} target="_block">
-                            <DropdownMenuItem>
-                                <Fingerprint className="mr-2 h-4 w-4" />
-                                <span>{_locales('Auth')}</span>
-                            </DropdownMenuItem>
-                        </Link>
-                    </>
-                    ):(
+                    </>:
                     <>
                         <DropdownMenuItem disabled>
                             <User className="mr-2 h-4 w-4" />
@@ -214,8 +212,7 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                             <Settings className="mr-2 h-4 w-4" />
                             <span>{_locales('Settings')}</span>
                         </DropdownMenuItem>
-                    </>
-                    )}
+                    </>}
                     <DropdownMenuSub>
                         <DropdownMenuSubTrigger>
                             <Eclipse className="mr-2 h-4 w-4" />
@@ -223,7 +220,7 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                             <DropdownMenuSubContent>
-                                {DarkModeGET() === "true" ? (
+                                {DarkModeGET() === "true" ?
                                 <>
                                     <DropdownMenuItem disabled>
                                         <Moon className="mr-2 h-4 w-4" />
@@ -233,8 +230,7 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                                         <SunMoon className="mr-2 h-4 w-4" />
                                         <span>{_locales('light')}</span>
                                     </DropdownMenuItem>
-                                </>
-                                ):(
+                                </>:
                                 <>
                                     <DropdownMenuItem onClick={() => DarkModeChange("true")}>
                                         <Moon className="mr-2 h-4 w-4" />
@@ -244,68 +240,83 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                                         <SunMoon className="mr-2 h-4 w-4" />
                                         <span>{_locales('light')}</span>
                                     </DropdownMenuItem>
-                                </>
-                                )}
+                                </>}
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>
                     </DropdownMenuSub>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <DropdownMenuItem disabled>
-                        <Users className="mr-2 h-4 w-4" />
-                        <span>{_locales('Team')}</span>
-                    </DropdownMenuItem>
                     <DropdownMenuSub>
                         <DropdownMenuSubTrigger>
-                            <UserPlus className="mr-2 h-4 w-4" />
-                            <span>{_locales('Invite users')}</span>
+                            <LayoutGrid className="mr-2 h-4 w-4" />
+                            <span>{_locales('App')}</span>
                         </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                             <DropdownMenuSubContent>
                                 <DropdownMenuItem disabled>
-                                    <Mail className="mr-2 h-4 w-4" />
-                                    <span>{_locales('Email')}</span>
+                                    <LayoutPanelLeft className="mr-2 h-4 w-4" />
+                                    <span>{_locales('Sglid')}</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem disabled>
-                                    <MessageSquare className="mr-2 h-4 w-4" />
-                                    <span>{_locales('Message')}</span>
+                                    <LayoutPanelLeft className="mr-2 h-4 w-4" />
+                                    <span>{_locales('ScPay')}</span>
                                 </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem disabled>
-                                    <PlusCircle className="mr-2 h-4 w-4" />
-                                    <span>{_locales('More...')}</span>
-                                </DropdownMenuItem>
+                            </DropdownMenuSubContent>
+                        </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                    <DropdownMenuSub>
+                        <DropdownMenuSubTrigger>
+                            <Cat className="mr-2 h-4 w-4" />
+                            <span>{_locales('Scratch Auth')}</span>
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                                <Link href={_cfgLinks.scratch_auth_pageLink_home} target="_block">
+                                    <DropdownMenuItem>
+                                        <HomeIcon className="mr-2 h-4 w-4" />
+                                        <span>{_locales('Website')}</span>
+                                    </DropdownMenuItem>
+                                </Link>
+                                <Link href={_cfgLinks.scratch_auth_stats_page} target="_block">
+                                    <DropdownMenuItem>
+                                        <BarChart2 className="mr-2 h-4 w-4" />
+                                        <span>{_locales('Status page')}</span>
+                                    </DropdownMenuItem>
+                                </Link>
+                                {username? 
+                                <>
+                                    <Link href={`https://auth.itinerary.eu.org/auth?`} target="_block">
+                                        <DropdownMenuItem>
+                                            <Fingerprint className="mr-2 h-4 w-4" />
+                                            <span>{_locales('Auth')}</span>
+                                        </DropdownMenuItem>
+                                    </Link>
+                                </>:
+                                <>
+                                    <DropdownMenuItem disabled>
+                                        <Fingerprint className="mr-2 h-4 w-4" />
+                                        <span>{_locales('Auth')}</span>
+                                    </DropdownMenuItem>
+                                </>}
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>
                     </DropdownMenuSub>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem disabled>
-                    <LifeBuoy className="mr-2 h-4 w-4" />
-                    <span>{_locales('Support')}</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem disabled>
-                    <Cloud className="mr-2 h-4 w-4" />
-                    <span>{_locales('API')}</span>
-                    <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                {userData? (
+                {userData?
                 <>
                     <DropdownMenuItem onClick={() => ScratchAuth_logout()}>
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>{_locales('Log out')}</span>
                     </DropdownMenuItem>
-                </>
-                ):(
+                </>:
                 <>
                     <DropdownMenuItem onClick={() => ScratchAuth_redirectToAuth()}>
                         <LogIn className="mr-2 h-4 w-4" />
                         <span>{_locales('Login')}</span>
                     </DropdownMenuItem>
-                </>
-                )}
+                </>}
             </DropdownMenuContent>
         </DropdownMenu>
     )
