@@ -22,11 +22,11 @@ Here are the steps to add a new MOD to this repository.
 
 Please place the file for the new MOD in the following location:
 
-- **File Path:** `/contents/contentObj_mods.ts`
+- **File Path:** `/contents/mods.ts`
 
 ## Information to Add
 
-Add information for the new MOD to the `contentObj_modsAll` object in the `contentObj_mods.ts` file.
+Add information for the new MOD to the `contentObj_modsAll` object in the `mods.ts` file.
 
 ### Properties
 

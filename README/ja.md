@@ -21,11 +21,11 @@
 
 新しいMODを追加するファイルは以下の場所に配置してください。
 
-- **ファイルパス:** `/contents/contentObj_mods.ts`
+- **ファイルパス:** `/contents/mods.ts`
 
 ## 追加するMODの情報
 
-`contentObj_mods.ts` ファイル内の `contentObj_modsAll` オブジェクトに新しいMODの情報を追加してください。
+`mods.ts` ファイル内の `contentObj_modsAll` オブジェクトに新しいMODの情報を追加してください。
 
 ### プロパティ
 
