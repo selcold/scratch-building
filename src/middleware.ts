@@ -7,7 +7,11 @@ export function middleware(request: NextRequest) {
     if (_cfgMaintenancePages.includes(request.nextUrl.pathname)) {
         return NextResponse.redirect(new URL(`/maintenance?requestUrl=${request.nextUrl.href}`, request.url))
     } else {
-        return NextResponse.next()
+        if (request.nextUrl.pathname === "/play") {
+            return NextResponse.redirect(new URL(`/games`, request.url))
+        } else {
+            return NextResponse.next()
+        }
     }
 }
 
