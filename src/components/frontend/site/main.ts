@@ -37,13 +37,13 @@ export function DarkModeSET() {
                 html.classList.add('dark');
             }
         }else{
-            setEncryptedUsername('dark', "false", 0);
+            setEncryptedUsername('dark', "false", 36500);
         }
     }else{
         console.log('html not found')
     }
 };
 export function DarkModeChange( mode: string ) {
-    setEncryptedUsername('dark', mode, 0);
+    setEncryptedUsername('dark', mode, 36500);
     window.location.reload();
 }
