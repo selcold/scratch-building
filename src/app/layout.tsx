@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 		template: `%s | ${_cfgSite.title}`,
 		default: `${_cfgSite.title}`
 	},
-	description: "A building management game is a simulation game where you create buildings using Scratch.",
+	description: "Scratch Building is a game developed on the Scratch platform, and this repository serves as its official website. It provides various features including account authentication, commenting, notifications, and community engagement.",
 
 	generator: "Next.js",
 	metadataBase: new URL('https:/scratch-building.vercel.app'),
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 		type: "website",
 		url: "https://scratch-building.vercel.app/",
 		title: `${_cfgSite.title}`,
-		description: "A building management game is a simulation game where you create buildings using Scratch.",
+		description: "Scratch Building is a game developed on the Scratch platform, and this repository serves as its official website. It provides various features including account authentication, commenting, notifications, and community engagement.",
 		siteName: `${_cfgSite.title}`,
 		images: [
 			{

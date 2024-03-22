@@ -1,5 +1,5 @@
 export const _cfgSite = {
-    origin: "https://scratch-building-beta.vercel.app",
+    origin: "https://scratch-building.vercel.app",
     title: "Scratch Building",
 }
 

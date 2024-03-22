@@ -1,7 +1,7 @@
 {
     "name":"Scratch building",
     "short_name":"Scratch building",
-    "description":"A building management game is a simulation game where you create buildings using Scratch.",
+    "description":"Scratch Building is a game developed on the Scratch platform, and this repository serves as its official website. It provides various features including account authentication, commenting, notifications, and community engagement.",
     "start_url":"/",
     "display_override": [
         "window-control-overlay", 

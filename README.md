@@ -1,61 +1,67 @@
-# MOD追加ガイド
+# Scratch Building
 
-以下の手順に従って、新しい[MODをこのリスト](https://github.com/selcold/scratch-building-beta/blob/main/contents/contentObj_mods.ts#L49)に追加してください。
+Scratch Building is a game developed on the Scratch platform, and this repository serves as its official website. It provides various features including account authentication, commenting, notifications, and community engagement.
 
-## 1. インターフェースを理解する
+## language
 
-まず、MODの情報を追加するために使用するインターフェースを理解しましょう。
+[English](https://github.com/selcold/scratch-building/blob/main/README.md) / [日本語](https://github.com/selcold/scratch-building/blob/main/README/ja.md)
 
-### contentObj_mods インターフェース:
 
-```tsx
+# Table of Contents
+- [Scratch Building Website](#scratch-building)
+- [Adding New MODs](#adding-new-mods)
+    - [Files](#files)
+    - [Information to Add](#information-to-add)
+    - [Example Addition](#example-addition)
+
+# Adding New MODs
+
+Here are the steps to add a new MOD to this repository.
+
+## Files
+
+Please place the file for the new MOD in the following location:
+
+- **File Path:** `/contents/contentObj_mods.ts`
+
+## Information to Add
+
+Add information for the new MOD to the `contentObj_modsAll` object in the `contentObj_mods.ts` file.
+
+### Properties
+
+1. **version:** Specify the version number of the MOD.
+2. **project_type:** Specify the type of the project. Example: "SBMOD", "SBAPI", "SBAddons", "SBaddonAPI".
+3. **project_id:** Specify the ID of the project.
+4. **creator:** Specify the creator of the MOD.
+5. **title:** Specify the title of the MOD.
+6. **title_en:** Specify the English title of the MOD (optional).
+7. **description:** Specify the description of the MOD.
+8. **description_en:** Specify the English description of the MOD (optional).
+9. **tags:** Specify tags related to the MOD. Each tag has a label and a color.
+
+### Example Addition
+
+```typescript
 {
-    version: "7" | "6"; // バージョン
-    mod_type: "Default" | "Official" | "Prerequisite"; // MODタイプ
-    project_type: "SBMOD" | "SBAPI" | "SBAddons" | "SBaddonAPI"; // プロジェクトタイプ
-    projects_id: number; // プロジェクトID
-    creator: string; // 作成者
-    title: string; // タイトル
-    title_ja?: string; // 日本語タイトル（オプション）
-    description: string; // 説明
-    description_ja?: string; // 日本語説明（オプション）
-    tags?: Tag[]; // タグ（オプション）
-}
-```
-
-# Tag インターフェース
-
-```tsx
-{
-    label: string; // ラベル
-    color: "" | "dark" | "blue" | "red" | "green" | "yellow" | "indigo" | "purple" | "pink"; // 色
-    display?: "block" | "none"; // 表示設定（オプション）
-}
-```
-
-# 2. MOD情報を追加する
-
-新しいMOD情報を以下の形式で追加してください。
-
-```tsx
-{
-    "version": "7", // バージョン
-    "mod_type": "Default", // MODタイプ
-    "project_type": "SBAPI", // プロジェクトタイプ
-    "projects_id": 123456789, // プロジェクトID
-    "creator": "Your_Name", // 作成者
-    "title": "Your_MOD_Title", // タイトル
-    "description": "Your_MOD_Description", // 説明
-    "description_ja": "Your_MOD_Description_in_Japanese", // 日本語説明（オプション）
-    "tags": [ // タグ（オプション）
+    "version": 7,
+    "project_type": "SBMOD",
+    "project_id": YOUR_PROJECT_ID,
+    "creator": "YOUR_NAME",
+    "title": "YOUR_MOD_TITLE",
+    "title_en": "YOUR_MOD_EN_TITLE", // Optional
+    "description": "YOUR_MOD_DESCRIPTION",
+    "description_en": "YOUR_MOD_EN_DESCRIPTION", // Optional
+    "tags": [
         {
-            "label": "Tag_Label", // タグのラベル
-            "color": "blue", // タグの色
-        }
+            "label": "YOUR_TAG_LABEL",
+            "color": "YOUR_TAG_COLOR"
+        },
+        // Add additional tags here if needed
     ]
 }
 ```
 
-# 3. 追加されたMOD情報を確認する
-
-MOD情報が正しく追加されたことを確認してください。すべての必須フィールドが提供され、不要なフィールドが含まれていないことを確認してください。
+> [!NOTE]
+> - Choose the color for the tags from the following values: "dark", "blue", "red", "green", "yellow", "indigo", "purple", "pink", "" (empty string).
+> - Don't forget to create a pull request after making changes to the file.
