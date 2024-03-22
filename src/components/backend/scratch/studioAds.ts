@@ -4,7 +4,6 @@
 
 import axios from 'axios';
 import { studioAdConfig } from '../../../../scratchAds.config';
-import { customLog } from '@/components/_log';
 
 export interface ScratchStudioAdConfig {
     studio_id: number;
@@ -77,18 +76,12 @@ export const filterProjects = async (projects: any[], config: ScratchStudioAdCon
 };
 
 export const ScratchStudioAd = async () => {
-    const startTime = new Date();
-    //customLog(`ScratchAds loading...`, '○', '0', '0', 'log');
 
     const projects = await fetchProjects(studioAdConfig);
     const filteredProjects = await filterProjects(projects, studioAdConfig);
 
     const randomIndex = Math.floor(Math.random() * filteredProjects.length);
     const randomProject = filteredProjects[randomIndex];
-
-    const endTime = new Date();
-
-    //customLog(`ScratchAds success: ${endTime.getTime() - startTime.getTime()}ms`, '✓', '32', '0', 'log');
 
     return randomProject;
 };
