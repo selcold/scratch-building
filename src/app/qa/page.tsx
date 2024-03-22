@@ -89,18 +89,22 @@ export default function Home() {
 					}
                     if (storedUsername) {
                         const userData = await ScratchAuthGET_UserProfile(storedUsername);
-						if(_cfg_logs.scratchAuth_userData_log){
-							console.log(userData);
+						if(userData){
+							if(_cfg_logs.scratchAuth_userData_log){
+								console.log(userData);
+							}
+							setUserId(userData?.id || null)
+							setUserImage(userData?.profile?.images['90x90'] || null);
+							set_userData_profile_bio(userData?.profile?.bio || null);
+							setUserData(userData);
+						}else{
+							console.warn('userData null');
 						}
-						setUserId(userData?.id || null)
-						setUserImage(userData?.profile?.images['90x90'] || null);
-						set_userData_profile_bio(userData?.profile?.bio || null);
-                        setUserData(userData);
                     }
                 }
                 setPageLoaded(true);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('fetchUserData Error:', error);
             }
         };
 

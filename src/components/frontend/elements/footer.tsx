@@ -1,6 +1,6 @@
 // /src/components/frontend/elements/footer.tsx
 
-import { _cfgCredit, _cfgImages, _cfgSiteLinks, _cfgSite, _cfgSocials } from "@/components/configs/siteLinks";
+import { _cfgCredit, _cfgImages, _cfgSiteLinks, _cfgSite, _cfgSocials, _cfgLinks } from "@/components/configs/siteLinks";
 import Image from "next/image";
 import { _locales } from "../site/_locales";
 import Link from "next/link";
@@ -10,14 +10,15 @@ const nav_Socials = [
 ]
 
 const nav_Development = [
+    { name: _locales('Docs'), href: _cfgSiteLinks.docs, target: '' },
 	{ name: _locales('Repository'), href: _cfgCredit.Repository_GitHub, target: '_block' },
     { name: _locales('changelogs'), href: _cfgSiteLinks.docs_changelogs, target: '' },
 ]
 
 const nav_Resources = [
-    { name: _locales('Docs'), href: _cfgSiteLinks.docs, target: '' },
 	{ name: _locales('Terms of Use'), href: _cfgSiteLinks.docs_terms_of_use, target: '' },
     { name: _locales('Guidelines'), href: _cfgSiteLinks.docs_guidelines, target: '' },
+    { name: _locales('Status page'), href: _cfgLinks.stats_page, target: '_block' },
 ]
 
 export default function Footer({ children, Breadcrumb }: { children?: React.ReactNode, Breadcrumb?: React.ReactNode}) {

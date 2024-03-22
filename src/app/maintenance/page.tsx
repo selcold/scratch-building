@@ -105,10 +105,14 @@ export default function Home() {
 					}
                     if (storedUsername) {
                         const userData = await ScratchAuthGET_UserProfile(storedUsername);
-						if(_cfg_logs.scratchAuth_userData_log){
-							console.log(userData);
+						if(userData){
+							if(_cfg_logs.scratchAuth_userData_log){
+								console.log(userData);
+							}
+							setUserData(userData);
+						}else{
+							console.warn('userData null');
 						}
-                        setUserData(userData);
                     }
 
 					const paramsString = window.location.search;
@@ -132,7 +136,7 @@ export default function Home() {
                 }
                 setPageLoaded(true);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('fetchUserData Error:', error);
             }
         };
 

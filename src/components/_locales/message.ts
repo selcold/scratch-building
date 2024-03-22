@@ -31,6 +31,7 @@ export const _locales_en: { [key: string]: string } = {
     "Privacy Policy": "",
     "Terms of Use": "",
     "Guidelines": "",
+    "Status page": "",
     "Game": "",
 
     // header
@@ -189,6 +190,7 @@ export const _locales_ja: { [key: string]: string } = {
     "Privacy Policy": "プライバシーポリシー",
     "Terms of Use": "利用規約",
     "Guidelines": "ガイドライン",
+    "Status page": "ステータスページ",
     "Game": "ゲーム",
 
     // header

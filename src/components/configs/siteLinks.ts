@@ -14,6 +14,10 @@ export const _cfgImages = {
     links_projects_alpha_480x360: "/images/projects/alpha_480x360.webp",
 }
 
+export const _cfgLinks = {
+    stats_page: "https://stats.uptimerobot.com/ncjBMaI1yr",
+}
+
 export const _cfgSiteLinks = {
     home: "/",
     games: "/games",
