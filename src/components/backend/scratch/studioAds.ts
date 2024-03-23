@@ -35,17 +35,17 @@ export const fetchProject = async (project_id: number) => {
         const projects = response.data;
         return projects;
     } catch (error) {
-        console.error('Error fetching projects:', error);
+        console.error('Error fetching project:', error);
         return [];
     }
 };
 
-export const filterProjects = async (projects: any[], config: ScratchStudioAdConfig) => {
+export const filterProjects = async (projects: any[], config: ScratchStudioAdConfig): Promise<any[]> => {
 
-    const filteredProjects = [];
+    const filteredProjects: any[] = [];
 
     // プロジェクトごとに非同期でデータを取得し、フィルターを適用する
-    for (const project of projects) {
+    await Promise.all(projects.map(async (project) => {
         const check = config.check;
         if(check){
             const projectData = await fetchProject(project.id);
@@ -67,10 +67,10 @@ export const filterProjects = async (projects: any[], config: ScratchStudioAdCon
                     };
                 };
             };
-        }else{
+        } else {
             filteredProjects.push(project);
         }
-    }
+    }));
 
     return filteredProjects;
 };
