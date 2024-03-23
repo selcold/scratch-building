@@ -38,7 +38,7 @@ export function ScratchStudioAds({ className, durationPls }: { className?: null 
                 const ads = await ScratchStudioAd(); // await キーワードを追加
                 setScratchAds(ads);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('ScratchAds fetchUserData:', error);
             }
         }
         fetchUserData();

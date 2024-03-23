@@ -9,7 +9,7 @@ export function GetUserLanguage() {
         const userLanguage = navigator.language.split('-')[0];
         return userLanguage;
     }
-    return 'error';
+    return 'GetUserLanguage Error';
 }
 
 export function _locales(text: string) {

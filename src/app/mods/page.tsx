@@ -109,7 +109,7 @@ export default function Home() {
                 }
                 setPageLoaded(true);
             } catch (error) {
-                console.error('fetchUserData Error:', error);
+                console.error('fetchUserData:', error);
             }
         };
 

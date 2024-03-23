@@ -44,7 +44,7 @@ export default function Home() {
                 }
                 setPageLoaded(true);
             } catch (error) {
-                console.error('Error:', error);
+                console.error('auth page:', error);
             }
         };
 
