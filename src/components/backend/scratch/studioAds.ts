@@ -24,7 +24,7 @@ export const fetchProjects = async (config: ScratchStudioAdConfig) => {
         const projects = response.data;
         return projects;
     } catch (error) {
-        console.error('Error fetching projects:', error);
+        console.error(`Error fetching projects ( studio_id: ${config.studio_id} ):`, error);
         return [];
     }
 };
@@ -35,7 +35,7 @@ export const fetchProject = async (project_id: number) => {
         const projects = response.data;
         return projects;
     } catch (error) {
-        console.error('Error fetching project:', error);
+        console.error(`Error fetching project ( project_id: ${project_id} ):`, error);
         return [];
     }
 };
@@ -74,7 +74,7 @@ export const filterProjects = async (projects: any[], config: ScratchStudioAdCon
     
         return filteredProjects; // 配列を返す
     } catch (error) {
-        console.error('ScratchAds filterProjects:', error);
+        console.error(`ScratchAds filterProjects ( projects.length: ${projects.length} ):`, error);
         throw error; // エラーが発生した場合はエラーをスローする
     }
 };
