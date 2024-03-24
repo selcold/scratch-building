@@ -41,38 +41,42 @@ export const fetchProject = async (project_id: number) => {
 };
 
 export const filterProjects = async (projects: any[], config: ScratchStudioAdConfig): Promise<any[]> => {
-
-    const filteredProjects: any[] = [];
-
-    // プロジェクトごとに非同期でデータを取得し、フィルターを適用する
-    await Promise.all(projects.map(async (project) => {
-        const check = config.check;
-        if(check){
-            const projectData = await fetchProject(project.id);
-
-            // プロジェクトデータが取得できた場合のみフィルターを適用する
-            if (projectData) {
-                const stats = projectData.stats;
-                const filter = config.filter || {};
-                // プロジェクトにstatsプロパティが存在しない場合、フィルターを通過させない
-                if (stats) {
-                    const passesFilter =
-                        (!filter.min_views || stats.views >= filter.min_views) &&
-                        (!filter.min_loves || stats.loves >= filter.min_loves) &&
-                        (!filter.min_favorites || stats.favorites >= filter.min_favorites) &&
-                        (!filter.min_remixes || stats.remixes >= filter.min_remixes);
+    try {
+        const filteredProjects: any[] = [];
     
-                    if (passesFilter) {
-                        filteredProjects.push(project);
+        // プロジェクトごとに非同期でデータを取得し、フィルターを適用する
+        await Promise.all(projects.map(async (project) => {
+            const check = config.check;
+            if(check){
+                const projectData = await fetchProject(project.id);
+    
+                // プロジェクトデータが取得できた場合のみフィルターを適用する
+                if (projectData) {
+                    const stats = projectData.stats;
+                    const filter = config.filter || {};
+                    // プロジェクトにstatsプロパティが存在しない場合、フィルターを通過させない
+                    if (stats) {
+                        const passesFilter =
+                            (!filter.min_views || stats.views >= filter.min_views) &&
+                            (!filter.min_loves || stats.loves >= filter.min_loves) &&
+                            (!filter.min_favorites || stats.favorites >= filter.min_favorites) &&
+                            (!filter.min_remixes || stats.remixes >= filter.min_remixes);
+        
+                        if (passesFilter) {
+                            filteredProjects.push(project); // ここで配列に追加する
+                        };
                     };
                 };
-            };
-        } else {
-            filteredProjects.push(project);
-        }
-    }));
-
-    return filteredProjects;
+            } else {
+                filteredProjects.push(project); // ここで配列に追加する
+            }
+        }));
+    
+        return filteredProjects; // 配列を返す
+    } catch (error) {
+        console.error('ScratchAds filterProjects:', error);
+        throw error; // エラーが発生した場合はエラーをスローする
+    }
 };
 
 export const ScratchStudioAd = async () => {
