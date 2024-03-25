@@ -74,7 +74,7 @@ export const filterProjects = async (projects: any[], config: ScratchStudioAdCon
     
         return filteredProjects; // 配列を返す
     } catch (error) {
-        console.error(`ScratchAds filterProjects ( projects.length: ${projects.length} ):`, error);
+        console.error(`ScratchAds filterProjects ( projects.length: ${projects.length} / studio_id: ${config.studio_id} ):`, error);
         throw error; // エラーが発生した場合はエラーをスローする
     }
 };
