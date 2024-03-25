@@ -57,8 +57,8 @@ export function ScratchStudioAds({ className, durationPls }: { className?: null 
             <>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild className="hover:scale-105 transition-all duration-300 ease-in-out">
-                        <Avatar className="h-10 w-10 rounded-full border border-neutral-500">
-                            <AvatarImage src={ScratchAd.avatar['90x90']} alt={ScratchAd.username} className="rounded-full"/>
+                        <Avatar className="items-center text-center h-10 w-10 rounded-full border border-neutral-500">
+                            <AvatarImage src={ScratchAd.avatar['90x90']} alt={ScratchAd.username} className="rounded-full" width={40} height={40}/>
                             <AvatarFallback>ICO</AvatarFallback>
                         </Avatar>
                     </DropdownMenuTrigger>

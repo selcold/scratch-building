@@ -54,6 +54,15 @@ import { _cfg_logs } from "@/components/configs/config";
 import { ScratchStudioAds } from "@/components/frontend/site/scratchAds";
 import { ScratchComment_Check } from "@/components/frontend/site/scratchComments";
 
+import type { Viewport } from 'next'
+
+export const viewport: Viewport = {
+	themeColor: [
+		{ media: "(prefers-color-scheme: dark)", color: "#000000" },
+		{ media: "(prefers-color-scheme: light)", color: "#ffffff" }
+	],
+}
+
 export default function Home() {
 
 	// headカスタム

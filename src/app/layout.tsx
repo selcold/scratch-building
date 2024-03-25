@@ -8,8 +8,12 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css'; // Import the CSS
 import { _cfgImages, _cfgSite } from "@/components/configs/siteLinks";
 import { Toaster } from "sonner";
-import Head from "next/head";
+import type { Viewport } from 'next'
 config.autoAddCss = false; // Disable the automatic CSS injection
+
+export const viewport: Viewport = {
+	themeColor: '#18181b',
+}
 
 export const metadata: Metadata = {
 	title: {
