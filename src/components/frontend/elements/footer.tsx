@@ -45,13 +45,13 @@ export default function Footer({ children, Breadcrumb }: { children?: React.Reac
                         <nav className="flex flex-wrap gap-10">
                             <section className="gap-2 items-start">
                                 <h1 className="font-bold text-[16px] mb-1 text-neutral-600 dark:text-neutral-300">{_locales('Socials')}</h1>
-                                <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-2">
                                 {nav_Socials.map((item) => (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         target={item.target}
-                                        className={`text-neutral-500 dark:text-neutral-400 hover:opacity-60 transition duration-200`}
+                                        className={`text-neutral-600 dark:text-neutral-400 hover:opacity-60 transition duration-200`}
                                     >
                                         {item.name}
                                     </Link>
@@ -60,13 +60,13 @@ export default function Footer({ children, Breadcrumb }: { children?: React.Reac
                             </section>
                             <section className="gap-2 items-start">
                                 <h1 className="font-bold text-[16px] mb-1 text-neutral-600 dark:text-neutral-300">{_locales('Development')}</h1>
-                                <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-2">
                                 {nav_Development.map((item) => (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         target={item.target}
-                                        className={`text-neutral-500 dark:text-neutral-400 hover:opacity-60 transition duration-200`}
+                                        className={`text-neutral-600 dark:text-neutral-400 hover:opacity-60 transition duration-200`}
                                     >
                                         {item.name}
                                     </Link>
@@ -75,13 +75,13 @@ export default function Footer({ children, Breadcrumb }: { children?: React.Reac
                             </section>
                             <section className="gap-2 items-start">
                                 <h1 className="font-bold text-[16px] mb-1 text-neutral-600 dark:text-neutral-300">{_locales('Resources')}</h1>
-                                <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-2">
                                 {nav_Resources.map((item) => (
                                     <Link
                                         key={item.name}
                                         href={item.href}
                                         target={item.target}
-                                        className={`text-neutral-500 dark:text-neutral-400 hover:opacity-60 transition duration-200`}
+                                        className={`text-neutral-600 dark:text-neutral-400 hover:opacity-60 transition duration-200`}
                                     >
                                         {item.name}
                                     </Link>
@@ -91,7 +91,7 @@ export default function Footer({ children, Breadcrumb }: { children?: React.Reac
                         </nav>
                     </div>
                 </div>
-                <div className="flex flex-wrap gap-3 justify-between text-neutral-400 dark:text-neutral-600 border-neutral-200 dark:border-neutral-800 border-t-[1px] w-full max-w-4xl mx-auto mt-5 pt-5">
+                <div className="flex flex-wrap gap-3 justify-between text-neutral-600 dark:text-neutral-400 border-neutral-200 dark:border-neutral-800 border-t-[1px] w-full max-w-4xl mx-auto mt-5 pt-5">
                     <span>© {currentFullYear} - {_cfgCredit.creator}. {_locales('All rights reserved.')}</span>
                     {Breadcrumb}
                 </div>

@@ -87,7 +87,7 @@ export default function Header({ userData, btmSpace, title }: { userData: any, b
 
     return (
         <>
-            <header className={`fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md border-[1px] border-neutral-500/50 text-white bg-black/40 dark:bg-white/10 w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards`}>
+            <header className={`fixed inset-x-0 top-4 z-[49] flex justify-between items-center gap-4 rounded-lg backdrop-blur-md border-[1px] border-neutral-500/50 text-white bg-black/50 dark:bg-white/10 w-[95%] max-w-7xl m-auto h-[50px] px-4 py-2 animate-fade-down animate-once animate-duration-350 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards`}>
                 <Link href={_cfgSiteLinks.home}>
                     <div className="flex flex-row items-center gap-3">
                         <Image
@@ -121,7 +121,7 @@ export default function Header({ userData, btmSpace, title }: { userData: any, b
                 <div className="block md:hidden">
                 <Sheet>
                     <SheetTrigger asChild className="flex border-none bg-transparent p-0">
-                        <Button variant="outline" className="w-auto h-auto m-auto"><FontAwesomeIcon icon={faBars} className="text-[18px]"/></Button>
+                        <Button variant="outline" className="w-auto h-auto m-auto" aria-label="navigation"><FontAwesomeIcon icon={faBars} className="text-[18px]"/></Button>
                     </SheetTrigger>
                     <SheetContent>
                         <div className="border-neutral-300 dark:border-neutral-800 border-b-[1px] pb-3">
@@ -286,12 +286,14 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                                 </Link>
                                 {username? 
                                 <>
+                                    <DropdownMenuItem disabled>
+                                        <Fingerprint className="mr-2 h-4 w-4" />
+                                        <span>{_locales('Auth')}</span>
+                                    </DropdownMenuItem>
+                                    {/*
                                     <Link href={`https://auth.itinerary.eu.org/auth?`} target="_block">
-                                        <DropdownMenuItem>
-                                            <Fingerprint className="mr-2 h-4 w-4" />
-                                            <span>{_locales('Auth')}</span>
-                                        </DropdownMenuItem>
                                     </Link>
+                                    */}
                                 </>:
                                 <>
                                     <DropdownMenuItem disabled>

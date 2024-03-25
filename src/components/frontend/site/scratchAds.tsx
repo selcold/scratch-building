@@ -66,7 +66,7 @@ export function ScratchStudioAds({ className, durationPls }: { className?: null 
                         <DropdownMenuLabel>{ScratchAd.username}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <Link href={`https://docs.google.com/forms/d/e/1FAIpQLSczKklgvbiyc3hkmjdELUPyvAL_1kZDkK5vYv83WDV06QqXsA/viewform?entry.1486506055=${_localesContent("日本語","English")}&entry.765880011=${ScratchAd.id}`} target="_block">
+                            <Link href={`https://docs.google.com/forms/d/e/1FAIpQLSczKklgvbiyc3hkmjdELUPyvAL_1kZDkK5vYv83WDV06QqXsA/viewform?entry.1486506055=${_localesContent("日本語","English")}&entry.765880011=${ScratchAd.id}`} target="_block" aria-label="ScratchAds">
                                 <DropdownMenuItem>
                                     <Flag className="mr-2 h-4 w-4"/>
                                     <span className="text-sm">{_locales('Report')}</span>
