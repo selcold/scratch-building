@@ -1,6 +1,9 @@
 export const _cfgSite = {
     origin: "https://scratch-building.vercel.app",
     title: "Scratch Building",
+    title_ja: "ビル経営ゲーム",
+    description: "Scratch Building is a game developed on the Scratch platform, and this site functions as its official website. It offers various features such as account authentication, comments, notifications, and community participation.",
+    description_ja: "ビル経営ゲームはScratchプラットフォーム上で開発されたゲームであり、このサイトは公式ウェブサイトとして機能します。アカウント認証、コメント、通知、コミュニティ参加など、さまざまな機能を提供しています。",
 }
 
 // https://scratch-building.vercel.app
