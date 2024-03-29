@@ -5,6 +5,11 @@
 import { Scratch_GET_user_image } from "../frontend/_scratch";
 import { sendWebhook } from "./webhook";
 
+function ScratchComment_escape(content: string){
+    const newContent = content.replace(/\s+/g,'\n');
+    return newContent;
+}
+
 export async function Server_GetRequest_Comments() {
     try {
         // GASのAPIエンドポイントを設定
@@ -32,10 +37,12 @@ export const API_gas_backendApi_new_commentSend = async ( user_name: string, use
     try {
         const compileStartTime = performance.now();
         const user_image = Scratch_GET_user_image( user_id );
-        let apiUrl = `${process.env.COMMENT_SERVER_API_URL}?apikey=${process.env.COMMENT_SERVER_API_KEY}&sheet=${process.env.COMMENT_SERVER_SHEET_ID}&mode=post_comment&user_name=${user_name}&user_id=${user_id}&user_tag=${user_tag}&content=${content}`
+        const comment = ScratchComment_escape(content);
+        let uri = `${process.env.COMMENT_SERVER_API_URL}?apikey=${process.env.COMMENT_SERVER_API_KEY}&sheet=${process.env.COMMENT_SERVER_SHEET_ID}&mode=post_comment&user_name=${user_name}&user_id=${user_id}&user_tag=${user_tag}&content=${comment}`
         if(reply_group_id!=='false'){
-            apiUrl = `${process.env.COMMENT_SERVER_API_URL}?apikey=${process.env.COMMENT_SERVER_API_KEY}&sheet=${process.env.COMMENT_SERVER_SHEET_ID}&mode=post_comment&user_name=${user_name}&user_id=${user_id}&user_tag=${user_tag}&content=${content}&reply_group_id=${reply_group_id}&reply_id=${reply_id}`
+            uri = `${process.env.COMMENT_SERVER_API_URL}?apikey=${process.env.COMMENT_SERVER_API_KEY}&sheet=${process.env.COMMENT_SERVER_SHEET_ID}&mode=post_comment&user_name=${user_name}&user_id=${user_id}&user_tag=${user_tag}&content=${comment}&reply_group_id=${reply_group_id}&reply_id=${reply_id}`
         };
+        const apiUrl = encodeURI(uri);
         //console.log("> apiUrl:\n",apiUrl)
         const response = await fetch(apiUrl, {
             method: 'GET',
@@ -45,7 +52,7 @@ export const API_gas_backendApi_new_commentSend = async ( user_name: string, use
         if (!response.ok) {
             console.error('status:', response.status);
             console.error('res msg', response.statusText)
-            throw new Error('Error sending POST request to GAS:');
+            throw new Error('Error sending POST request to GAS (response):');
         };
         const result = await response.json();
         const compileTime = Math.round(compileEndTime - compileStartTime);

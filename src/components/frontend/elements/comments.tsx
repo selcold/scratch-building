@@ -174,7 +174,7 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
 
                     const validationResult = ScratchComment_Check(FoSendBtCl_user_name, comment);
                     if(validationResult.status){
-                        if(await API_gas_backendApi_new_commentSend(FoSendBtCl_user_name, FoSendBtCl_user_Id, validationResult.tag? validationResult.tag : "null", comment, FoSendBtCl_reply_group_id, FoSendBtCl_reply_id, FoSendBtCl_replyUser)){
+                        if(await API_gas_backendApi_new_commentSend(FoSendBtCl_user_name, FoSendBtCl_user_Id, validationResult.tag? validationResult.tag : "null", validationResult.content, FoSendBtCl_reply_group_id, FoSendBtCl_reply_id, FoSendBtCl_replyUser)){
                             window.alert(_locales('Comment posted!'));
                             window.location.href=(`${window.location}`);
                         }else{
@@ -185,7 +185,7 @@ export function CommentsHTML( CommentsData: Comments[] , username: string, userI
                             }
                         }
                     }else{
-                        window.alert(_locales(validationResult.content?validationResult.content:""));
+                        window.alert(_locales(validationResult.content? validationResult.content : ""));
                         if(comment_reply_form_button){
                             comment_reply_form_button.classList.remove('pointer-events-none');
                             comment_reply_form_button.innerText=(_locales('Post'))

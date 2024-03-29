@@ -4,12 +4,17 @@ import { _ScratchCommentsConfig } from "@/components/backend/scratch/comments";
 import { ScratchCommentsConfig } from "../../../../scratchComments.config";
 import { API_gas_backendApi_new_commentSend } from "@/components/backend/comments";
 
-export function ScratchComment_Check(username: string, content: string) {
+interface _configScratchComment_Check {
+    status: boolean;
+    content: string;
+    tag?: null | string;
+}
+export function ScratchComment_Check(username: string, content: string): _configScratchComment_Check {
     const config = ScratchCommentsConfig as _ScratchCommentsConfig;
 
     let tag = "null";
     let error = false;
-    let error_message = null;
+    let error_message = "";
 
     const noSpaceContent = content.replace(/\s+/g,'');
     if(noSpaceContent.length < 1){

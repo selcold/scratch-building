@@ -160,7 +160,7 @@ export default function Home() {
 
 				const validationResult = ScratchComment_Check(userData.username, comment);
 				if(validationResult.status){
-					if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, validationResult.tag? validationResult.tag : "null", comment)){
+					if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, validationResult.tag? validationResult.tag : "null", validationResult.content)){
 						window.alert(_locales('Comment posted!'));
 						window.location.href=(`${window.location}`);
 					}else{
