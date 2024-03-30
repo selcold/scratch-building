@@ -64,7 +64,6 @@ import {
 } from "@/components/ui/sheet"
 
 import { useEffect, useState } from "react";
-import { ScratchAuth_logout, ScratchAuth_redirectToAuth } from "../_scratch";
 import { _locales } from "../site/_locales";
 import { _cfgImages, _cfgLinks, _cfgSite, _cfgSiteLinks } from "@/components/configs/siteLinks"
 import { getDecryptedSessionId, setEncryptedUsername } from "@/components/backend/cookie"
@@ -72,6 +71,7 @@ import { DarkModeChange, DarkModeGET } from "../site/main"
 import Image from "next/image"
 import Link from "next/link"
 import { HeaderBtmSpace } from "./main"
+import { ScratchAuth_Login, ScratchAuth_Logout } from "scratch-auth-react"
 
 const HeaderNav = [
 	{ name: _locales('Home'), href: _cfgSiteLinks.home, target: '_self' },
@@ -308,13 +308,13 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                 <DropdownMenuSeparator />
                 {userData?
                 <>
-                    <DropdownMenuItem onClick={() => ScratchAuth_logout()}>
+                    <DropdownMenuItem onClick={() => ScratchAuth_Logout()}>
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>{_locales('Log out')}</span>
                     </DropdownMenuItem>
                 </>:
                 <>
-                    <DropdownMenuItem onClick={() => ScratchAuth_redirectToAuth()}>
+                    <DropdownMenuItem onClick={() => ScratchAuth_Login()}>
                         <LogIn className="mr-2 h-4 w-4" />
                         <span>{_locales('Login')}</span>
                     </DropdownMenuItem>

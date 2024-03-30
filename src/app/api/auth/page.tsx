@@ -10,8 +10,12 @@ import { DarkModeSET } from '@/components/frontend/site/main';
 import { HeadCustom_config } from '@/components/frontend/site/metaCustom';
 import { _locales } from '@/components/frontend/site/_locales';
 import { _cfgSite } from '@/components/configs/siteLinks';
+import { useSearchParams } from 'next/navigation';
+import { ScratchAuthSET_session } from 'scratch-auth-react';
 
 export default function Home() {
+    const searchParams = useSearchParams();
+    const privateCode = searchParams.get('privateCode');
 
     // headカスタム
 	const Head_config = {
@@ -25,22 +29,8 @@ export default function Home() {
             try {
                 if(typeof window !== 'undefined') {
                     DarkModeSET();
-                    const paramsString = window.location.search;
-                    const searchParams = new URLSearchParams(paramsString);
-                    const privateCode = searchParams.get("privateCode");
-                    if (privateCode){
-                        const res = await ScratchAuth_verifyToken(privateCode);
-                        if(res){
-                            const obj = JSON.parse(res);
-                            setEncryptedUsername('username', obj.data.username, 30);
-                            window.location.href=(window.location.origin);
-                            return true;
-                        }else{
-                            window.location.href=(window.location.origin);
-                        }
-                    }else{
-                        window.location.href=(window.location.origin);
-                    };
+                    await ScratchAuthSET_session(privateCode); //アカウント認証
+                    window.location.href = `/`; //ホーム移動
                 }
                 setPageLoaded(true);
             } catch (error) {

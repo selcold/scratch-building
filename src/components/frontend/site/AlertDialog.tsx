@@ -10,8 +10,8 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { ScratchAuth_redirectToAuth } from "../_scratch";
 import { _locales } from "./_locales";
+import { ScratchAuth_Login } from "scratch-auth-react";
 
 export function AlertDialogCustomButton_loginUserOnly({ children, title, description }: { children: React.ReactNode, title?: string, description?: string }) {
     return (
@@ -29,7 +29,7 @@ export function AlertDialogCustomButton_loginUserOnly({ children, title, descrip
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>{_locales('Close')}</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => ScratchAuth_redirectToAuth()}>{_locales('Login')}</AlertDialogAction>
+                    <AlertDialogAction onClick={() => ScratchAuth_Login()}>{_locales('Login')}</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

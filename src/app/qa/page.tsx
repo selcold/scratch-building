@@ -3,7 +3,6 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { getDecryptedSessionId, setEncryptedUsername } from "@/components/backend/cookie";
 import { ScratchAuthGET_UserProfile } from "@/components/backend/scratch";
 import Footer from "@/components/frontend/elements/footer";
 import Header from "@/components/frontend/elements/header";
@@ -11,7 +10,6 @@ import Loading from "@/components/frontend/elements/loading";
 import { ElementGroup, Main } from "@/components/frontend/elements/main";
 import Image from "next/image";
 import { _locales } from "@/components/frontend/site/_locales";
-import { ScratchAuth_logout, ScratchAuth_redirectToAuth, Scratch_GET_user_image, ValidationCheck_comment } from "@/components/frontend/_scratch";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -53,6 +51,7 @@ import { _cfgSite } from "@/components/configs/siteLinks";
 import { ContentsSET } from "@/components/frontend/elements/contents";
 import Giscus from '@giscus/react';
 import { _cfg_logs } from "@/components/configs/config";
+import { ScratchAuthGET_session } from "scratch-auth-react";
 
 export default function Home() {
 
@@ -82,8 +81,8 @@ export default function Home() {
 						setNetworkStatus("online")
 					});
 
-                    const storedUsername = getDecryptedSessionId('username');
-                    setUsername(storedUsername);
+					const storedUsername = await ScratchAuthGET_session(); // session(ユーザー名)を取得
+                    setUsername(storedUsername);// session(ユーザー名)を変数に保存
 					if(_cfg_logs.scratchAuth_userData_log){
 						console.log('login:',storedUsername);
 					}

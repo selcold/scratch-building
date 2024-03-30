@@ -6,7 +6,7 @@ import { createRoot } from "react-dom/client";
 import { API_gas_backendApi_new_commentSend, Server_GetRequest_Comments } from "@/components/backend/comments";
 import { formatDateTime } from "../site/formatDateTime";
 import { Button } from "@/components/ui/button";
-import { ScratchAuth_redirectToAuth, Scratch_GET_user_image } from "../_scratch";
+import { Scratch_GET_user_image } from "../_scratch";
 import { AlertDialogCustomButton_NotRelease, AlertDialogCustomButton_loginUserOnly } from "../site/AlertDialog";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton"
