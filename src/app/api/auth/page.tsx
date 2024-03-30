@@ -3,8 +3,6 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { setEncryptedUsername } from '@/components/backend/cookie';
-import { ScratchAuth_verifyToken } from '@/components/backend/scratch';
 import Loading from '@/components/frontend/elements/loading';
 import { DarkModeSET } from '@/components/frontend/site/main';
 import { HeadCustom_config } from '@/components/frontend/site/metaCustom';
