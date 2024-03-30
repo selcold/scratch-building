@@ -13,18 +13,18 @@ import { ScratchAuthSET_session } from 'scratch-auth-react';
 
 export default function Home() {
     const searchParams = useSearchParams();
-    const privateCode = searchParams.get('privateCode');
-
+    
     // headカスタム
 	const Head_config = {
-		title: `${_locales('Auth')} | ${_locales(_cfgSite.title)}`,
+        title: `${_locales('Auth')} | ${_locales(_cfgSite.title)}`,
 	};
 	HeadCustom_config(Head_config);
-
+    
     const [isLangLoaded, setPageLoaded] = useState(false);
     useEffect(() => {
         const fetchLanguage = async () => {
             try {
+                const privateCode = searchParams.get('privateCode');
                 if(typeof window !== 'undefined') {
                     DarkModeSET();
                     await ScratchAuthSET_session(privateCode); //アカウント認証
