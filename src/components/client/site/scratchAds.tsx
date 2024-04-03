@@ -1,10 +1,10 @@
 // /src/components/frontend/site/scratchAds.tsx
 
 import { useEffect, useState } from "react";
-import { ScratchStudioAd } from '@/components/backend/scratch/studioAds';
+import { ScratchStudioAd } from '@/components/server/scratch/studioAds';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { _locales, _localesContent } from '@/components/frontend/site/_locales';
-import { CardContents } from '@/components/frontend/elements/card';
+import { _locales, _localesContent } from '@/components/client/site/_locales';
+import { CardContents } from '@/components/client/elements/card';
 import Image from "next/image";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";

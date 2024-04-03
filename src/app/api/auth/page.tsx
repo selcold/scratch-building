@@ -3,10 +3,10 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import Loading from '@/components/frontend/elements/loading';
-import { DarkModeSET } from '@/components/frontend/site/main';
-import { HeadCustom_config } from '@/components/frontend/site/metaCustom';
-import { _locales } from '@/components/frontend/site/_locales';
+import Loading from '@/components/client/elements/loading';
+import { DarkModeSET } from '@/components/client/site/main';
+import { HeadCustom_config } from '@/components/client/site/metaCustom';
+import { _locales } from '@/components/client/site/_locales';
 import { _cfgSite } from '@/components/configs/siteLinks';
 import { useSearchParams } from 'next/navigation';
 import { ScratchAuthSET_session } from 'scratch-auth-react';

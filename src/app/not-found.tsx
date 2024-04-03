@@ -5,18 +5,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloud } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-import { _locales } from '@/components/frontend/site/_locales';
-import { HeadCustom_config } from '@/components/frontend/site/metaCustom';
-import Loading from '@/components/frontend/elements/loading';
+import { _locales } from '@/components/client/site/_locales';
+import { HeadCustom_config } from '@/components/client/site/metaCustom';
+import Loading from '@/components/client/elements/loading';
 import { _cfgSite } from '@/components/configs/siteLinks';
-import { ElementGroup, Main } from '@/components/frontend/elements/main';
-import Header from '@/components/frontend/elements/header';
-import { ContentsSET } from '@/components/frontend/elements/contents';
-import Footer from '@/components/frontend/elements/footer';
+import { ElementGroup, Main } from '@/components/client/elements/main';
+import Header from '@/components/client/elements/header';
+import { ContentsSET } from '@/components/client/elements/contents';
+import Footer from '@/components/client/elements/footer';
 import { _cfg_logs } from '@/components/configs/config';
-import { getDecryptedSessionId } from '@/components/backend/cookie';
-import { ScratchAuthGET_UserProfile } from '@/components/backend/scratch';
-import { DarkModeSET } from '@/components/frontend/site/main';
+import { getDecryptedSessionId } from '@/components/server/cookie';
+import { ScratchAuthGET_UserProfile } from '@/components/server/scratch';
+import { DarkModeSET } from '@/components/client/site/main';
 
 export default function Home() {
 

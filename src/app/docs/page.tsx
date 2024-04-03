@@ -3,13 +3,13 @@
 'use client';
 
 import { useEffect, useState } from "react";
-import { ScratchAuthGET_UserProfile } from "@/components/backend/scratch";
-import Footer from "@/components/frontend/elements/footer";
-import Header from "@/components/frontend/elements/header";
-import Loading from "@/components/frontend/elements/loading";
-import { ElementGroup, Main } from "@/components/frontend/elements/main";
+import { ScratchAuthGET_UserProfile } from "@/components/server/scratch";
+import Footer from "@/components/client/elements/footer";
+import Header from "@/components/client/elements/header";
+import Loading from "@/components/client/elements/loading";
+import { ElementGroup, Main } from "@/components/client/elements/main";
 import Image from "next/image";
-import { _locales } from "@/components/frontend/site/_locales";
+import { _locales } from "@/components/client/site/_locales";
 
 import { Button } from "@/components/ui/button"
 import {
@@ -29,10 +29,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
-import { CardContents } from "@/components/frontend/elements/card";
+import { CardContents } from "@/components/client/elements/card";
 import { Textarea } from "@/components/ui/textarea";
-import { CommentsHTML, CommentsHtmlContents } from "@/components/frontend/elements/comments";
-import { API_gas_backendApi_new_commentSend, Server_GetRequest_Comments } from "@/components/backend/comments";
+import { CommentsHTML, CommentsHtmlContents } from "@/components/client/elements/comments";
+import { API_gas_backendApi_new_commentSend, Server_GetRequest_Comments } from "@/components/server/comments";
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -53,11 +53,11 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { DarkModeGET, DarkModeSET } from "@/components/frontend/site/main";
-import { AlertDialogCustomButton_loginUserOnly } from "@/components/frontend/site/AlertDialog";
-import { HeadCustom_config } from "@/components/frontend/site/metaCustom";
+import { DarkModeGET, DarkModeSET } from "@/components/client/site/main";
+import { AlertDialogCustomButton_loginUserOnly } from "@/components/client/site/AlertDialog";
+import { HeadCustom_config } from "@/components/client/site/metaCustom";
 import { _cfgSite, _cfgSiteLinks } from "@/components/configs/siteLinks";
-import { ContentsSET } from "@/components/frontend/elements/contents";
+import { ContentsSET } from "@/components/client/elements/contents";
 import { _cfg_logs } from "@/components/configs/config";
 import { ScratchAuthGET_session } from "scratch-auth-react";
 

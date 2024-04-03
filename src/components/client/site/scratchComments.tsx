@@ -1,8 +1,8 @@
 'use client';
 
-import { _ScratchCommentsConfig } from "@/components/backend/scratch/comments";
+import { _ScratchCommentsConfig } from "@/components/server/scratch/comments";
 import { ScratchCommentsConfig } from "../../../../scratchComments.config";
-import { API_gas_backendApi_new_commentSend } from "@/components/backend/comments";
+import { API_gas_backendApi_new_commentSend } from "@/components/server/comments";
 
 interface _configScratchComment_Check {
     status: boolean;

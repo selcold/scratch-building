@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: "website",
 		url: "https://scratch-building.vercel.app/",
-		title: `${_cfgSite.title}`,
+		title: `${_cfgSite.title_ja}`,
 		description: _cfgSite.description_ja,
 		siteName: `${_cfgSite.title}`,
 		images: [

@@ -2,7 +2,7 @@
 
 'use server';
 
-import { Scratch_GET_user_image } from "../frontend/_scratch";
+import { Scratch_GET_user_image } from "../client/_scratch";
 import { sendWebhook } from "./webhook";
 
 function ScratchComment_escape(content: string){

@@ -1,7 +1,7 @@
 // /contents/contentsObj.ts
 
 import { _cfgLinks, _cfgSiteLinks } from "@/components/configs/siteLinks";
-import { _locales } from "@/components/frontend/site/_locales";
+import { _locales } from "@/components/client/site/_locales";
 
 export interface Content {
     title: string;

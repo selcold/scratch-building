@@ -1,4 +1,4 @@
-import { ScratchStudioAdConfig } from "@/components/backend/scratch/studioAds";
+import { ScratchStudioAdConfig } from "@/components/server/scratch/studioAds";
 
 export const studioAdConfig: ScratchStudioAdConfig = {
     studio_id: 34675120,

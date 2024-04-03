@@ -1,7 +1,7 @@
 // /contents/changelog.ts
 
 import { _cfgSiteLinks } from "@/components/configs/siteLinks";
-import { _locales } from "@/components/frontend/site/_locales";
+import { _locales } from "@/components/client/site/_locales";
 
 export type ChangelogsJSON = ChangelogsJSONItem[];
 export interface ChangelogsJSONItem {

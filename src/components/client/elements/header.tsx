@@ -6,6 +6,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons"
 import {
     BarChart2,
     Cat,
+    CircleDot,
     Cloud,
     CreditCard,
     Eclipse,
@@ -19,6 +20,7 @@ import {
     LogIn,
     LogOut,
     Mail,
+    MessageCircleMore,
     MessageSquare,
     Moon,
     Plus,
@@ -66,7 +68,7 @@ import {
 import { useEffect, useState } from "react";
 import { _locales } from "../site/_locales";
 import { _cfgImages, _cfgLinks, _cfgSite, _cfgSiteLinks } from "@/components/configs/siteLinks"
-import { getDecryptedSessionId, setEncryptedUsername } from "@/components/backend/cookie"
+import { getDecryptedSessionId, setEncryptedUsername } from "@/components/server/cookie"
 import { DarkModeChange, DarkModeGET } from "../site/main"
 import Image from "next/image"
 import Link from "next/link"
@@ -244,6 +246,21 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                             </DropdownMenuSubContent>
                         </DropdownMenuPortal>
                     </DropdownMenuSub>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                    <Link href={`https://github.com/selcold/scratch-building/issues`} target="_block">
+                        <DropdownMenuItem>
+                            <CircleDot className="mr-2 h-4 w-4" />
+                            <span>{_locales('Report an Issue')}</span>
+                        </DropdownMenuItem>
+                    </Link>
+                    <Link href={`https://github.com/selcold/scratch-building/discussions`} target="_block">
+                        <DropdownMenuItem>
+                            <MessageCircleMore className="mr-2 h-4 w-4" />
+                            <span>{_locales('Discussions')}</span>
+                        </DropdownMenuItem>
+                    </Link>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>

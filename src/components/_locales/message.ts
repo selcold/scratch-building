@@ -211,6 +211,7 @@ export const _locales_ja: { [key: string]: string } = {
     "Support": "サポート",
     "API": "API",
     "App": "アプリ",
+    "Discussions": "議論",
 
     // footer
     "All rights reserved.": "全著作権所有",
@@ -231,6 +232,8 @@ export const _locales_ja: { [key: string]: string } = {
     "At least one non-space character is required!": "少なくとも1つの空白以外の文字が必要です！",
     "There was a problem posting the comment!": "コメントの投稿中に問題が発生しました！",
     "Failed to retrieve comment form!": "コメントフォームの取得に失敗しました！",
+    "View more replies": "さらに返信を表示",
+    "See fewer replies": "返信を少なく表示",
 
     // tags
     "Developer": "開発者",

@@ -2,7 +2,7 @@
 
 'use client';
 
-import { getDecryptedSessionId, setEncryptedUsername } from "@/components/backend/cookie";
+import { getDecryptedSessionId, setEncryptedUsername } from "@/components/server/cookie";
 
 // Text Copy
 export const TextCopyToClipboard = async (text: string) => {
