@@ -51,7 +51,7 @@ interface Comments {
         image: string,
     },
 };
-export function CommentsHTML( CommentsData: Comments[] , username: string, userId: string, userImage: string ): JSX.Element[] {
+export function CommentsHTML({ CommentsData, username, userId, userImage }: { CommentsData: Comments[], username: string, userId: string, userImage: string } ): JSX.Element[] {
 
     // コメントごとに返信コメントの数を数える関数
     const countReplies = (commentsData: Comments[], commentId: string): Comments[] => {
@@ -472,44 +472,52 @@ export function CommentsHtmlContents({ commentsRes, comments, userData }: { comm
         userImage = Scratch_GET_user_image(userId);
     };
 
+    function Group({ children }: { children: React.ReactNode }) {
+        return (
+            <section className="md:p-6 pt-0">
+                <ul className="flex flex-col justify-center items-center gap-1 w-full mt-10 *:flex *:flex-row *:flex-wrap *:justify-end *:items-center *:w-full *:p-1">
+                    {children}
+                </ul>
+            </section>
+        )
+    }
+
     // CommentsHTML を一時的に保存
     let commentsContent = null;
     if (commentsRes) {
         if (comments.length > 0) {
-            commentsContent = CommentsHTML(comments, username, userId, userImage);
+            return (
+                <Group>
+                    <CommentsHTML CommentsData={comments} username={username} userId={userId} userImage={userImage}/>
+                </Group>
+            )
         } else {
-            commentsContent = (
-                <li className='animated-slideIn-up p-2 animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards'>
-                    <h1 className='text-zinc-400 text-[1.2rem] m-auto'>{_locales('No comments yet')}</h1>
-                </li>
-            );
+            return (
+                <Group>
+                    <li className='animated-slideIn-up p-2 animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards'>
+                        <h1 className='text-zinc-400 text-[1.2rem] m-auto'>{_locales('No comments yet')}</h1>
+                    </li>
+                </Group>
+            )
         }
     } else {
-        commentsContent = (
-            <li className="relative flex flex-col md:flex-row flex-wrap items-center justify-end w-full">
-                <div className="flex flex-row flex-nowrap justify-between items-start w-full p-1 group animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
-                    <span className="select-none pointer-events-none">
-                        <Skeleton className="h-[48px] w-[48px] mr-[0.5rem] overflow-clip rounded-full shadow-lg" />
-                    </span>
-                    <div className="flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3">
-                        <div className="flex flex-wrap flex-row justify-start lg:justify-around items-center w-full ml-[0.5rem] mb-[8px]">
-                            <Skeleton className="hidden sm:block w-40 h-5 mr-auto rounded-lg" />
+        return (
+            <Group>
+                <li className="relative flex flex-col md:flex-row flex-wrap items-center justify-end w-full">
+                    <div className="flex flex-row flex-nowrap justify-between items-start w-full p-1 group animate-fade-up animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
+                        <span className="select-none pointer-events-none">
+                            <Skeleton className="h-[48px] w-[48px] mr-[0.5rem] overflow-clip rounded-full shadow-lg" />
+                        </span>
+                        <div className="flex flex-wrap flex-col justify-center items-start gap-1 w-full min-w-[50%] mb-3">
+                            <div className="flex flex-wrap flex-row justify-start lg:justify-around items-center w-full ml-[0.5rem] mb-[8px]">
+                                <Skeleton className="hidden sm:block w-40 h-5 mr-auto rounded-lg" />
+                            </div>
+                            <Skeleton className="relative h-15 ml-[0.6rem] mb-1 p-[0.75rem] rounded-[0.5rem] text-left box-border" style={{}} />
+                            <Skeleton className="relative w-[70%] h-15 ml-[0.6rem] my-1 p-[0.75rem] rounded-[0.5rem] text-left box-border" />
                         </div>
-                        <Skeleton className="relative h-15 ml-[0.6rem] mb-1 p-[0.75rem] rounded-[0.5rem] text-left box-border" style={{}} />
-                        <Skeleton className="relative w-[70%] h-15 ml-[0.6rem] my-1 p-[0.75rem] rounded-[0.5rem] text-left box-border" />
                     </div>
-                </div>
-            </li>
-        );
+                </li>
+            </Group>
+        )
     }
-
-    return (
-        <>
-            <section className="md:p-6 pt-0">
-                <ul className="flex flex-col justify-center items-center gap-1 w-full mt-10 *:flex *:flex-row *:flex-wrap *:justify-end *:items-center *:w-full *:p-1">
-                    {commentsContent}
-                </ul>
-            </section>
-        </>
-    )
 }
