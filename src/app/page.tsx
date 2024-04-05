@@ -2,7 +2,7 @@
 
 'use client';
 
-import { useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ScratchAuthGET_UserProfile } from "@/components/server/scratch";
 import Footer from "@/components/client/elements/footer";
 import Header from "@/components/client/elements/header";
@@ -62,7 +62,7 @@ export const viewport: Viewport = {
 	],
 }
 
-export default function Home() {
+function Home() {
 
 	// headカスタム
 	const Head_config = {
@@ -145,50 +145,78 @@ export default function Home() {
 		fetchData();
 	}, []);
 
-	const [comment, setComment] = useState('');
+	const textareaRef = useRef<HTMLTextAreaElement>(null); // HTMLTextAreaElement型でuseRefを初期化
 
 	// コメント送信
 	const CommentForm_send_ButtonClick = async () => {
 		if (typeof window !== 'undefined') {
-			if(userData.username && userData.id){
-				const comment_reply_form_button = document.getElementById(`commentForm_send`);
-				if(comment_reply_form_button){
-					comment_reply_form_button.classList.add('pointer-events-none');
-					comment_reply_form_button.innerText=(_locales('Sending...'))
-				};
-
-				const validationResult = ScratchComment_Check(userData.username, comment);
-				if(validationResult.status){
-					if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, validationResult.tag? validationResult.tag : "null", validationResult.content)){
-						window.alert(_locales('Comment posted!'));
-						window.location.href=(`${window.location}`);
+			if( textareaRef.current ){
+				const comment = textareaRef.current.value;
+				if(userData.username && userData.id){
+					const comment_reply_form_button = document.getElementById(`commentForm_send`);
+					if(comment_reply_form_button){
+						comment_reply_form_button.classList.add('pointer-events-none');
+						comment_reply_form_button.innerText=(_locales('Sending...'))
+					};
+	
+					const validationResult = ScratchComment_Check(userData.username, comment);
+					if(validationResult.status){
+						if(await API_gas_backendApi_new_commentSend(userData.username, userData.id, validationResult.tag? validationResult.tag : "null", validationResult.content)){
+							window.alert(_locales('Comment posted!'));
+							window.location.href=(`${window.location}`);
+						}else{
+							window.alert(_locales('There was a problem posting the comment!'));
+							if(comment_reply_form_button){
+								comment_reply_form_button.classList.remove('pointer-events-none');
+								comment_reply_form_button.innerText=(_locales('Post'))
+							}
+						}
 					}else{
-						window.alert(_locales('There was a problem posting the comment!'));
+						window.alert(_locales(validationResult.content?validationResult.content:""));
 						if(comment_reply_form_button){
 							comment_reply_form_button.classList.remove('pointer-events-none');
 							comment_reply_form_button.innerText=(_locales('Post'))
 						}
 					}
-				}else{
-					window.alert(_locales(validationResult.content?validationResult.content:""));
-					if(comment_reply_form_button){
-						comment_reply_form_button.classList.remove('pointer-events-none');
-						comment_reply_form_button.innerText=(_locales('Post'))
-					}
+				} else {
+					window.alert(_locales('Processing user information!'));
 				}
-			} else {
-				window.alert(_locales('Processing user information!'));
 			}
 		}
 	};
 
-    if (!isLangLoaded) {
+	function CommentForm() {
+		return (
+			<>
+			<CardHeader>
+				<CardTitle>{_locales('Comments')}</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<Textarea ref={textareaRef} placeholder={_locales('Write a comment')}/>
+			</CardContent>
+			<CardFooter className="flex flex-wrap gap-2 animate-fade-down animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
+				{userData? (
+					<Button id="commentForm_send" onClick={CommentForm_send_ButtonClick}>{_locales('Post')}</Button>
+				):(									
+					<AlertDialogCustomButton_loginUserOnly>
+						<Button>{_locales('Post')}</Button>
+					</AlertDialogCustomButton_loginUserOnly>
+				)}
+				<Button variant="outline">{_locales('Cancel')}</Button>
+			</CardFooter>
+			<CommentsHtmlContents commentsRes={commentsRes} comments={comments} userData={userData}/>
+			</>
+		)
+	}
+
+	if (!isLangLoaded) {
         return <Loading />;
     }
 
 	if (isLangLoaded && NetworkStatus === "offline") {
 		return (<><h1>offline</h1></>);
 	}
+
 
 	return (
 		<>
@@ -200,23 +228,7 @@ export default function Home() {
 							<ContentsSET contentTitle={"home"}/>
 							<ScratchStudioAds/>
 							<CardContents durationPls={100}>
-								<CardHeader>
-									<CardTitle>{_locales('Comments')}</CardTitle>
-								</CardHeader>
-								<CardContent>
-									<Textarea placeholder={_locales('Write a comment')} onChange={(e) => setComment(e.target.value)} />
-								</CardContent>
-								<CardFooter className="flex flex-wrap gap-2 animate-fade-down animate-once animate-duration-500 animate-delay-0 animate-ease-in-out animate-normal animate-fill-forwards">
-									{userData? (
-										<Button id="commentForm_send" onClick={CommentForm_send_ButtonClick}>{_locales('Post')}</Button>
-									):(									
-										<AlertDialogCustomButton_loginUserOnly>
-											<Button>{_locales('Post')}</Button>
-										</AlertDialogCustomButton_loginUserOnly>
-									)}
-									<Button variant="outline">{_locales('Cancel')}</Button>
-								</CardFooter>
-								<CommentsHtmlContents commentsRes={commentsRes} comments={comments} userData={userData}/>
+								<CommentForm/>
 							</CardContents>
 						</section>
 					</Main>
@@ -226,3 +238,5 @@ export default function Home() {
 		</>
 	);
 }
+
+export default Home;
