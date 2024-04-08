@@ -38,20 +38,33 @@ export const API_gas_backendApi_new_commentSend = async ( user_name: string, use
         const compileStartTime = performance.now();
         const user_image = Scratch_GET_user_image( user_id );
         const comment = ScratchComment_escape(content);
-        let uri = `${process.env.COMMENT_SERVER_API_URL}?apikey=${process.env.COMMENT_SERVER_API_KEY}&sheet=${process.env.COMMENT_SERVER_SHEET_ID}&mode=post_comment&user_name=${user_name}&user_id=${user_id}&user_tag=${user_tag}&content=${comment}`
-        if(reply_group_id!=='false'){
-            uri = `${process.env.COMMENT_SERVER_API_URL}?apikey=${process.env.COMMENT_SERVER_API_KEY}&sheet=${process.env.COMMENT_SERVER_SHEET_ID}&mode=post_comment&user_name=${user_name}&user_id=${user_id}&user_tag=${user_tag}&content=${comment}&reply_group_id=${reply_group_id}&reply_id=${reply_id}`
-        };
+        let uri = `${process.env.COMMENT_SERVER_API_URL}?apikey=${process.env.COMMENT_SERVER_API_KEY}&sheet=${process.env.COMMENT_SERVER_SHEET_ID}&mode=post`
+
         const apiUrl = encodeURI(uri);
-        //console.log("> apiUrl:\n",apiUrl)
+
+        let dataToSend = {
+            user_name: `${user_name}`,
+            user_id: `${user_id}`,
+            user_tag: `${user_tag}`,
+            reply_group_id: `${reply_group_id}`,
+            reply_id: `${reply_id}`,
+            content: `${comment}`,
+        };
+
+        let body = JSON.stringify(dataToSend);
+
         const response = await fetch(apiUrl, {
-            method: 'GET',
-            cache: 'no-store'
+            method: 'POST',
+            cache: 'no-store',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: body,
         });
+
         const compileEndTime = performance.now();
         if (!response.ok) {
-            console.error('status:', response.status);
-            console.error('res msg', response.statusText)
+            console.error('status:', response.status, '\nres msg', response.statusText);
             throw new Error('Error sending POST request to GAS (response):');
         };
         const result = await response.json();
