@@ -32,12 +32,6 @@ export const contents_json: ContentsJSON = {
     ],
     "home": [
         {
-            "title": "ニュース",
-            "title_en": "News",
-            "description": "日本時間（JST）2024年3月22日をもってアカウントシステムを廃止しました。これに伴い、すべてのアカウント情報が削除されました。今後は従来のアカウントシステムに代わり、Scratchアカウントでのログインが必要となります。ログインユーザー限定の機能を利用するには、Scratchアカウントでログインしてください。",
-            "description_en": "As of March 22, 2024, Japan Standard Time (JST), we have discontinued our account system. Consequently, all account information has been deleted. Going forward, instead of the previous account system, you will need to log in with a Scratch account. To access features limited to logged-in users, please log in with your Scratch account.",
-        },
-        {
             "title": "お知らせ",
             "title_en": "Announcement",
             "description": "ビル経営ゲームでクラウドセーブを行った人の数が3600人を超えました！\nこれからもビル経営ゲームをよろしくお願いします！",
@@ -46,6 +40,19 @@ export const contents_json: ContentsJSON = {
                 {
                     "label": _locales('Play'),
                     "url": _cfgLinks.scratch_building_play,
+                    "target": "_blank",
+                },
+            ],
+        },
+        {
+            "title": "機能紹介",
+            "title_en": "Feature Introduction",
+            "description": "Masaabu公式Discordサーバーに参加すると、サイトに投稿されたコメントの通知が受け取れるほか、お知らせチャンネルでは最新アップデートの詳細情報を確認できます。",
+            "description_en": "By joining the official Masaabu Discord server, you can receive notifications for comments posted on the site, and in the announcements channel, you can check detailed information about the latest updates.",
+            "actions": [
+                {
+                    "label": _locales('Join the Server'),
+                    "url": `https://discord.gg/j2FG5j2z7v`,
                     "target": "_blank",
                 },
             ],
@@ -78,11 +85,38 @@ export const contents_json: ContentsJSON = {
             "description_en": "The MODs for the building management game are like extensions that can make the game more interesting! You can also create them yourself, so be sure to check out the projects labeled [Prerequisite]!",
         },
     ],
+    "issues": [
+        {
+            "title": "Issues",
+            "description": "GitHub リポジトリの問題セクションで問題を報告すると、より迅速な解決につながりますが、GitHub アカウントを使用できない場合は、Google フォームを使用して問題を報告してください。",
+            "description_en": "While reporting issues on GitHub repository's Issues section leads to faster resolution, if you are unable to use a GitHub account, please report the issues using Google Form.",
+            "actions": [
+                {
+                    "label": "GitHub issues",
+                    "url": "https://github.com/selcold/scratch-building/issues",
+                    "target": "_blank",
+                },
+                {
+                    "label": "Google Form",
+                    "url": "https://forms.gle/wTCUGM3JofLqbgzo8",
+                    "target": "_blank",
+                    "variant": "outline",
+                },
+            ],
+        },
+    ],
     "qa": [
         {
             "title": "Q&A",
-            "description": "気になることなどをここで聞いて解決しよう！",
-            "description_en": "Let's hear your questions and solve them here!",
+            "description": "気になることなどをここで聞いて解決しよう！\nGitHub アカウントでログインして、ここで質問することで、より迅速な解決につながりますが、GitHub アカウントを使用できない場合は、Google フォームを使用して質問してください。",
+            "description_en": "Let's ask and resolve any concerns here!\nWhile logging in with your GitHub account and asking questions here can lead to quicker resolution, if you are unable to use a GitHub account, please ask questions using the Google Form.",
+            "actions": [
+                {
+                    "label": "Google form",
+                    "url": "https://forms.gle/wTCUGM3JofLqbgzo8",
+                    "target": "_blank",
+                }
+            ],
         },
     ],
     "docs": [

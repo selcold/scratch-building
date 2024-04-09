@@ -249,7 +249,7 @@ export function MyAccount({ userData, username, user_image }: { userData: any, u
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <Link href={`https://github.com/selcold/scratch-building/issues`} target="_block">
+                    <Link href={_cfgSiteLinks.issues}>
                         <DropdownMenuItem>
                             <CircleDot className="mr-2 h-4 w-4" />
                             <span>{_locales('Report an Issue')}</span>

@@ -30,6 +30,7 @@ export const _cfgSiteLinks = {
     home: "/",
     games: "/games",
     mods: "/mods",
+    issues: "/issues",
     qa: "/qa",
     docs: "/docs",
     docs_changelogs: "/docs/changelogs",
