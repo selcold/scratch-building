@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import PageRedirect from './[id]/_page';
+import PageRedirect from './_page';
 
 export const metadata: Metadata = {
     title: "Docs"

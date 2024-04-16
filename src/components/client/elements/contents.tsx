@@ -31,7 +31,6 @@ import { Input } from "@/components/ui/input";
 import { _locales, _localesContent, _localesText } from "../site/_locales";
 import { contentObj_gamesAll } from "../../../../contents/games";
 import { _cfgImages } from "@/components/configs/siteLinks";
-import { changelogs_obj } from "../../../../contents/changelogs";
 
 export function ContentsSET({ contentTitle }: { contentTitle: string }) {
     const contentsObj = contents_json;
@@ -44,51 +43,6 @@ export function ContentsSET({ contentTitle }: { contentTitle: string }) {
                 <CardHeader>
                     <CardTitle>{_localesContent(content.title,content.title_en)}</CardTitle>
                     <CardDescription className="whitespace-pre-line" dangerouslySetInnerHTML={{ __html: _localesContent(content.description,content.description_en) }} />
-                </CardHeader>
-                {content.actions ? (
-                    <CardFooter className="flex flex-wrap gap-2">
-                    {content.actions?.map((action: any, index: number) => (
-                        <Button
-                            variant={action.variant} 
-                            onClick={() => {
-                                if (action.onclick) {
-                                    eval(action.onclick);
-                                }
-                            }}
-                            key={index}
-                        >
-                            {action.url ? (
-                                <Link href={action.url} target={action.target || '_self'}>
-                                    {_locales(action.label)}
-                                </Link>
-                            ):(
-                                _locales(action.label)
-                            )}
-                        </Button>
-                    ))}
-                    </CardFooter>
-                ):(
-                    <></>
-                )}
-            </CardContents>
-            ))}
-        </>
-    );
-};
-
-export function ContentGET_changelogs({ }: { }) {
-    const contentsObj = changelogs_obj;
-
-    return (
-        <>
-            {contentsObj.map((content: any, index: number) => (
-            <CardContents durationPls={ 50 * index} key={index}>
-                <CardHeader>
-                    <CardTitle>{content.version_name}</CardTitle>
-                    <CardDescription className="whitespace-pre-line">{content.date}</CardDescription>
-                    {content.contents.map((log: any, index: number) => (
-                        <li key={index}>{_localesContent(log.title,log.title_en)}</li>
-                    ))}
                 </CardHeader>
                 {content.actions ? (
                     <CardFooter className="flex flex-wrap gap-2">

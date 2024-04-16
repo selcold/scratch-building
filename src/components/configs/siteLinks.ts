@@ -32,10 +32,10 @@ export const _cfgSiteLinks = {
     mods: "/mods",
     issues: "/issues",
     qa: "/qa",
-    docs: "/docs",
-    docs_changelogs: "/docs/changelogs",
-    docs_terms_of_use: "/docs/terms",
-    docs_guidelines: "/docs/guidelines",
+    docs: "https://scratch-building-docs.vercel.app/",
+    docs_changelogs: "https://scratch-building-docs.vercel.app/changelog",
+    docs_terms_of_use: "https://scratch-building-docs.vercel.app/ja/docs/terms-of-use",
+    docs_guidelines: "https://scratch-building-docs.vercel.app/ja/docs/guidelines",
 }
 
 export const _cfgCredit = {

@@ -119,59 +119,6 @@ export const contents_json: ContentsJSON = {
             ],
         },
     ],
-    "docs": [
-        {
-            "title": "変更履歴",
-            "title_en": "Changelogs",
-            "description": "",
-            "actions": [
-                {
-                    "label": _locales('More...'),
-                    "url": _cfgSiteLinks.docs_changelogs,
-                },
-            ],
-        },
-        {
-            "title": "利用規約",
-            "title_en": "Terms of Use",
-            "description":"このウェブサイト（以下、「サイト」といいます）をご利用いただき、ありがとうございます。以下の利用規約をよくお読みいただき、ご理解いただいた上で、本サイトをご利用ください。本利用規約は、本サイトの利用者（以下、「利用者」といいます）とサイト管理者との間の契約を構成します。",
-            "description_en": "Thank you for using this website (hereinafter referred to as the 'Site'). Please read the following terms of use carefully and use this Site only after understanding them. These terms of use constitute an agreement between the users of this Site (hereinafter referred to as 'Users') and the Site administrator.",
-            "actions": [
-                {
-                    "label": _locales('More...'),
-                    "url": _cfgSiteLinks.docs_terms_of_use,
-                },
-            ],
-        },
-        {
-            "title": "ガイドライン",
-            "title_en": "Guidelines",
-            "description": "ようこそ、ビル経営ゲーム コミュニティーへ！ここでは、楽しい体験を共有し、他のメンバーと交流する場を提供しています。以下のガイドラインをお読みいただき、コミュニティーの健全な環境を保つためのお手伝いをしてください。",
-            "description_en": "Welcome to the Scratch Building community! Here, we provide a space for sharing fun experiences and interacting with other members. Please read the following guidelines and help us maintain a healthy community environment.",
-            "actions": [
-                {
-                    "label": _locales('More...'),
-                    "url": _cfgSiteLinks.docs_guidelines,
-                },
-            ],
-        },
-    ],
-    "terms": [
-        {
-            "title": "利用規約",
-            "title_en": "Terms of Use",
-            "description":"このウェブサイト（以下、「サイト」といいます）をご利用いただき、ありがとうございます。以下の利用規約をよくお読みいただき、ご理解いただいた上で、本サイトをご利用ください。本利用規約は、本サイトの利用者（以下、「利用者」といいます）とサイト管理者との間の契約を構成します。",
-            "description_en": "Thank you for using this website (hereinafter referred to as the 'Site'). Please read the following terms of use carefully and use this Site only after understanding them. These terms of use constitute an agreement between the users of this Site (hereinafter referred to as 'Users') and the Site administrator.",
-        },
-    ],
-    "guidelines": [
-        {
-            "title": "ガイドライン",
-            "title_en": "Guidelines",
-            "description": "ようこそ、ビル経営ゲーム コミュニティーへ！ここでは、楽しい体験を共有し、他のメンバーと交流する場を提供しています。以下のガイドラインをお読みいただき、コミュニティーの健全な環境を保つためのお手伝いをしてください。",
-            "description_en": "Welcome to the Scratch Building community! Here, we provide a space for sharing fun experiences and interacting with other members. Please read the following guidelines and help us maintain a healthy community environment.",
-        },
-    ],
 }
 
 

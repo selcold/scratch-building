@@ -80,7 +80,7 @@ const HeaderNav = [
     { name: _locales('Game'), href: _cfgSiteLinks.games, target: '_self' },
     { name: _locales('MOD'), href: _cfgSiteLinks.mods, target: '_self' },
     { name: _locales('Q&A'), href: _cfgSiteLinks.qa, target: '_self' },
-    { name: _locales('Docs'), href: _cfgSiteLinks.docs, target: '_self' },
+    { name: _locales('Docs'), href: _cfgSiteLinks.docs, target: '_block' },
 ]
 
 export default function Header({ userData, btmSpace, title }: { userData: any, btmSpace?: boolean, title?: null | string}) {
