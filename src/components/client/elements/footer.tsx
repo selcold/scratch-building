@@ -6,6 +6,7 @@ import { _locales } from "../site/_locales";
 import Link from "next/link";
 
 const nav_Socials = [
+	{ name:  _locales('Support'), href: _cfgLinks.support, target: '_block' },
 	{ name: 'GitHub', href: _cfgCredit.creator_url, target: '_block' },
 ]
 

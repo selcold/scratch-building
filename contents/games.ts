@@ -34,7 +34,7 @@ export const contentObj_gamesAll: contentObj = {
     "release": [
         {
             "version": 7,
-            "version_name": "7.1.1a",
+            "version_name": "7.1.1b",
             "creator": "Masaabu-YT",
             "date": "2023-12-01",
             "project_id": 927111186,
