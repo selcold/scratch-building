@@ -31,6 +31,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { contents_json } from "../../../../contents/contents";
 import {
@@ -69,6 +78,7 @@ export interface _shop_items {
 function ShopProfilePreviewGet_Bg({ req_color }: { req_color: string }) {
   return (
     <svg
+      viewBox="0 0 405 253"
       width="405.21388"
       height="253.00593"
       xmlns="http://www.w3.org/2000/svg"
@@ -277,43 +287,66 @@ export function Client_ShopGET({
                           } else if (type === "color") {
                             color = shop_items.color[value]?.code || "#9494a6";
                           }
+                          let release_date = '';
+                          if (type === "deco") {
+                            release_date = shop_items.deco[value]?.release_date || '';
+                          } else if (type === "color") {
+                            release_date = shop_items.color[value]?.release_date || '';
+                          }
+                          let price = 0;
+                          if (type === "deco") {
+                            price = shop_items.deco[value]?.price || 0;
+                          } else if (type === "color") {
+                            price = shop_items.color[value]?.price || 0;
+                          }
                           return (
                             <ModCard key={index2}>
                               <ModCardHeader>
-                                <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <Image
-                                      src={`/images/scratch/scratch-building/profileView_bg.svg`}
-                                      alt="image"
-                                      width={480}
-                                      height={360}
-                                      className={`w-full h-auto rounded-md fill-[${color}]`}
-                                    />
-                                  </AlertDialogTrigger>
-                                  <AlertDialogContent className="flex flex-col justify-center p-4 md:p-5">
+                                <Dialog>
+                                  <DialogTrigger asChild>
+                                    <div className="w-full h-full overflow-hidden">
+                                      {type === "color" ? (
+                                        <ShopProfilePreviewGet_Bg
+                                          req_color={value}
+                                        />
+                                      ) : (
+                                        <>
+                                          <ShopProfilePreviewGet_Bg
+                                            req_color={`color-0`}
+                                          />
+                                        </>
+                                      )}
+                                    </div>
+                                  </DialogTrigger>
+                                  <DialogContent className="flex flex-col justify-center p-4 md:p-5">
                                     {type === "color" ? (
                                       <ShopProfilePreviewGet_Bg
                                         req_color={value}
                                       />
                                     ) : (
                                       <>
-                                        <h1>
+                                        <ShopProfilePreviewGet_Bg
+                                          req_color={`color-0`}
+                                        />
+                                        <h1 className="text-red-500">
                                           {_locales(
                                             "Decoration currently does not support preview."
                                           )}
                                         </h1>
                                       </>
                                     )}
-                                    <AlertDialogFooter>
-                                      <AlertDialogCancel>
-                                        {_locales("Close")}
-                                      </AlertDialogCancel>
-                                    </AlertDialogFooter>
-                                  </AlertDialogContent>
-                                </AlertDialog>
+                                    <CardTitle className="text-2xl">{label}</CardTitle>
+                                    <CardTitle className="text-xl">🟡{price}</CardTitle>
+                                    <CardTitle className="text-sm">{type === "color" ? `${_locales('color')}🎨` : `${_locales('decoration')}✨`}</CardTitle>
+                                    <CardTitle className="text-sm">{_locales('Add')}：{release_date}</CardTitle>
+                                  </DialogContent>
+                                </Dialog>
                               </ModCardHeader>
                               <ModCardContent>
-                                <CardTitle>{label}</CardTitle>
+                                <CardTitle className="text-xl">{label}</CardTitle>
+                                <CardTitle className="text-base">🟡{price}</CardTitle>
+                                <CardTitle className="text-sm">{type === "color" ? `${_locales('color')}🎨` : `${_locales('decoration')}✨`}</CardTitle>
+                                <CardTitle className="text-sm">{_locales('Add')}：{release_date}</CardTitle>
                               </ModCardContent>
                             </ModCard>
                           );
@@ -326,87 +359,113 @@ export function Client_ShopGET({
             <>
               {shopItems &&
                 shopItems.length > 0 &&
-                shopItems.map((content: any, index: number) => (
-                  <CardContents durationPls={0} key={index}>
-                    <CardHeader>
-                      <CardTitle>
-                        {FormatDate_yyyy_MM_dd(content.timestamp)}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2 px-2">
-                        {content.value &&
-                          content.value.length > 0 &&
-                          content.value
-                            .substring(1, content.value.length - 1)
-                            .split(",")
-                            .map((value: string, index2: number) => {
-                              // カラーコードからラベルを取得
-                              let type = "";
-                              if (value.startsWith("deco-")) {
-                                type = "deco";
-                              } else if (value.startsWith("color-")) {
-                                type = "color";
-                              }
+                shopItems
+                  .slice()
+                  .reverse()
+                  .map((content: any, index: number) => (
+                    <CardContents durationPls={0} key={index}>
+                      <CardHeader>
+                        <CardTitle>
+                          {FormatDate_yyyy_MM_dd(content.timestamp)}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-wrap gap-2 px-2 b">
+                          {content.value &&
+                            content.value.length > 0 &&
+                            content.value
+                              .substring(1, content.value.length - 1)
+                              .split(",")
+                              .map((value: string, index2: number) => {
+                                // カラーコードからラベルを取得
+                                let type = "";
+                                if (value.startsWith("deco-")) {
+                                  type = "deco";
+                                } else if (value.startsWith("color-")) {
+                                  type = "color";
+                                }
 
-                              let label = "";
-                              if (type === "deco") {
-                                label = shop_items.deco[value]?.label || "";
-                              } else if (type === "color") {
-                                label = shop_items.color[value]?.label || "";
-                              }
-                              let color = "";
-                              if (type === "deco") {
-                                color = "#9494a6";
-                              } else if (type === "color") {
-                                color =
-                                  shop_items.color[value]?.code || "#9494a6";
-                              }
-                              return (
-                                <ModCard key={index2}>
-                                  <ModCardHeader>
-                                    <AlertDialog>
-                                      <AlertDialogTrigger asChild>
-                                        <Image
-                                          src={`/images/scratch/scratch-building/profileView_bg.svg`}
-                                          alt="image"
-                                          width={480}
-                                          height={360}
-                                          className={`w-full h-auto rounded-md fill-[${color}]`}
-                                        />
-                                      </AlertDialogTrigger>
-                                      <AlertDialogContent className="flex flex-col justify-center p-4 md:p-5">
-                                        {type === "color" ? (
-                                          <ShopProfilePreviewGet_Bg
-                                            req_color={value}
-                                          />
-                                        ) : (
-                                          <>
-                                            <h1>
-                                              {_locales(
-                                                "Decoration currently does not support preview."
-                                              )}
-                                            </h1>
-                                          </>
-                                        )}
-                                        <AlertDialogFooter>
-                                          <AlertDialogCancel>
-                                            {_locales("Close")}
-                                          </AlertDialogCancel>
-                                        </AlertDialogFooter>
-                                      </AlertDialogContent>
-                                    </AlertDialog>
-                                  </ModCardHeader>
-                                  <ModCardContent>
-                                    <CardTitle>{label}</CardTitle>
-                                  </ModCardContent>
-                                </ModCard>
-                              );
-                            })}
-                      </div>
-                    </CardContent>
-                  </CardContents>
-                ))}
+                                let label = "";
+                                if (type === "deco") {
+                                  label = shop_items.deco[value]?.label || "";
+                                } else if (type === "color") {
+                                  label = shop_items.color[value]?.label || "";
+                                }
+                                let color = "";
+                                if (type === "deco") {
+                                  color = "#9494a6";
+                                } else if (type === "color") {
+                                  color =
+                                    shop_items.color[value]?.code || "#9494a6";
+                                }
+                                let release_date = '';
+                                if (type === "deco") {
+                                  release_date = shop_items.deco[value]?.release_date || '';
+                                } else if (type === "color") {
+                                  release_date = shop_items.color[value]?.release_date || '';
+                                }
+                                let price = 0;
+                                if (type === "deco") {
+                                  price = shop_items.deco[value]?.price || 0;
+                                } else if (type === "color") {
+                                  price = shop_items.color[value]?.price || 0;
+                                }
+                                return (
+                                  <ModCard key={index2}>
+                                    <ModCardHeader>
+                                      <Dialog>
+                                        <DialogTrigger asChild>
+                                          <div className="w-full h-full overflow-hidden">
+                                            {type === "color" ? (
+                                              <ShopProfilePreviewGet_Bg
+                                                req_color={value}
+                                              />
+                                            ) : (
+                                              <>
+                                                <ShopProfilePreviewGet_Bg
+                                                  req_color={`color-0`}
+                                                />
+                                              </>
+                                            )}
+                                          </div>
+                                        </DialogTrigger>
+                                        <DialogContent className="flex flex-col justify-center p-4 md:p-5">
+                                          {type === "color" ? (
+                                            <ShopProfilePreviewGet_Bg
+                                              req_color={value}
+                                            />
+                                          ) : (
+                                            <>
+                                              <ShopProfilePreviewGet_Bg
+                                                req_color={`color-0`}
+                                              />
+                                              <h1 className="text-red-500">
+                                                {_locales(
+                                                  "Decoration currently does not support preview."
+                                                )}
+                                              </h1>
+                                            </>
+                                          )}
+                                          <CardTitle className="text-2xl">{label}</CardTitle>
+                                          <CardTitle className="text-xl">🟡{price}</CardTitle>
+                                          <CardTitle className="text-sm">{type === "color" ? `${_locales('color')}🎨` : `${_locales('decoration')}✨`}</CardTitle>
+                                          <CardTitle className="text-sm">{_locales('Add')}：{release_date}</CardTitle>
+                                        </DialogContent>
+                                      </Dialog>
+                                    </ModCardHeader>
+                                    <ModCardContent>
+                                      <CardTitle className="text-xl">{label}</CardTitle>
+                                      <CardTitle className="text-base">🟡{price}</CardTitle>
+                                      <CardTitle className="text-sm">{type === "color" ? "カラー🎨" : "デコレーション✨"}</CardTitle>
+                                      <CardTitle className="text-sm">追加：{release_date}</CardTitle>
+                                    </ModCardContent>
+                                  </ModCard>
+                                );
+                              })}
+                        </div>
+                      </CardContent>
+                    </CardContents>
+                  ))}
             </>
           )}
         </>
@@ -414,3 +473,14 @@ export function Client_ShopGET({
     </div>
   );
 }
+
+
+/**
+  <Image
+    src={`/images/scratch/scratch-building/profileView_bg.svg`}
+    alt="image"
+    width={480}
+    height={360}
+    className={`w-full h-auto rounded-md fill-[${color}]`}
+  />
+ */

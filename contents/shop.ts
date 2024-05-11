@@ -34,6 +34,12 @@ const shop_items: _shop_items = {
         },
     },
     color: {
+        'color-0': {
+            label: '',
+            code: '#9494a6',
+            release_date: '',
+            price: 0,
+        },
         'color-1': {
             label: 'スノーブルー',
             code: '#bbccde',

@@ -193,9 +193,12 @@ export const _locales_ja: { [key: string]: string } = {
   "Join the Server": "サーバーに参加",
 
   // shop
+  'Add': '追加',
   'Today': '今日',
   'untilToday': '今日まで',
   'Decoration currently does not support preview.': '装飾は現在プレビューをサポートしていません。',
+  'color': 'カラー',
+  'decoration': 'デコレーション',
 
   // error messages
   'Failed to retrieve store data': 'ショップデータの取得に失敗しました',
