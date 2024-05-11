@@ -52,7 +52,7 @@ export interface _shop_items {
   deco: {
     [key: string]: {
       label: string;
-      added: string;
+      release_date: string;
       price: number;
     };
   };
@@ -60,7 +60,7 @@ export interface _shop_items {
     [key: string]: {
       label: string;
       code: string; // Changed 'value' to 'code'
-      added: string;
+      release_date: string;
       price: number;
     };
   };
