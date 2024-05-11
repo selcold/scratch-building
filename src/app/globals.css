@@ -3,245 +3,243 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
-		--background: 0 0% 100%;
-		--foreground: 0 0% 3.9%;
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
 
-		--card: 0 0% 98%;
-		--card-foreground: 0 0% 3.9%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 3.9%;
 
-		--popover: 0 0% 100%;
-		--popover-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
 
-		--primary: 0 0% 9%;
-		--primary-foreground: 0 0% 98%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
 
-		--secondary: 0 0% 96.1%;
-		--secondary-foreground: 0 0% 9%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
 
-		--muted: 0 0% 96.1%;
-		--muted-foreground: 0 0% 45.1%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
 
-		--accent: 0 0% 96.1%;
-		--accent-foreground: 0 0% 9%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
 
-		--destructive: 0 84.2% 60.2%;
-		--destructive-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
 
-		--border: 0 0% 89.8%;
-		--input: 0 0% 89.8%;
-		--ring: 0 0% 3.9%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
 
-		--radius: 0.5rem;
-	}
+    --radius: 0.5rem;
+  }
 
-	.dark {
-		--background: 0 0% 3.9%;
-		--foreground: 0 0% 98%;
-	
-		--card: 0 0% 6.9%;
-		--card-foreground: 0 0% 98%;
-	
-		--popover: 0 0% 3.9%;
-		--popover-foreground: 0 0% 98%;
-	
-		--primary: 0 0% 98%;
-		--primary-foreground: 0 0% 9%;
-	
-		--secondary: 0 0% 14.9%;
-		--secondary-foreground: 0 0% 98%;
-	
-		--muted: 0 0% 14.9%;
-		--muted-foreground: 0 0% 63.9%;
-	
-		--accent: 0 0% 14.9%;
-		--accent-foreground: 0 0% 98%;
-	
-		--destructive: 0 62.8% 30.6%;
-		--destructive-foreground: 0 0% 98%;
-	
-		--border: 0 0% 14.9%;
-		--input: 0 0% 14.9%;
-		--ring: 0 0% 83.1%;
-	}
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 6.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
 }
 
 @layer base {
-	* {
-		@apply border-border;
-	}
-	body {
-		@apply 
-			bg-background
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background
 			text-foreground;
-	}
+  }
 }
-
 
 /* tooltip */
 .tooltip {
-	position: relative;
-	display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .tooltip .tooltiptext {
-	visibility: hidden;
-	width: 120px;
-	background-color: black;
-	color: #fff;
-	text-align: center;
-	border-radius: 6px;
-	padding: 5px 0;
-	position: absolute;
-	z-index: 1;
-	bottom: 110%;
-	left: 50%;
-	margin-left: -60px;
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 110%;
+  left: 50%;
+  margin-left: -60px;
 
-	/* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
-	opacity: 0;
-	transition: opacity 1s;
+  /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+  opacity: 0;
+  transition: opacity 1s;
 }
 
 .tooltip .tooltiptext::after {
-	content: "";
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	margin-left: -5px;
-	border-width: 5px;
-	border-style: solid;
-	border-color: black transparent transparent transparent;
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
-	visibility: visible;
-	opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }
 
 /* アラートcss */
 /* https://codepen.io/alvarotrigo/pen/NWzKoOV */
 main {
-	padding: 40px;
+  padding: 40px;
 }
 
 section {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .alert {
-	width: 512px;
-	padding: 16px;
-	margin: 8px;
-	max-width: 90%;
+  width: 512px;
+  padding: 16px;
+  margin: 8px;
+  max-width: 90%;
 }
 
 .alert-1-primary {
-	background-color: rgba(77, 77, 255, 0.05);
+  background-color: rgba(77, 77, 255, 0.05);
 }
 .alert-1-primary .alert-title {
-	color: #4d4dff;
+  color: #4d4dff;
 }
 
 .alert-1-warning {
-	background-color: rgba(255, 186, 0, 0.05);
+  background-color: rgba(255, 186, 0, 0.05);
 }
 .alert-1-warning .alert-title {
-	color: #ffba00;
+  color: #ffba00;
 }
 
 .alert-2-success {
-	border-left: 4px solid #2ec946;
-	background-color: rgba(46, 201, 70, 0.05);
+  border-left: 4px solid #2ec946;
+  background-color: rgba(46, 201, 70, 0.05);
 }
 .alert-2-success .alert-title {
-	color: #2ec946;
+  color: #2ec946;
 }
 
 .alert-2-secondary {
-	border-left: 4px solid #666666;
-	background-color: rgba(102, 102, 102, 0.05);
+  border-left: 4px solid #666666;
+  background-color: rgba(102, 102, 102, 0.05);
 }
 .alert-2-secondary .alert-title {
-	color: #666666;
+  color: #666666;
 }
 
 .alert-3-primary {
-	border: 1px solid #cdcdff;
-	border-radius: 8px;
-	background-color: rgba(77, 77, 255, 0.05);
+  border: 1px solid #cdcdff;
+  border-radius: 8px;
+  background-color: rgba(77, 77, 255, 0.05);
 }
 .alert-3-primary .alert-title {
-	color: #4d4dff;
+  color: #4d4dff;
 }
 
 .alert-3-danger {
-	border: 1px solid #ffb8b8;
-	border-radius: 8px;
-	background-color: rgba(255, 56, 56, 0.05);
+  border: 1px solid #ffb8b8;
+  border-radius: 8px;
+  background-color: rgba(255, 56, 56, 0.05);
 }
 .alert-3-danger .alert-title {
-	color: #ff3838;
+  color: #ff3838;
 }
 
 .alert-title {
-	margin-top: 0;
-	margin-bottom: 8px;
-	font-size: 18px;
-	font-family: "Poppins", sans-serif;
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
 }
 
 .alert-content {
-	margin: 0;
-	font-size: 14px;
-	font-family: "Open Sans", sans-serif;
-	color: #555555;
+  margin: 0;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  color: #555555;
 }
 
 .animate-duration-\[300ms\] {
-	animation-duration: 300ms;
+  animation-duration: 300ms;
 }
 .animate-duration-\[350ms\] {
-	animation-duration: 350ms;
+  animation-duration: 350ms;
 }
 .animate-duration-\[300ms\] {
-	animation-duration: 400ms;
+  animation-duration: 400ms;
 }
 .animate-duration-\[350ms\] {
-	animation-duration: 450ms;
+  animation-duration: 450ms;
 }
 .animate-duration-\[300ms\] {
-	animation-duration: 500ms;
+  animation-duration: 500ms;
 }
 .animate-duration-\[350ms\] {
-	animation-duration: 550ms;
+  animation-duration: 550ms;
 }
 .animate-duration-\[300ms\] {
-	animation-duration: 600ms;
+  animation-duration: 600ms;
 }
 .animate-duration-\[350ms\] {
-	animation-duration: 650ms;
+  animation-duration: 650ms;
 }
 .animate-duration-\[300ms\] {
-	animation-duration: 700ms;
+  animation-duration: 700ms;
 }
 .animate-duration-\[350ms\] {
-	animation-duration: 750ms;
+  animation-duration: 750ms;
 }
 .animate-duration-\[300ms\] {
-	animation-duration: 800ms;
+  animation-duration: 800ms;
 }
 .animate-duration-\[350ms\] {
-	animation-duration: 850ms;
+  animation-duration: 850ms;
 }
 .animate-duration-\[300ms\] {
-	animation-duration: 900ms;
+  animation-duration: 900ms;
 }
 .animate-duration-\[350ms\] {
-	animation-duration: 950ms;
+  animation-duration: 950ms;
 }
 .animate-duration-\[300ms\] {
-	animation-duration: 1000ms;
+  animation-duration: 1000ms;
 }

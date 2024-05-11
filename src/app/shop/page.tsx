@@ -50,19 +50,24 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { DarkModeGET, DarkModeSET } from "@/components/client/site/main";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DarkModeSET } from "@/components/client/site/main";
 import { AlertDialogCustomButton_loginUserOnly } from "@/components/client/site/AlertDialog";
 import { HeadCustom_config } from "@/components/client/site/metaCustom";
 import { _cfgSite } from "@/components/configs/siteLinks";
-import { ContentsSET } from "@/components/client/elements/contents";
-import Giscus from "@giscus/react";
+import {
+  ContentsGET_GameAll,
+  ContentsSET,
+} from "@/components/client/elements/contents";
 import { _cfg_logs } from "@/components/configs/config";
 import { ScratchAuthGET_session } from "scratch-auth-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ShopPreviewGET } from "@/components/client/shop/main";
 
 export default function Home() {
   // headカスタム
   const Head_config = {
-    title: `Q&A | ${_locales(_cfgSite.title)}`,
+    title: `${_locales("Game")} | ${_locales(_cfgSite.title)}`,
   };
   HeadCustom_config(Head_config);
 
@@ -138,20 +143,7 @@ export default function Home() {
           <Header userData={userData} btmSpace />
           <Main>
             <section className="flex flex-col gap-5 max-w-[800px] w-full mx-auto p-5">
-              <ContentsSET contentTitle={"qa"} />
-              <Giscus
-                id="comments"
-                repo="selcold/scratch-building"
-                repoId="R_kgDOLLLFdg"
-                mapping="number"
-                term="2"
-                reactionsEnabled="1"
-                emitMetadata="0"
-                inputPosition="top"
-                theme={DarkModeGET() === "false" ? "light" : "dark"}
-                lang={_locales("_lang")}
-                loading="lazy"
-              />
+              <ShopPreviewGET/>
             </section>
           </Main>
         </ElementGroup>

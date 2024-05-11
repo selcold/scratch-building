@@ -1,19 +1,19 @@
 // src/components/frontend/site/metaCustom.ts
 
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 interface HeadConfig {
-    title?: string;
+  title?: string;
 }
 
 export const HeadCustom_config = (req_config: HeadConfig) => {
-    useEffect(() => {
-        if (req_config.title) {
-            if (document.title) {
-                document.title = req_config.title;
-            }
-        }
-    }, [req_config.title]);
+  useEffect(() => {
+    if (req_config.title) {
+      if (document.title) {
+        document.title = req_config.title;
+      }
+    }
+  }, [req_config.title]);
 };

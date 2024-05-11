@@ -1,12 +1,11 @@
 // /src/app/app/page.tsx
 
-'use client';
+"use client";
 
 export default function Home() {
-
-	return (
-		<>
-			<span>not found</span>
-		</>
-	);
+  return (
+    <>
+      <span>not found</span>
+    </>
+  );
 }
