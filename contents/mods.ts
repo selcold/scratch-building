@@ -165,6 +165,12 @@ export const contentObj_modsAll: contentObj = {
       description: "ビル経営ゲームの拡張性を上げるツール",
       description_en:
         "A tool to increase the extensibility of Scratch Building",
+      tags: [
+        {
+          label: "Official",
+          color: "yellow",
+        },
+      ],
     },
     {
       version: 6,
