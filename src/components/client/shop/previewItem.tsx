@@ -52,12 +52,16 @@ export interface _shop_items {
   deco: {
     [key: string]: {
       label: string;
+      added: string;
+      price: number;
     };
   };
   color: {
     [key: string]: {
       label: string;
       code: string; // Changed 'value' to 'code'
+      added: string;
+      price: number;
     };
   };
 }
