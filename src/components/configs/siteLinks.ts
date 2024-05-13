@@ -27,7 +27,7 @@ export const _cfgLinks = {
   scratch_auth_pageLink_home: "https://auth.itinerary.eu.org/",
   scratch_auth_stats_page: "https://stats.uptimerobot.com/4Ggz4Fzo2O",
 
-  support: "https://forms.gle/RGZ3WZepiuVwDpv39",
+  support: "https://forms.gle/wTCUGM3JofLqbgzo8",
 };
 
 export const _cfgSiteLinks = {
