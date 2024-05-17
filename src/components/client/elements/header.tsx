@@ -353,12 +353,6 @@ export function MyAccount({
                     <span>{_locales("Website")}</span>
                   </DropdownMenuItem>
                 </Link>
-                <Link href={_cfgLinks.scratch_auth_stats_page} target="_block">
-                  <DropdownMenuItem>
-                    <BarChart2 className="mr-2 h-4 w-4" />
-                    <span>{_locales("Status page")}</span>
-                  </DropdownMenuItem>
-                </Link>
                 {username ? (
                   <>
                     <DropdownMenuItem disabled>
@@ -366,9 +360,9 @@ export function MyAccount({
                       <span>{_locales("Auth")}</span>
                     </DropdownMenuItem>
                     {/*
-                                    <Link href={`https://auth.itinerary.eu.org/auth?`} target="_block">
-                                    </Link>
-                                    */}
+                      <Link href={`https://auth.itinerary.eu.org/auth?`} target="_block">
+                      </Link>
+                    */}
                   </>
                 ) : (
                   <>

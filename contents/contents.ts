@@ -135,4 +135,30 @@ export const contents_json: ContentsJSON = {
       ],
     },
   ],
+  status: [
+    {
+      title: "Status",
+      description:
+        "このサービスに関連するデータベースや機能の状況。",
+      description_en:
+        "Status of databases and functions related to this service.",
+      actions: [
+        {
+          label: "Scratch Building",
+          url: "https://stats.uptimerobot.com/ncjBMaI1yr",
+          target: "_blank",
+        },
+        {
+          label: "Scratch Auth",
+          url: "https://stats.uptimerobot.com/4Ggz4Fzo2O",
+          target: "_blank",
+        },
+        {
+          label: "PenguinMod",
+          url: "https://status.penguinmod.com/",
+          target: "_blank",
+        },
+      ],
+    },
+  ],
 };

@@ -31,6 +31,7 @@ export const _cfgLinks = {
 };
 
 export const _cfgSiteLinks = {
+  status: "/status",
   home: "/",
   games: "/games",
   mods: "/mods",

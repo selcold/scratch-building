@@ -44,8 +44,8 @@ const nav_Resources = [
   },
   {
     name: _locales("Status page"),
-    href: _cfgLinks.scratch_building_stats_page,
-    target: "_block",
+    href: _cfgSiteLinks.status,
+    target: "_self",
   },
 ];
 
