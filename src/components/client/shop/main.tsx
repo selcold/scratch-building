@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 export function ShopPreviewGET() {
   const searchParams = useSearchParams();
   const param_tab = searchParams.get('tab');
-  const tab_defaultValue = (param_tab === 'today' || param_tab === 'untilToday') ? param_tab : 'today';
+  const tab_defaultValue = (param_tab === 'today' || param_tab === 'untiltoday') ? param_tab : 'today';
 
   return (
     <>
@@ -18,12 +18,12 @@ export function ShopPreviewGET() {
       >
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="today">{_locales("Today")}</TabsTrigger>
-          <TabsTrigger value="untilToday">{_locales("untilToday")}</TabsTrigger>
+          <TabsTrigger value="untiltoday">{_locales("untilToday")}</TabsTrigger>
         </TabsList>
         <TabsContent value="today">
           <Client_ShopGET mode="today"/>
         </TabsContent>
-        <TabsContent value="untilToday">
+        <TabsContent value="untiltoday">
           <Client_ShopGET mode="untilToday"/>
         </TabsContent>
       </Tabs>
