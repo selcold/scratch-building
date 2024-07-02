@@ -32,6 +32,26 @@ const shop_items: _shop_items = {
             release_date: '2023-05-05',
             price: 12200000,
         },
+        'deco-7': {
+            label: 'クリアウェーブ',
+            release_date: '2023-07-01',
+            price: 12200000,
+        },
+        'deco-8': {
+            label: 'ひまわり',
+            release_date: '2023-07-01',
+            price: 12200000,
+        },
+        'deco-9': {
+            label: '提灯',
+            release_date: '2023-07-01',
+            price: 12200000,
+        },
+        'deco-10': {
+            label: '花火',
+            release_date: '2023-07-01',
+            price: 12200000,
+        },
     },
     color: {
         'color-0': {
@@ -104,6 +124,48 @@ const shop_items: _shop_items = {
             label: 'ミッドナイトブルー',
             code: '#0f2746',
             release_date: '2023-05-05',
+            price: 5400000,
+        },
+        'color-12': {
+            label: 'ミントグリーン',
+            code: '#93cc9f',
+            release_date: '2023-07-01',
+            price: 5400000,
+        },
+        'color-13': {
+            label: 'ウォーターメロン',
+            code: '#d63b5a',
+            release_date: '2023-07-01',
+            price: 5400000,
+        },
+        'color-14': {
+            label: 'サンドブラウン',
+            code: '#da9a6c',
+            release_date: '2023-07-01',
+            price: 5400000,
+        },
+        'color-15': {
+            label: 'ナイトパープル',
+            code: '#190922',
+            release_date: '2023-07-01',
+            price: 5400000,
+        },
+        'color-16': {
+            label: 'アクアブルー',
+            code: '#51c1c6',
+            release_date: '2023-07-01',
+            price: 5400000,
+        },
+        'color-17': {
+            label: 'サマーイエロー',
+            code: '#e5d36c',
+            release_date: '2023-07-01',
+            price: 5400000,
+        },
+        'color-18': {
+            label: 'スペースブルー',
+            code: '#002f38',
+            release_date: '2023-07-01',
             price: 5400000,
         },
     },
