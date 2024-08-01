@@ -34,12 +34,27 @@ export const contents_json: ContentsJSON = {
   ],
   home: [
     {
+      title: "ニュース",
+      title_en: "News",
+      description:
+        "ビル経営ゲーム v8 近日公開...",
+      description_en:
+        "ScratchBuilding v8 coming soon...",
+      actions: [
+        {
+          label: "YouTube",
+          url: "https://youtube.com/@masaabu_?si=-SHsfwItOTgl9tng",
+          target: "_blank",
+        },
+      ],
+    },
+    {
       title: "お知らせ",
       title_en: "Announcement",
       description:
-        "ビル経営ゲームでクラウドセーブを行った人の数が3600人を超えました！\nこれからもビル経営ゲームをよろしくお願いします！",
+        "ビル経営ゲームでクラウドセーブを行った人の数が5000人を超えました！\nこれからもビル経営ゲームをよろしくお願いします！",
       description_en:
-        "The number of people who have performed cloud saves in the scratch building has exceeded 3600!\nThank you for your continued support of the scratch building!",
+        "The number of people who have performed cloud saves in the scratch building has exceeded 5000!\nThank you for your continued support of the scratch building!",
       actions: [
         {
           label: _locales("Play"),
