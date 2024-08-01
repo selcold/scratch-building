@@ -63,6 +63,7 @@ export interface _shop_items {
       label: string;
       release_date: string;
       price: number;
+      svg?: string;
     };
   };
   color: {
@@ -75,114 +76,28 @@ export interface _shop_items {
   };
 }
 
-function ShopProfilePreviewGet_Bg({ req_color }: { req_color: string }) {
+function ShopProfilePreviewGet_Bg({ req_color, req_deco }: { req_color: string; req_deco?: string; }) {
   return (
     <svg
       viewBox="0 0 405 253"
-      width="405.21388"
-      height="253.00593"
+      width="405.21"
+      height="253.00"
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
-      className="w-[286px] h-[178.562px] md:w-[405.21388px] md:max-w-full md:h-auto mx-auto align-middle"
+      className="w-[286px] h-[178.56px] md:w-[405.21px] md:max-w-full md:h-auto mx-auto align-middle"
     >
-      <g
-        id="svg_1"
-        fillRule="nonzero"
-        strokeMiterlimit="10"
-        strokeDashoffset="0"
-      >
-        {/* タブレット背景 */}
-        <path
-          id="svg_2"
-          d="m383.24021,247.00592l-361.33246,0c-8.77227,0 -15.90775,-7.13243 -15.90775,-15.91084l0,-209.18733c0,-8.7692 7.1355,-15.90775 15.90775,-15.90775l361.33553,0c8.77227,0 15.90776,7.1386 15.90776,15.90775l0,209.18734c0,8.77841 -7.1386,15.91084 -15.91086,15.91084l0.00003,-0.00001z"
-          fill="#b6b6c1"
-          stroke="#7b7d8c"
-          strokeWidth="12"
-        />
-        {/* カラー背景 */}
-        <path
-          id="svg_3"
-          d="m15.30679,246.61684l0,-178.29877c0,-25.25407 20.54922,-45.81206 45.81206,-45.81206l282.8602,0c25.26291,0 45.8121,20.55816 45.8121,45.81206l0,178.2988l-374.48436,-0.00003z"
-          fill={shop_items.color[req_color].code || `#9494a6`}
-          strokeWidth="0"
-        />
-        {/* 情報線 */}
-        <g id="svg_4" fill="none" strokeLinecap="round">
-          <path
-            id="svg_5"
-            d="m119.82542,228.05656l-75.76501,0"
-            stroke="#60bf69"
-            strokeWidth="20"
-          />
-          <path
-            id="svg_6"
-            d="m147.24956,228.05656l42.29826,0"
-            stroke="#60bf69"
-            strokeWidth="20"
-          />
-          <path
-            id="svg_7"
-            d="m88.8895,185.13012l-33.29966,0"
-            stroke="#e1e1e1"
-            strokeWidth="12.5"
-          />
-          <path
-            id="svg_8"
-            d="m88.88949,157.07723l-33.29965,0"
-            stroke="#e1e1e1"
-            strokeWidth="12.5"
-          />
-          <path
-            id="svg_9"
-            d="m127.22606,129.02435l-71.63622,0"
-            stroke="#e1e1e1"
-            strokeWidth="12.5"
-          />
-          <path
-            id="svg_10"
-            d="m55.58984,100.97145l113.61057,0"
-            stroke="#e1e1e1"
-            strokeWidth="12.5"
-          />
-          <path
-            id="svg_11"
-            d="m205.93347,82.46021l-68.27828,0"
-            stroke="#aaff88"
-            strokeWidth="7.5"
-          />
-          <path
-            id="svg_12"
-            d="m347.18602,40.20602l-214.61784,0"
-            stroke="#b5b5b5"
-            strokeWidth="25"
-          />
-          <path
-            id="svg_13"
-            d="m137.65519,63.43183l68.27828,0"
-            stroke="#e1e1e1"
-            strokeWidth="7.5"
-          />
-          <path
-            id="svg_14"
-            d="m258.80173,40.20602l-110.51304,0"
-            stroke="#e1e1e1"
-            strokeWidth="12.5"
-          />
-          <path
-            id="svg_15"
-            d="m224.68201,82.46021l31.62068,0"
-            stroke="#ffab19"
-            strokeWidth="7.5"
-          />
-        </g>
-        {/* 最前面枠 */}
-        <path
-          id="svg_16"
-          d="m383.24021,247.00592l-361.33246,0c-8.77227,0 -15.90775,-7.13243 -15.90775,-15.91084l0,-209.18733c0,-8.7692 7.1355,-15.90775 15.90775,-15.90775l361.33553,0c8.77227,0 15.90776,7.1386 15.90776,15.90775l0,209.18734c0,8.77841 -7.1386,15.91084 -15.91086,15.91084l0.00003,-0.00001z"
-          fill="none"
-          stroke="#7b7d8c"
-          strokeWidth="12"
-        />
+      {/* タブレット背景 */}
+      <path id="svg_back" d="M383.24 247h-361.33c-8.77 0-15.9-7.13-15.9-15.91v-209.18c0-8.76 7.13-15.9 15.9-15.9h361.33c8.77 0 15.9 7.13 15.9 15.9v209.18c0 8.77-7.13 15.91-15.91 15.91z" fill="#B6B6C1" />
+      <path id="svg_color" d="M15.30,246.61v-178.29c0,-25.25 20.54,-45.81 45.81,-45.81h282.86c25.26,0 45.81,20.55 45.81,45.81v178.29h-374.48z" fill={shop_items.color[req_color].code || `#9494a6`} stroke-width="0px" />
+      <path id="svg_frame" d="M383.24 247h-361.33c-8.77 0-15.9-7.13-15.9-15.91v-209.18c0-8.76 7.13-15.9 15.9-15.9h361.33c8.77 0 15.9 7.13 15.9 15.9v209.18c0 8.77-7.13 15.91-15.91 15.91z" fill="none" stroke="#7B7D8C" stroke-width="12px" />
+      {/* 情報線 */}
+      <g id="lines" fill="none" stroke-linecap="round">
+          <path id="svg_line_lightgray" d="M347.18,40.20h-214.61" stroke="#B5B5B5" stroke-width="25px" />
+          <path id="svg_line_gray" d="M137.65519,63.43183h68.27828" stroke="#E1E1E1" stroke-width="7.5px" />
+          <path id="svg_line_lime" d="M205.93,82.46h-68.27" stroke="#AAFF88" stroke-width="7.5px" />
+          <path id="svg_line_orange" d="M224.68,82.46h31.62" stroke="#FFAB19" stroke-width="7.5px" />
+          <path id="svg_line_white" d="M88.88,185.13h-33.29M88.88,157.07h-33.29M127.22,129.02h-71.63M55.58,100.97h113.61M258.80,40.20h-110.51" stroke="#E1E1E1" stroke-width="12.5px" />
+          <path id="svg_line_green" d="M119.82,228.05h-75.76M147.24,228.05h42.29" stroke="#60BF69" stroke-width="20px" />
       </g>
     </svg>
   );
