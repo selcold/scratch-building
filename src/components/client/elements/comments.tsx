@@ -20,6 +20,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { _locales } from "../site/_locales";
 import { ScratchComment_Check } from "../site/scratchComments";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { filterUrls } from "@/utils/cleanText";
+import { marked } from "marked";
+import { ScratchCommentsConfig } from "../../../../scratchComments.config";
 
 // コピーされた後にテキストを変更する処理
 async function handleCopy(uuid: string, text: string) {
@@ -632,6 +635,9 @@ export function CommentsHTML({
       className?: string;
       style?: { background: string; backgroundImage: string };
     }) {
+      const markdownText = filterUrls(reply.content); // URLをフィルタリング
+      const HtmlComment = marked(markdownText); // MarkdownをHTMLに変換
+
       return (
         <>
           <div
@@ -681,7 +687,7 @@ export function CommentsHTML({
                   <span className="text-blue-400 hover:text-blue-500 transition duration-500 ease mr-2">
                     @{obj_commentsId[reply.reply_Id].author.username}
                   </span>
-                  <span>{reply.content}</span>
+                  <span dangerouslySetInnerHTML={{ __html: HtmlComment || reply.content}}/>
                 </div>
                 <div className="flex flex-wrap flex-row justify-between items-center pt-2">
                   <span className="text-zinc-500">
@@ -704,6 +710,9 @@ export function CommentsHTML({
         </>
       );
     }
+
+    const markdownText = filterUrls(comment.content); // URLをフィルタリング
+    const HtmlComment = marked(markdownText); // MarkdownをHTMLに変換
 
     // コメントのHTMLを生成し、commentsHtmlに追加
     commentsHtml.push(
@@ -739,7 +748,7 @@ export function CommentsHTML({
               style={{ width: "calc(100% - 0.5rem)" }}
             >
               <div className="overflow-auto whitespace-break-spaces max-h-[100px]">
-                <span>{comment.content}</span>
+                <span dangerouslySetInnerHTML={{ __html: HtmlComment || comment.content}}/>
               </div>
               <div className="flex flex-wrap flex-row justify-between items-center pt-2">
                 <span className="text-zinc-500">{formattedTimestamp}</span>
