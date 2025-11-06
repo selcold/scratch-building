@@ -1,7 +1,10 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme"; // Tailwindのデフォルトテーマをインポート
 
 const config = {
+  // ダークモードはクラスベースで切り替えます
   darkMode: ["class"],
+  // コンテンツのパス設定（一般的なReact/Next.jsプロジェクトの構造）
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -13,11 +16,27 @@ const config = {
     container: {
       center: true,
       padding: "2rem",
+      // カスタム画面サイズ (breakpoints) を拡張
       screens: {
-        "2xl": "1400px",
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': "1400px",
+        '3xl': "1600px", // ワイドデスクトップ用
+        '4xl': "1920px", // ウルトラワイド用
       },
     },
     extend: {
+      // 1. フォントファミリーの拡張
+      fontFamily: {
+        // メインフォントとして 'Inter' を設定
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+        // 見出しやアクセント用に 'Poppins' を追加 (例: className="font-heading")
+        heading: ["Poppins", ...defaultTheme.fontFamily.sans],
+      },
+
+      // 2. カラーパレット (shadcn/uiのCSS変数ベースのカラーを保持)
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -53,11 +72,22 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      
+      // 3. ボーダーラディウスの拡張
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xl: "calc(var(--radius) + 2px)", // より大きな丸みを追加
       },
+
+      // 4. カスタムシャドウの追加
+      boxShadow: {
+        // より目立つ、深みのあるシャドウ (例: className="shadow-3xl")
+        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.4)',
+      },
+
+      // 5. アコーディオン用キーフレームとアニメーション (元の設定を保持)
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -74,6 +104,7 @@ const config = {
       },
     },
   },
+  // プラグイン (アニメーション系を保持)
   plugins: [require("tailwindcss-animate"), require("tailwindcss-animated")],
 } satisfies Config;
 
